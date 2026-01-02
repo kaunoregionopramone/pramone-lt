@@ -917,13 +917,10 @@ export type EventsListQueryResult = Array<never>;
 // Query: *[_type == "event" && slug.current == $slug][0] {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    locationLat,    locationLng,    organizers,    excerpt,    content,    images[]{ asset->{ _id, url } }  }
 export type SingleEventQueryResult = null;
 // Variable: membershipInfoQuery
-// Query: *[_id == "membershipInfo"][0] {    whyJoinText,    benefitsText[] {      _key,      title,      description1,      description2,      description3,      description4    },    entryFee,    annualFeeDescription,    "feeImage": feeImage{      asset->{        _id,        url      }    },    requiredDocuments[] {      _key,      title,      description,      "fileUrl": file.asset->url,      "fileName": file.asset->originalFilename    }  }
+// Query: *[_id == "membershipInfo"][0] {    whyJoinText,    benefitsText[] {      _key,      title,      description1,      description2,      description3,      description4    },    requiredDocuments[] {      _key,      title,      description,      "fileUrl": file.asset->url,      "fileName": file.asset->originalFilename    }  }
 export type MembershipInfoQueryResult = {
   whyJoinText: null;
   benefitsText: null;
-  entryFee: null;
-  annualFeeDescription: null;
-  feeImage: null;
   requiredDocuments: null;
 } | {
   whyJoinText: BlockContent | null;
@@ -935,14 +932,6 @@ export type MembershipInfoQueryResult = {
     description3: string | null;
     description4: string | null;
   }> | null;
-  entryFee: number;
-  annualFeeDescription: string | null;
-  feeImage: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-  } | null;
   requiredDocuments: Array<{
     _key: string;
     title: string;
@@ -972,6 +961,6 @@ declare module "@sanity/client" {
     "\n  *[_id == \"veikla\"][0] {\n    \"reports\": ataskaitos[] {\n      _key,\n      period,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename\n    }\n  }\n": ActivityReportsQueryResult;
     "\n  *[_type == \"event\" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    \"plainContent\": pt::text(content),\n    \"cover\": images[0]{ asset->{ _id, url } }\n  }\n": EventsListQueryResult;
     "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n": SingleEventQueryResult;
-    "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    },\n    entryFee,\n    annualFeeDescription,\n    \"feeImage\": feeImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename\n    }\n  }\n": MembershipInfoQueryResult;
+    "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    },\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename\n    }\n  }\n": MembershipInfoQueryResult;
   }
 }

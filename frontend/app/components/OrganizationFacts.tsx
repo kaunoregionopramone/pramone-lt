@@ -14,9 +14,11 @@ interface FactItem {
 interface OrganizationFactsProps {
   yearsOfActivity: number;
   membersCount: number;
+  misija?: string;
+  vizija?: string;
 }
 
-export function OrganizationFacts({ yearsOfActivity, membersCount }: OrganizationFactsProps) {
+export function OrganizationFacts({ yearsOfActivity, membersCount, misija, vizija }: OrganizationFactsProps) {
   const facts: FactItem[] = [
     {
       icon: Building2,
@@ -34,15 +36,15 @@ export function OrganizationFacts({ yearsOfActivity, membersCount }: Organizatio
     },
     {
       icon: Calendar,
-      title: '500+ renginių',
-      description: 'Kasmet organizuojame daugiau nei 500 renginių, kuriuose dalyvauja verslo lyderiai ir ekspertai.',
-      link: '/naujienos-ir-renginiai',
+      title: 'Misija',
+      description: misija || 'Atstovauti nariams, vienijant verslo, mokslo ir visuomenės interesus.',
+      link: '/apie/veikla',
       linkText: 'Plačiau',
     },
     {
       icon: TrendingUp,
-      title: 'Verslo augimas',
-      description: 'Padedame nariams augti ir plėstis, teikdami profesionalias konsultacijas ir verslo sprendimus.',
+      title: 'Vizija',
+      description: vizija || 'Vedanti ir atvira verslo organizacija, kurioje narystė yra vertinga ir garbinga.',
       link: '/apie/veikla',
       linkText: 'Plačiau',
     },

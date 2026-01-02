@@ -3,7 +3,6 @@ import { newsQuery, membersCountQuery, strategicDirectionsQuery, partnersQuery, 
 import { NewsCarousel } from "./components/NewsCarousel";
 import { PartnersSlider } from "./components/PartnersSlider";
 import { OrganizationFacts } from "./components/OrganizationFacts";
-import { MissionVision } from "./components/MissionVision";
 import { MemberBenefits } from "./components/MemberBenefits";
 import { MembershipCTA } from "./components/MembershipCTA";
 import { createExcerpt } from "@/lib/portableTextUtils";
@@ -57,7 +56,6 @@ export default async function Page() {
 
   const misija = veiklaData?.misija;
   const vizija = veiklaData?.vizija;
-  const strategicDirections = veiklaData?.strategicDirections || [];
 
   // Calculate full years of activity since 1989-12-22
   const now = new Date();
@@ -107,14 +105,9 @@ export default async function Page() {
       {/* Organization Facts / Stats */}
       <OrganizationFacts 
         yearsOfActivity={yearsOfActivity} 
-        membersCount={membersCount || 0} 
-      />
-
-      {/* Mission, Vision & Strategic Directions */}
-      <MissionVision 
-        misija={misija ?? undefined} 
-        vizija={vizija ?? undefined} 
-        strategicDirections={strategicDirections} 
+        membersCount={membersCount || 0}
+        misija={misija ?? undefined}
+        vizija={vizija ?? undefined}
       />
 
       {/* Member Benefits */}
