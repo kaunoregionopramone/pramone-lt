@@ -1,8 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
-  leadershipQuery,
   pastPresidentsQuery,
   membersCountQuery,
 } from "@/sanity/lib/queries";
@@ -19,28 +17,15 @@ import {
 } from "lucide-react";
 
 export default async function IstorijaPage() {
-  const [
-    { data: leadershipData },
-    { data: istorijaData },
-    { data: membersCount },
-  ] = await Promise.all([
-    sanityFetch({ query: leadershipQuery }),
+  const [{ data: istorijaData }, { data: membersCount }] = await Promise.all([
     sanityFetch({ query: pastPresidentsQuery }),
     sanityFetch({ query: membersCountQuery }),
   ]);
 
   const pastPresidents = istorijaData?.pastPresidents || [];
-  const presidentMessage = istorijaData?.presidentMessage;
   const services = istorijaData?.services || [];
   const ourHistory = istorijaData?.ourHistory;
   const kkpdaToday = istorijaData?.kkpdaToday;
-
-  // Find the current president
-  const president = leadershipData?.find(
-    (member: any) =>
-      member.role?.trim().replace(/[\u200B-\u200D\uFEFF]/g, "") ===
-      "prezidentas"
-  );
 
   // Calculate years of activity (from 1989 to current year)
   const foundingYear = 1989;
@@ -210,48 +195,6 @@ export default async function IstorijaPage() {
         </div>
       )}
 
-      {/* President's Message */}
-      {president && (
-        <div className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-[#101828] mb-4">
-                Asociacijos prezidento žodis
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#FE9A00] to-[#E17100] mx-auto rounded-full"></div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div>
-                <Image
-                  src={president.photo?.asset?.url || "/placeholder.jpg"}
-                  alt={`${president.name} nuotrauka`}
-                  width={600}
-                  height={750}
-                  className="rounded-2xl shadow-2xl w-full aspect-[4/5] object-cover"
-                />
-              </div>
-
-              <div>
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-[#101828] mb-2">
-                    {president.name}
-                  </h3>
-                  <p className="text-lg text-[#FE9A00] font-semibold">
-                    {president.position || "Asociacijos prezidentas"}
-                  </p>
-                </div>
-
-                {presidentMessage && (
-                  <article className="prose prose-lg max-w-none text-[#4a5565]">
-                    <PortableText value={presidentMessage as any} />
-                  </article>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Services Section */}
       {services.length > 0 && (
