@@ -650,56 +650,6 @@ export type Geopoint = {
 export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockContent | Leadership | SanityImageCrop | SanityImageHotspot | Member | Veikla | Partneriai | Istorija | MembershipInfo | Istatai | ContactInfo | Settings | News | Slug | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
-// Variable: settingsQuery
-// Query: *[_type == "settings"][0]
-export type SettingsQueryResult = {
-  _id: string;
-  _type: "settings";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      linkType?: "href" | "news";
-      href?: string;
-      news?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "news";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  ogImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    metadataBase?: string;
-    _type: "image";
-  };
-} | null;
 // Variable: leadershipQuery
 // Query: *[_type == "leadership"] | order(role asc, name asc) {    _id,    name,    position,    role,    "photo": photo{      asset->{        _id,        url      }    },    phone,    email  }
 export type LeadershipQueryResult = Array<{
@@ -811,17 +761,13 @@ export type SingleNewsQueryResult = {
   }> | null;
 } | null;
 // Variable: istorijaQuery
-// Query: *[_id == "istorija"][0] {    ourHistory,    kkpdaToday,    presidentMessage,    "services": services[] {      _key,      title,      description    },    "pastPresidents": pastPresidents[] {      _key,      name,      startYear,      endYear    }  }
+// Query: *[_id == "istorija"][0] {    ourHistory,    "services": services[] {      _key,      title,      description    },    "pastPresidents": pastPresidents[] {      _key,      name,      startYear,      endYear    }  }
 export type IstorijaQueryResult = {
   ourHistory: null;
-  kkpdaToday: null;
-  presidentMessage: null;
   services: null;
   pastPresidents: null;
 } | {
   ourHistory: BlockContent | null;
-  kkpdaToday: BlockContent | null;
-  presidentMessage: BlockContent | null;
   services: Array<{
     _key: string;
     title: string;
@@ -833,6 +779,13 @@ export type IstorijaQueryResult = {
     startYear: number;
     endYear: number | null;
   }> | null;
+} | null;
+// Variable: valdymasSettingsQuery
+// Query: *[_id == "valdymasSettings"][0] {    presidentMessage  }
+export type ValdymasSettingsQueryResult = {
+  presidentMessage: null;
+} | {
+  presidentMessage: BlockContent | null;
 } | null;
 // Variable: membersCountQuery
 // Query: count(*[_type == "member"])
@@ -945,13 +898,13 @@ export type MembershipInfoQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"settings\"][0]": SettingsQueryResult;
     "\n  *[_type == \"leadership\"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    \"photo\": photo{\n      asset->{\n        _id,\n        url\n      }\n    },\n    phone,\n    email\n  }\n": LeadershipQueryResult;
     "\n  *[_type == \"news\"] | order(publishedAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt\n  }\n": NewsQueryResult;
     "\n  *[_type == \"news\"] | order(isFeatured desc, publishedAt desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt,\n    eventStartDate,\n    eventEndDate,\n    organizers,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
     "\n  *[_type == \"news\"] | order(publishedAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    publishedAt\n  }\n": RecentNewsQueryResult;
     "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt,\n    eventStartDate,\n    eventEndDate,\n    organizers,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    program,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
-    "\n  *[_id == \"istorija\"][0] {\n    ourHistory,\n    kkpdaToday,\n    presidentMessage,\n    \"services\": services[] {\n      _key,\n      title,\n      description\n    },\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
+    "\n  *[_id == \"istorija\"][0] {\n    ourHistory,\n    \"services\": services[] {\n      _key,\n      title,\n      description\n    },\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
+    "\n  *[_id == \"valdymasSettings\"][0] {\n    presidentMessage\n  }\n": ValdymasSettingsQueryResult;
     "\n  count(*[_type == \"member\"])\n": MembersCountQueryResult;
     "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo{\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n": MembersQueryResult;
     "\n  *[_id == \"veikla\"][0] {\n    misija,\n    vizija,\n    \"strategicDirections\": strategicDirections[] {\n      _key,\n      title\n    }\n  }\n": StrategicDirectionsQueryResult;

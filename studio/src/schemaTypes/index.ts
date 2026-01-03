@@ -1,6 +1,5 @@
 import {callToAction} from './objects/callToAction'
 import {infoSection} from './objects/infoSection'
-import {settings} from './singletons/settings'
 import {link} from './objects/link'
 import {blockContent} from './objects/blockContent'
 import { member } from './documents/member'
@@ -19,7 +18,6 @@ import { valdymas } from './singletons/valdymas'
 
 export const schemaTypes = [
   // Singletons
-  settings,
   contactInfo,
   legalDocuments,
   membershipInfo,

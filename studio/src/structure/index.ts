@@ -1,4 +1,4 @@
-import {CogIcon, UsersIcon} from '@sanity/icons'
+import {UsersIcon} from '@sanity/icons'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 
 /**
@@ -7,7 +7,7 @@ import type {StructureBuilder, StructureResolver} from 'sanity/structure'
  * Learn more: https://www.sanity.io/docs/structure-builder-introduction
  */
 
-const DISABLED_TYPES = ['settings', 'assist.instruction.context']
+const DISABLED_TYPES = ['assist.instruction.context']
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
@@ -56,9 +56,4 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       // Rest of types excluding disabled ones and the explicitly added singletons
       ...S.documentTypeListItems()
         .filter((listItem: any) => !DISABLED_TYPES.includes(listItem.getId()) && listItem.getId() !== 'contact' && listItem.getId() !== 'contactsSettings' && listItem.getId() !== 'contactsPage' && listItem.getId() !== 'contactInfo' && listItem.getId() !== 'istatai' && listItem.getId() !== 'membershipInfo' && listItem.getId() !== 'istorija' && listItem.getId() !== 'valdymasSettings' && listItem.getId() !== 'leadership' && listItem.getId() !== 'pastPresident' && listItem.getId() !== 'partneriai' && listItem.getId() !== 'veikla' && listItem.getId() !== 'activityReport' && listItem.getId() !== 'strategicDirection'),
-      // Settings Singleton
-      S.listItem()
-        .title('Site Settings')
-        .child(S.document().schemaType('settings').documentId('siteSettings'))
-        .icon(CogIcon),
     ])

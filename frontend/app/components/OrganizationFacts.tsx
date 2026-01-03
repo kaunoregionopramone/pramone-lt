@@ -22,7 +22,7 @@ export function OrganizationFacts({ yearsOfActivity, membersCount, misija, vizij
   const facts: FactItem[] = [
     {
       icon: Building2,
-      title: `${yearsOfActivity} metų patirtis`,
+      title: `${yearsOfActivity}+ metų patirtis`,
       description: '1989 m. gruodžio 22 d. buvo įsteigta Kauno pramonininkų asociacija. Per šį laikotarpį tapome viena įtakingiausių verslo organizacijų.',
       link: '/apie/istorija',
       linkText: 'Plačiau',

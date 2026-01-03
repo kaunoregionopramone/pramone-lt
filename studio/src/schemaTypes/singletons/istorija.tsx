@@ -14,12 +14,6 @@ export const istorija = defineType({
       description: 'Istorijos skyriaus turinys',
     }),
     defineField({
-      name: 'kkpdaToday',
-      title: 'KKPDA šiandien',
-      type: 'blockContent',
-      description: 'KKPDA šiandien skyriaus turinys',
-    }),
-    defineField({
       name: 'services',
       title: 'Teikiamos paslaugos',
       type: 'array',

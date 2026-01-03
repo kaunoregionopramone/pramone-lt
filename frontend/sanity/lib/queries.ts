@@ -1,8 +1,5 @@
 import { defineQuery } from "next-sanity";
 
-export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
-// Removed: contacts settings singleton no longer used
-
 export const leadershipQuery = defineQuery(`
   *[_type == "leadership"] | order(role asc, name asc) {
     _id,
@@ -110,7 +107,6 @@ export const singleNewsQuery = defineQuery(`
 export const istorijaQuery = defineQuery(`
   *[_id == "istorija"][0] {
     ourHistory,
-    kkpdaToday,
     "services": services[] {
       _key,
       title,
