@@ -56,7 +56,7 @@ export default async function KaipTaptiNariuPage() {
       <section className="py-20 bg-white">
         <div className="max-w-[1280px] mx-auto px-8">
           {/* Section 1: Why become a member */}
-          <div className="mb-16">
+          <div>
             <h2 className="text-[32px] leading-[40px] text-[#2c3e5a] mb-6">
               Kodėl verta tapti KKPDA nariu?
             </h2>
@@ -67,99 +67,6 @@ export default async function KaipTaptiNariuPage() {
               </article>
             )}
           </div>
-
-          {/* Section 2: Membership Benefits - Dynamic from Sanity */}
-          {Array.isArray(data?.benefitsText) && data.benefitsText.length > 0 && (
-            <div>
-              <h2 className="text-[32px] leading-[40px] text-[#2c3e5a] mb-12">
-                Narystės naudos
-              </h2>
-
-              <div className="space-y-8">
-                {data.benefitsText.map((benefit: any, index: number) => {
-                  // Color schemes for different categories
-                  const colorSchemes = [
-                    {
-                      bg: "from-orange-50 to-white",
-                      border: "border-orange-100",
-                    },
-                    {
-                      bg: "from-blue-50 to-white",
-                      border: "border-blue-100",
-                    },
-                    {
-                      bg: "from-green-50 to-white",
-                      border: "border-green-100",
-                    },
-                    {
-                      bg: "from-purple-50 to-white",
-                      border: "border-purple-100",
-                    },
-                    {
-                      bg: "from-amber-50 to-white",
-                      border: "border-amber-100",
-                    },
-                  ];
-                  const colorScheme =
-                    colorSchemes[index % colorSchemes.length];
-
-                  return (
-                    <div
-                      key={benefit._key || index}
-                      className={`bg-gradient-to-br ${colorScheme.bg} border ${colorScheme.border} rounded-2xl p-8 hover:shadow-lg transition-all`}
-                    >
-                      <div className="flex items-start gap-4 mb-6">
-                        <div className="size-14 shrink-0 bg-gradient-to-br from-[#fe9a00] to-[#e17100] rounded-xl flex items-center justify-center">
-                          <span className="text-white text-2xl">
-                            {index + 1}
-                          </span>
-                        </div>
-                        <div>
-                          <h3 className="text-[24px] leading-[32px] text-[#2c3e5a] mb-2">
-                            {benefit.title}
-                          </h3>
-                        </div>
-                      </div>
-                      <ul className="space-y-3">
-                        {benefit.description1 && (
-                          <li className="flex items-start gap-3">
-                            <div className="size-1.5 shrink-0 mt-2.5 bg-[#fe9a00] rounded-full" />
-                            <p className="text-base leading-relaxed text-[#4a5565]">
-                              {benefit.description1}
-                            </p>
-                          </li>
-                        )}
-                        {benefit.description2 && (
-                          <li className="flex items-start gap-3">
-                            <div className="size-1.5 shrink-0 mt-2.5 bg-[#fe9a00] rounded-full" />
-                            <p className="text-base leading-relaxed text-[#4a5565]">
-                              {benefit.description2}
-                            </p>
-                          </li>
-                        )}
-                        {benefit.description3 && (
-                          <li className="flex items-start gap-3">
-                            <div className="size-1.5 shrink-0 mt-2.5 bg-[#fe9a00] rounded-full" />
-                            <p className="text-base leading-relaxed text-[#4a5565]">
-                              {benefit.description3}
-                            </p>
-                          </li>
-                        )}
-                        {benefit.description4 && (
-                          <li className="flex items-start gap-3">
-                            <div className="size-1.5 shrink-0 mt-2.5 bg-[#fe9a00] rounded-full" />
-                            <p className="text-base leading-relaxed text-[#4a5565]">
-                              {benefit.description4}
-                            </p>
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
         </div>
       </section>
 

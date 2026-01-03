@@ -246,6 +246,18 @@ export const singleEventQuery = defineQuery(`
 export const membershipInfoQuery = defineQuery(`
   *[_id == "membershipInfo"][0] {
     whyJoinText,
+    requiredDocuments[] {
+      _key,
+      title,
+      description,
+      "fileUrl": file.asset->url,
+      "fileName": file.asset->originalFilename
+    }
+  }
+`);
+
+export const narystesNaudosQuery = defineQuery(`
+  *[_id == "narystesNaudos"][0] {
     benefitsText[] {
       _key,
       title,
@@ -253,13 +265,6 @@ export const membershipInfoQuery = defineQuery(`
       description2,
       description3,
       description4
-    },
-    requiredDocuments[] {
-      _key,
-      title,
-      description,
-      "fileUrl": file.asset->url,
-      "fileName": file.asset->originalFilename
     }
   }
 `);

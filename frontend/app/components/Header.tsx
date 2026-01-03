@@ -140,6 +140,16 @@ export default function Header() {
                 <div className="absolute top-full left-0 pt-2 z-50">
                   <div className="w-80 bg-white rounded-lg shadow-xl border border-gray-100 py-2">
                     <Link
+                      href="/nariai/narystes-naudos"
+                      className={`block px-4 py-3 text-sm transition-all duration-200 ${
+                        pathname === "/nariai/narystes-naudos"
+                          ? "bg-amber-50 text-amber-600 font-semibold border-l-4 border-amber-500"
+                          : "text-gray-700 hover:bg-amber-50 hover:text-amber-600 hover:pl-5 border-l-4 border-transparent"
+                      }`}
+                    >
+                      Narystės naudos
+                    </Link>
+                    <Link
                       href="/nariai"
                       className={`block px-4 py-3 text-sm transition-all duration-200 ${
                         pathname === "/nariai"
@@ -293,6 +303,21 @@ export default function Header() {
                   </button>
                   {isMobileMembersOpen && (
                     <div className="ml-4 mt-1 space-y-1">
+                      <Link
+                        href="/nariai/narystes-naudos"
+                        className={`block px-4 py-2 rounded-lg text-sm transition-colors ${
+                          pathname === "/nariai/narystes-naudos"
+                            ? "bg-amber-50 text-amber-600 font-medium"
+                            : "text-gray-600 hover:bg-gray-50"
+                        }`}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsMobileAboutUsOpen(false);
+                          setIsMobileMembersOpen(false);
+                        }}
+                      >
+                        Narystės naudos
+                      </Link>
                       <Link
                         href="/nariai"
                         className={`block px-4 py-2 rounded-lg text-sm transition-colors ${

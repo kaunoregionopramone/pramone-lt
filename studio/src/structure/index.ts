@@ -21,10 +21,25 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.listItem()
         .title('Įstatai')
         .child(S.document().schemaType('istatai').documentId('istatai')),
-      // Membership Info singleton
+      // Nariai - combined section with membership info and members
       S.listItem()
-        .title('Narystė – Kaip tapti nariu')
-        .child(S.document().schemaType('membershipInfo').documentId('membershipInfo')),
+        .title('Nariai')
+        .icon(FolderIcon)
+        .child(
+          S.list()
+            .title('Nariai')
+            .items([
+              S.listItem()
+                .title('Narystės naudos')
+                .child(S.document().schemaType('narystesNaudos').documentId('narystesNaudos')),
+              S.listItem()
+                .title('Kaip tapti nariu')
+                .child(S.document().schemaType('membershipInfo').documentId('membershipInfo')),
+              S.listItem()
+                .title('Narių sąrašas')
+                .child(S.documentTypeList('member').title('Nariai')),
+            ])
+        ),
       // Istorija singleton
       S.listItem()
         .title('Istorija')
@@ -55,5 +70,5 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
         .child(S.document().schemaType('veikla').documentId('veikla')),
       // Rest of types excluding disabled ones and the explicitly added singletons
       ...S.documentTypeListItems()
-        .filter((listItem: any) => !DISABLED_TYPES.includes(listItem.getId()) && listItem.getId() !== 'contact' && listItem.getId() !== 'contactsSettings' && listItem.getId() !== 'contactsPage' && listItem.getId() !== 'contactInfo' && listItem.getId() !== 'istatai' && listItem.getId() !== 'membershipInfo' && listItem.getId() !== 'istorija' && listItem.getId() !== 'valdymasSettings' && listItem.getId() !== 'leadership' && listItem.getId() !== 'pastPresident' && listItem.getId() !== 'partneriai' && listItem.getId() !== 'veikla' && listItem.getId() !== 'activityReport' && listItem.getId() !== 'strategicDirection'),
+        .filter((listItem: any) => !DISABLED_TYPES.includes(listItem.getId()) && listItem.getId() !== 'contact' && listItem.getId() !== 'contactsSettings' && listItem.getId() !== 'contactsPage' && listItem.getId() !== 'contactInfo' && listItem.getId() !== 'istatai' && listItem.getId() !== 'membershipInfo' && listItem.getId() !== 'narystesNaudos' && listItem.getId() !== 'member' && listItem.getId() !== 'istorija' && listItem.getId() !== 'valdymasSettings' && listItem.getId() !== 'leadership' && listItem.getId() !== 'pastPresident' && listItem.getId() !== 'partneriai' && listItem.getId() !== 'veikla' && listItem.getId() !== 'activityReport' && listItem.getId() !== 'strategicDirection'),
     ])

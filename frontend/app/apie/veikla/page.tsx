@@ -23,14 +23,20 @@ import {
 } from "lucide-react";
 
 export default async function VeiklaPage() {
-  const [{ data: veiklaReportsData }, { data: veiklaData }] = await Promise.all([
-    sanityFetch({ query: activityReportsQuery }),
-    sanityFetch({ query: strategicDirectionsQuery }),
-  ]);
+  const [{ data: veiklaReportsData }, { data: veiklaData }] = await Promise.all(
+    [
+      sanityFetch({ query: activityReportsQuery }),
+      sanityFetch({ query: strategicDirectionsQuery }),
+    ]
+  );
 
   const reports = veiklaReportsData?.reports || [];
-  const misija = veiklaData?.misija || "Atstovauti nariams, vienijant verslo, mokslo ir visuomenės interesus.";
-  const vizija = veiklaData?.vizija || "Vedanti ir atvira verslo organizacija, kurioje narystė yra vertinga ir garbinga.";
+  const misija =
+    veiklaData?.misija ||
+    "Atstovauti nariams, vienijant verslo, mokslo ir visuomenės interesus.";
+  const vizija =
+    veiklaData?.vizija ||
+    "Vedanti ir atvira verslo organizacija, kurioje narystė yra vertinga ir garbinga.";
   const strategicDirections = veiklaData?.strategicDirections || [];
 
   const nationalActivities = [
@@ -153,7 +159,10 @@ export default async function VeiklaPage() {
                 strokeWidth="1.16667"
               />
             </svg>
-            <Link href="/apie/istorija" className="text-gray-500 hover:text-gray-700">
+            <Link
+              href="/apie/istorija"
+              className="text-gray-500 hover:text-gray-700"
+            >
               Apie mus
             </Link>
             <svg
@@ -262,11 +271,10 @@ export default async function VeiklaPage() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#fe9a00] to-[#e17100] rounded-full px-4 py-2 mb-4">
             <Globe className="size-5 text-white" />
-            <span className="text-white font-medium">Nacionaliniu mastu</span>
+            <span className="text-white font-medium">
+              Nacionalinės atstovavimo sritys
+            </span>
           </div>
-          <h2 className="text-2xl text-gray-900 mb-4">
-            Nacionalinės veiklos sritys
-          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Asociacija aktyviai dalyvauja nacionalinėse institucijose ir
             organizacijose, atstovaujama regiono verslo interesams
@@ -299,11 +307,10 @@ export default async function VeiklaPage() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full px-4 py-2 mb-4">
               <MapPinned className="size-5 text-white" />
-              <span className="text-white font-medium">Regioniniu mastu</span>
+              <span className="text-white font-medium">
+                Regioninės atstovavimo sritys
+              </span>
             </div>
-            <h2 className="text-2xl text-gray-900 mb-4">
-              Regioninės veiklos sritys
-            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Aktyviai prisidedame prie Kauno regiono ekonominio ir socialinio
               vystymosi
@@ -342,9 +349,6 @@ export default async function VeiklaPage() {
             <FileText className="size-5 text-white" />
             <span className="text-white font-medium">Veiklos ataskaitos</span>
           </div>
-          <h2 className="text-2xl text-gray-900 mb-4">
-            Metinės veiklos ataskaitos
-          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Peržiūrėkite ir atsisiųskite KKPDA metines veiklos ataskaitas
           </p>
