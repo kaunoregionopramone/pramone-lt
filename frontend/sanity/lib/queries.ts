@@ -1,8 +1,5 @@
 import { defineQuery } from "next-sanity";
 
-export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
-// Removed: contacts settings singleton no longer used
-
 export const leadershipQuery = defineQuery(`
   *[_type == "leadership"] | order(role asc, name asc) {
     _id,
@@ -109,20 +106,20 @@ export const singleNewsQuery = defineQuery(`
 
 export const istorijaQuery = defineQuery(`
   *[_id == "istorija"][0] {
+    turnover,
     ourHistory,
-    kkpdaToday,
-    presidentMessage,
-    "services": services[] {
-      _key,
-      title,
-      description
-    },
     "pastPresidents": pastPresidents[] {
       _key,
       name,
       startYear,
       endYear
     }
+  }
+`);
+
+export const valdymasSettingsQuery = defineQuery(`
+  *[_id == "valdymasSettings"][0] {
+    presidentMessage
   }
 `);
 
@@ -168,7 +165,6 @@ export const partnersQuery = defineQuery(`
     "agreements": partnersAgreements[] {
       _key,
       title,
-      "logo": logo.asset->url,
       extra
     }
   }
@@ -245,6 +241,19 @@ export const singleEventQuery = defineQuery(`
 export const membershipInfoQuery = defineQuery(`
   *[_id == "membershipInfo"][0] {
     whyJoinText,
+    requiredDocuments[] {
+      _key,
+      title,
+      description,
+      "fileUrl": file.asset->url,
+      "fileName": file.asset->originalFilename,
+      buttonText
+    }
+  }
+`);
+
+export const narystesNaudosQuery = defineQuery(`
+  *[_id == "narystesNaudos"][0] {
     benefitsText[] {
       _key,
       title,
@@ -252,21 +261,6 @@ export const membershipInfoQuery = defineQuery(`
       description2,
       description3,
       description4
-    },
-    entryFee,
-    annualFeeDescription,
-    "feeImage": feeImage{
-      asset->{
-        _id,
-        url
-      }
-    },
-    requiredDocuments[] {
-      _key,
-      title,
-      description,
-      "fileUrl": file.asset->url,
-      "fileName": file.asset->originalFilename
     }
   }
 `);

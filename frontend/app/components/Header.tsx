@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Header() {
@@ -23,7 +23,9 @@ export default function Header() {
   ];
 
   const isAboutUsActive = pathname.startsWith("/apie");
-  const isNewsActive = pathname.startsWith("/naujienos-ir-renginiai") || pathname.startsWith("/naujienos/");
+  const isNewsActive =
+    pathname.startsWith("/naujienos-ir-renginiai") ||
+    pathname.startsWith("/naujienos/");
   const isMembersActive = pathname.startsWith("/nariai");
   const isContactsActive = pathname.startsWith("/kontaktai");
   const isHomeActive = pathname === "/";
@@ -34,7 +36,7 @@ export default function Header() {
       // First reset all dropdowns
       setIsMobileAboutUsOpen(false);
       setIsMobileMembersOpen(false);
-      
+
       // Then open only the relevant dropdown if user is on a page in that section
       if (isAboutUsActive) {
         setIsMobileAboutUsOpen(true);
@@ -49,51 +51,41 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="bg-white p-2 rounded-xl shadow-md border border-gray-100">
-              <Image
-                src="/images/logo.png"
-                alt="Logo"
-                width={40}
-                height={40}
-                className="h-10 w-10 object-contain"
-              />
-            </div>
-            <div>
-              <div className="text-gray-900 font-bold">KAUNO KRAŠTO</div>
-              <div className="text-xs text-gray-600">Pramonininkų ir darbdavių asociacija</div>
-            </div>
+          <Link href="/" className="flex items-center">
+            <Image src="/images/logo.png" alt="Logo" width={220} height={64}/>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-2">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className={`flex items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-                isHomeActive 
-                  ? 'bg-amber-50 text-amber-600 font-medium' 
-                  : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                isHomeActive
+                  ? "bg-amber-50 text-amber-600 font-medium"
+                  : "text-gray-700 hover:bg-amber-50 hover:text-amber-600"
               }`}
             >
               <span>Pradžia</span>
             </Link>
 
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setIsAboutUsDropdownOpen(true)}
               onMouseLeave={() => setIsAboutUsDropdownOpen(false)}
             >
-              <button 
+              <button
                 className={`flex items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-                  isAboutUsActive 
-                    ? 'bg-amber-50 text-amber-600 font-medium' 
-                    : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                  isAboutUsActive
+                    ? "bg-amber-50 text-amber-600 font-medium"
+                    : "text-gray-700 hover:bg-amber-50 hover:text-amber-600"
                 }`}
               >
                 <span>Apie mus</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${isAboutUsDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${isAboutUsDropdownOpen ? "rotate-180" : ""}`}
+                />
               </button>
-              
+
               {isAboutUsDropdownOpen && (
                 <div className="absolute top-full left-0 pt-2 z-50">
                   <div className="w-80 bg-white rounded-lg shadow-xl border border-gray-100 py-2">
@@ -115,36 +107,48 @@ export default function Header() {
               )}
             </div>
 
-            <Link 
-              href="/naujienos-ir-renginiai" 
+            <Link
+              href="/naujienos-ir-renginiai"
               className={`px-4 py-2 rounded-lg transition-colors ${
-                isNewsActive 
-                  ? 'bg-amber-50 text-amber-600 font-medium' 
-                  : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                isNewsActive
+                  ? "bg-amber-50 text-amber-600 font-medium"
+                  : "text-gray-700 hover:bg-amber-50 hover:text-amber-600"
               }`}
             >
               Naujienos ir renginiai
             </Link>
 
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setIsMembersDropdownOpen(true)}
               onMouseLeave={() => setIsMembersDropdownOpen(false)}
             >
-              <button 
+              <button
                 className={`flex items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-                  isMembersActive 
-                    ? 'bg-amber-50 text-amber-600 font-medium' 
-                    : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                  isMembersActive
+                    ? "bg-amber-50 text-amber-600 font-medium"
+                    : "text-gray-700 hover:bg-amber-50 hover:text-amber-600"
                 }`}
               >
                 <span>Nariai</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${isMembersDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${isMembersDropdownOpen ? "rotate-180" : ""}`}
+                />
               </button>
-              
+
               {isMembersDropdownOpen && (
                 <div className="absolute top-full left-0 pt-2 z-50">
                   <div className="w-80 bg-white rounded-lg shadow-xl border border-gray-100 py-2">
+                    <Link
+                      href="/nariai/narystes-naudos"
+                      className={`block px-4 py-3 text-sm transition-all duration-200 ${
+                        pathname === "/nariai/narystes-naudos"
+                          ? "bg-amber-50 text-amber-600 font-semibold border-l-4 border-amber-500"
+                          : "text-gray-700 hover:bg-amber-50 hover:text-amber-600 hover:pl-5 border-l-4 border-transparent"
+                      }`}
+                    >
+                      Narystės naudos
+                    </Link>
                     <Link
                       href="/nariai"
                       className={`block px-4 py-3 text-sm transition-all duration-200 ${
@@ -170,12 +174,12 @@ export default function Header() {
               )}
             </div>
 
-            <Link 
-              href="/kontaktai" 
+            <Link
+              href="/kontaktai"
               className={`px-4 py-2 rounded-lg transition-colors ${
-                isContactsActive 
-                  ? 'bg-amber-50 text-amber-600 font-medium' 
-                  : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                isContactsActive
+                  ? "bg-amber-50 text-amber-600 font-medium"
+                  : "text-gray-700 hover:bg-amber-50 hover:text-amber-600"
               }`}
             >
               Kontaktai
@@ -183,7 +187,7 @@ export default function Header() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className="lg:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -199,7 +203,7 @@ export default function Header() {
         {isMenuOpen && (
           <>
             {/* Overlay */}
-            <div 
+            <div
               className="fixed inset-x-0 top-20 bottom-0 bg-black/20 z-40 lg:hidden"
               onClick={() => {
                 setIsMenuOpen(false);
@@ -207,143 +211,162 @@ export default function Header() {
                 setIsMobileMembersOpen(false);
               }}
             />
-            
+
             {/* Menu */}
             <div className="absolute top-full left-0 right-0 bg-white shadow-lg border-t border-gray-100 z-50 lg:hidden max-h-[calc(100vh-5rem)] overflow-y-auto">
               <nav className="flex flex-col gap-1 py-4 px-4">
-              <Link 
-                href="/" 
-                className={`px-4 py-3 rounded-lg transition-colors ${
-                  isHomeActive 
-                    ? 'bg-amber-50 text-amber-600 font-medium' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
-                }}
-              >
-                Pradžia
-              </Link>
-
-              {/* Apie mus dropdown */}
-              <div>
-                <button 
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
-                    isAboutUsActive 
-                      ? 'bg-amber-50 text-amber-600 font-medium' 
-                      : 'text-gray-700 hover:bg-gray-50'
+                <Link
+                  href="/"
+                  className={`px-4 py-3 rounded-lg transition-colors ${
+                    isHomeActive
+                      ? "bg-amber-50 text-amber-600 font-medium"
+                      : "text-gray-700 hover:bg-gray-50"
                   }`}
-                  onClick={() => setIsMobileAboutUsOpen(!isMobileAboutUsOpen)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsMobileAboutUsOpen(false);
+                    setIsMobileMembersOpen(false);
+                  }}
                 >
-                  <span>Apie mus</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform ${isMobileAboutUsOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isMobileAboutUsOpen && (
-                  <div className="ml-4 mt-1 space-y-1">
-                    {aboutUsMenuItems.map((item) => (
+                  Pradžia
+                </Link>
+
+                {/* Apie mus dropdown */}
+                <div>
+                  <button
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
+                      isAboutUsActive
+                        ? "bg-amber-50 text-amber-600 font-medium"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }`}
+                    onClick={() => setIsMobileAboutUsOpen(!isMobileAboutUsOpen)}
+                  >
+                    <span>Apie mus</span>
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${isMobileAboutUsOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {isMobileAboutUsOpen && (
+                    <div className="ml-4 mt-1 space-y-1">
+                      {aboutUsMenuItems.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={`block px-4 py-2 rounded-lg text-sm transition-colors ${
+                            pathname === item.href
+                              ? "bg-amber-50 text-amber-600 font-medium"
+                              : "text-gray-600 hover:bg-gray-50"
+                          }`}
+                          onClick={() => {
+                            setIsMenuOpen(false);
+                            setIsMobileAboutUsOpen(false);
+                            setIsMobileMembersOpen(false);
+                          }}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <Link
+                  href="/naujienos-ir-renginiai"
+                  className={`px-4 py-3 rounded-lg transition-colors ${
+                    isNewsActive
+                      ? "bg-amber-50 text-amber-600 font-medium"
+                      : "text-gray-700 hover:bg-gray-50"
+                  }`}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsMobileAboutUsOpen(false);
+                    setIsMobileMembersOpen(false);
+                  }}
+                >
+                  Naujienos ir renginiai
+                </Link>
+
+                {/* Nariai dropdown */}
+                <div>
+                  <button
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
+                      isMembersActive
+                        ? "bg-amber-50 text-amber-600 font-medium"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }`}
+                    onClick={() => setIsMobileMembersOpen(!isMobileMembersOpen)}
+                  >
+                    <span>Nariai</span>
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${isMobileMembersOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {isMobileMembersOpen && (
+                    <div className="ml-4 mt-1 space-y-1">
                       <Link
-                        key={item.href}
-                        href={item.href}
+                        href="/nariai/narystes-naudos"
                         className={`block px-4 py-2 rounded-lg text-sm transition-colors ${
-                          pathname === item.href
+                          pathname === "/nariai/narystes-naudos"
                             ? "bg-amber-50 text-amber-600 font-medium"
                             : "text-gray-600 hover:bg-gray-50"
                         }`}
                         onClick={() => {
-                  setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
-                }}
+                          setIsMenuOpen(false);
+                          setIsMobileAboutUsOpen(false);
+                          setIsMobileMembersOpen(false);
+                        }}
                       >
-                        {item.label}
+                        Narystės naudos
                       </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+                      <Link
+                        href="/nariai"
+                        className={`block px-4 py-2 rounded-lg text-sm transition-colors ${
+                          pathname === "/nariai"
+                            ? "bg-amber-50 text-amber-600 font-medium"
+                            : "text-gray-600 hover:bg-gray-50"
+                        }`}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsMobileAboutUsOpen(false);
+                          setIsMobileMembersOpen(false);
+                        }}
+                      >
+                        Nariai
+                      </Link>
+                      <Link
+                        href="/nariai/kaip-tapti-nariu"
+                        className={`block px-4 py-2 rounded-lg text-sm transition-colors ${
+                          pathname === "/nariai/kaip-tapti-nariu"
+                            ? "bg-amber-50 text-amber-600 font-medium"
+                            : "text-gray-600 hover:bg-gray-50"
+                        }`}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsMobileAboutUsOpen(false);
+                          setIsMobileMembersOpen(false);
+                        }}
+                      >
+                        Kaip tapti nariu?
+                      </Link>
+                    </div>
+                  )}
+                </div>
 
-              <Link 
-                href="/naujienos-ir-renginiai" 
-                className={`px-4 py-3 rounded-lg transition-colors ${
-                  isNewsActive 
-                    ? 'bg-amber-50 text-amber-600 font-medium' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
-                }}
-              >
-                Naujienos ir renginiai
-              </Link>
-
-              {/* Nariai dropdown */}
-              <div>
-                <button 
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
-                    isMembersActive 
-                      ? 'bg-amber-50 text-amber-600 font-medium' 
-                      : 'text-gray-700 hover:bg-gray-50'
+                <Link
+                  href="/kontaktai"
+                  className={`px-4 py-3 rounded-lg transition-colors ${
+                    isContactsActive
+                      ? "bg-amber-50 text-amber-600 font-medium"
+                      : "text-gray-700 hover:bg-gray-50"
                   }`}
-                  onClick={() => setIsMobileMembersOpen(!isMobileMembersOpen)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsMobileAboutUsOpen(false);
+                    setIsMobileMembersOpen(false);
+                  }}
                 >
-                  <span>Nariai</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform ${isMobileMembersOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isMobileMembersOpen && (
-                  <div className="ml-4 mt-1 space-y-1">
-                    <Link
-                      href="/nariai"
-                      className={`block px-4 py-2 rounded-lg text-sm transition-colors ${
-                        pathname === "/nariai"
-                          ? "bg-amber-50 text-amber-600 font-medium"
-                          : "text-gray-600 hover:bg-gray-50"
-                      }`}
-                      onClick={() => {
-                  setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
-                }}
-                    >
-                      Nariai
-                    </Link>
-                    <Link
-                      href="/nariai/kaip-tapti-nariu"
-                      className={`block px-4 py-2 rounded-lg text-sm transition-colors ${
-                        pathname === "/nariai/kaip-tapti-nariu"
-                          ? "bg-amber-50 text-amber-600 font-medium"
-                          : "text-gray-600 hover:bg-gray-50"
-                      }`}
-                      onClick={() => {
-                  setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
-                }}
-                    >
-                      Kaip tapti nariu?
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              <Link 
-                href="/kontaktai" 
-                className={`px-4 py-3 rounded-lg transition-colors ${
-                  isContactsActive 
-                    ? 'bg-amber-50 text-amber-600 font-medium' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
-                }}
-              >
-                Kontaktai
-              </Link>
+                  Kontaktai
+                </Link>
               </nav>
             </div>
           </>

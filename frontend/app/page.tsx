@@ -1,9 +1,15 @@
 import { sanityFetch } from "@/sanity/lib/live";
-import { newsQuery, membersCountQuery, strategicDirectionsQuery, partnersQuery, membershipInfoQuery, contactInfoQuery } from "@/sanity/lib/queries";
+import {
+  newsQuery,
+  membersCountQuery,
+  strategicDirectionsQuery,
+  partnersQuery,
+  membershipInfoQuery,
+  contactInfoQuery,
+} from "@/sanity/lib/queries";
 import { NewsCarousel } from "./components/NewsCarousel";
 import { PartnersSlider } from "./components/PartnersSlider";
 import { OrganizationFacts } from "./components/OrganizationFacts";
-import { MissionVision } from "./components/MissionVision";
 import { MemberBenefits } from "./components/MemberBenefits";
 import { MembershipCTA } from "./components/MembershipCTA";
 import { createExcerpt } from "@/lib/portableTextUtils";
@@ -45,7 +51,7 @@ export default async function Page() {
     { data: veiklaData },
     { data: partners },
     { data: membership },
-    { data: contactInfo }
+    { data: contactInfo },
   ] = await Promise.all([
     sanityFetch({ query: newsQuery }),
     sanityFetch({ query: membersCountQuery }),
@@ -57,22 +63,11 @@ export default async function Page() {
 
   const misija = veiklaData?.misija;
   const vizija = veiklaData?.vizija;
-  const strategicDirections = veiklaData?.strategicDirections || [];
 
   // Calculate full years of activity since 1989-12-22
   const now = new Date();
   const foundingYear = 1989;
-  const anniversaryMonth = 11; // December (0-based)
-  const anniversaryDay = 22;
-  let yearsOfActivity = now.getFullYear() - foundingYear;
-  const anniversaryThisYear = new Date(
-    now.getFullYear(),
-    anniversaryMonth,
-    anniversaryDay
-  );
-  if (now < anniversaryThisYear) {
-    yearsOfActivity -= 1;
-  }
+  const yearsOfActivity = now.getFullYear() - foundingYear;
 
   // Transform news data to match expected format
   const news =
@@ -105,24 +100,19 @@ export default async function Page() {
       <PartnersSlider partners={partnersWithLogos} />
 
       {/* Organization Facts / Stats */}
-      <OrganizationFacts 
-        yearsOfActivity={yearsOfActivity} 
-        membersCount={membersCount || 0} 
-      />
-
-      {/* Mission, Vision & Strategic Directions */}
-      <MissionVision 
-        misija={misija ?? undefined} 
-        vizija={vizija ?? undefined} 
-        strategicDirections={strategicDirections} 
+      <OrganizationFacts
+        yearsOfActivity={yearsOfActivity}
+        membersCount={membersCount || 0}
+        misija={misija ?? undefined}
+        vizija={vizija ?? undefined}
       />
 
       {/* Member Benefits */}
       <MemberBenefits benefits={membership?.benefitsText ?? undefined} />
 
       {/* Membership CTA */}
-      <MembershipCTA 
-        membersCount={membersCount || 0} 
+      <MembershipCTA
+        membersCount={membersCount || 0}
         yearsOfActivity={yearsOfActivity}
         contactInfo={contactInfo}
       />

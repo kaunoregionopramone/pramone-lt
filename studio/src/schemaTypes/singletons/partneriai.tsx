@@ -66,20 +66,11 @@ export const partneriai = defineType({
               title: 'Papildoma informacija (pvz., data)',
               type: 'string',
             }),
-            defineField({
-              name: 'logo',
-              title: 'Logotipas (nebūtina)',
-              type: 'image',
-              options: {
-                hotspot: true,
-              },
-            }),
           ],
           preview: {
             select: {
               title: 'title',
               subtitle: 'extra',
-              media: 'logo',
             },
           },
         },

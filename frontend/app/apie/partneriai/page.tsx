@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { partnersQuery } from "@/sanity/lib/queries";
-import { Handshake, FileCheck, Building2, Calendar, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export const revalidate = 60;
 
@@ -18,8 +18,8 @@ export default async function PartneriaiPage() {
     query: partnersQuery,
   });
 
-  const cooperate = data?.cooperate || [];
-  const agreements = data?.agreements || [];
+  const cooperate: Partner[] = data?.cooperate || [];
+  const agreements: Partner[] = data?.agreements || [];
 
   return (
     <div className="min-h-screen bg-white">
@@ -76,79 +76,38 @@ export default async function PartneriaiPage() {
         </div>
       </div>
 
-      {/* Partnership Stats Section */}
-      <section className="py-16 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center size-20 bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl mb-4">
-                <Handshake className="size-10 text-[#fe9a00]" />
-              </div>
-              <div className="text-5xl mb-2 bg-gradient-to-r from-[#fe9a00] to-[#e17100] bg-clip-text text-transparent">
-                {cooperate.length}
-              </div>
-              <p className="text-gray-600 text-lg">Aktyvūs partneriai</p>
-            </div>
-
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center size-20 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl mb-4">
-                <FileCheck className="size-10 text-blue-600" />
-              </div>
-              <div className="text-5xl mb-2 text-blue-600">
-                {agreements.length}
-              </div>
-              <p className="text-gray-600 text-lg">Pasirašytos sutartys</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* All Partners Grid Section */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 mb-4 shadow-sm border border-gray-100">
-              <Handshake className="size-5 text-[#fe9a00]" />
-              <span className="text-gray-900 font-medium">Mūsų partneriai</span>
-            </div>
-            <h2 className="text-gray-900 mb-3">
-              Bendradarbiavimo tinklas
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Dirbame su įvairiomis organizacijomis ir institucijomis visoje
-              Lietuvoje
-            </p>
-          </div>
-
           <div className="space-y-12">
             {/* Partners with logos */}
             {cooperate.filter((p) => p.logo).length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {cooperate
                   .filter((p) => p.logo)
                   .map((partner) => (
                     <div
                       key={partner._key}
-                      className="group bg-white border border-gray-200 rounded-xl p-6 hover:border-[#fe9a00] hover:shadow-lg transition-all duration-300 relative overflow-hidden"
+                      className="group bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 rounded-xl p-4 hover:shadow-lg transition-all duration-300"
                     >
-                      {/* Gradient overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#fe9a00]/5 to-[#e17100]/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                      <div className="relative">
-                        <div className="flex flex-col gap-4">
-                          <div className="h-28 flex items-center justify-center rounded-lg p-4">
-                            <Image
-                              src={partner.logo!}
-                              alt={`${partner.title} logotipas`}
-                              width={200}
-                              height={112}
-                              className="max-h-full max-w-full object-contain"
-                            />
-                          </div>
-                          <p className="text-gray-900 text-sm text-center leading-snug">
-                            {partner.title}
-                          </p>
+                      {/* Logo */}
+                      <div className="bg-white rounded-lg p-4 mb-3 h-32 flex items-center justify-center">
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={partner.logo!}
+                            alt={`${partner.title} logotipas`}
+                            fill
+                            className="object-contain"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                          />
                         </div>
+                      </div>
+
+                      {/* Partner name */}
+                      <div className="text-center">
+                        <h3 className="text-lg font-medium text-gray-900">
+                          {partner.title}
+                        </h3>
                       </div>
                     </div>
                   ))}
@@ -188,11 +147,7 @@ export default async function PartneriaiPage() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-8">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#fe9a00] to-[#e17100] rounded-full px-4 py-2 mb-4">
-                <FileCheck className="size-5 text-white" />
-                <span className="text-white font-medium">Sutartys</span>
-              </div>
-              <h2 className="text-gray-900 mb-3">
+              <h2 className="text-3xl text-gray-900 mb-3">
                 Pasirašytos bendradarbiavimo sutartys
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
@@ -202,44 +157,24 @@ export default async function PartneriaiPage() {
             </div>
 
             <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 gap-3">
-                {agreements.map((agreement) => (
-                  <div
-                    key={agreement._key}
-                    className="bg-gradient-to-r from-orange-50 to-white border border-orange-100 rounded-xl p-5 hover:shadow-md transition-all group"
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-4 flex-1">
-                        {agreement.logo ? (
-                          <div className="h-12 w-20 bg-white border border-orange-200 rounded-lg flex items-center justify-center shrink-0 p-2">
-                            <Image
-                              src={agreement.logo}
-                              alt={`${agreement.title} logotipas`}
-                              width={80}
-                              height={48}
-                              className="max-h-full max-w-full object-contain"
-                            />
-                          </div>
-                        ) : (
-                          <div className="size-10 bg-white border border-orange-200 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-gradient-to-b group-hover:from-[#fe9a00] group-hover:to-[#e17100] transition-all">
-                            <FileCheck className="size-5 text-[#fe9a00] group-hover:text-white transition-colors" />
-                          </div>
-                        )}
-                        <p className="text-gray-900 flex-1">
-                          {agreement.title}
-                        </p>
-                      </div>
-                      {agreement.extra && (
-                        <div className="flex items-center gap-2 shrink-0">
-                          <Calendar className="size-4 text-gray-400" />
-                          <span className="text-sm text-gray-600">
+              <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                <div className="divide-y divide-gray-200">
+                  {agreements.map((agreement) => (
+                    <div
+                      key={agreement._key}
+                      className="p-5 hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between gap-6">
+                        <p className="text-gray-900 flex-1">{agreement.title}</p>
+                        {agreement.extra && (
+                          <span className="text-sm text-gray-500 shrink-0">
                             {agreement.extra}
                           </span>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>

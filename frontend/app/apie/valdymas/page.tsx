@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import { leadershipQuery } from "@/sanity/lib/queries";
+import { leadershipQuery, valdymasSettingsQuery } from "@/sanity/lib/queries";
 import { GovernanceStructureCard } from "@/app/components/GovernanceStructureCard";
 import { LeadershipMemberCard } from "@/app/components/LeadershipMemberCard";
-import { User, Users, UsersRound } from "lucide-react";
+import PortableText from "@/app/components/PortableText";
+import { Users, UsersRound, Phone, Mail } from "lucide-react";
 
 interface LeadershipMember {
   _id: string;
@@ -20,9 +22,12 @@ interface LeadershipMember {
 }
 
 export default async function ValdymasPage() {
-  const { data: leadershipData } = await sanityFetch({
-    query: leadershipQuery,
-  });
+  const [{ data: leadershipData }, { data: valdymasSettings }] = await Promise.all([
+    sanityFetch({ query: leadershipQuery }),
+    sanityFetch({ query: valdymasSettingsQuery }),
+  ]);
+
+  const presidentMessage = valdymasSettings?.presidentMessage;
 
   // Group leadership data by role
   const president = leadershipData?.filter(
@@ -107,30 +112,64 @@ export default async function ValdymasPage() {
       {/* President Section */}
       {president && (
         <section className="max-w-7xl mx-auto px-8 pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* President Info Card */}
-            <div className="lg:sticky lg:top-24">
-              <GovernanceStructureCard
-                title="Prezidentas"
-                description="Prezidentas atstovauja asociacijai aukščiausiu lygiu – valstybės institucijose, savivaldoje, partnerių organizacijose ir tarptautinėje erdvėje. Jis pirmininkauja Prezidiumo posėdžiams, įgyvendina jo sprendimus, koordinuoja veiklą ir gali deleguoti tam tikras funkcijas viceprezidentams ar administracijai."
-                icon={
-                  <User className="size-6 text-white" strokeWidth={2} />
-                }
-                variant="blue"
-              />
+          {/* Section Title */}
+          <div className="text-center mb-16">
+            <h2 className="mb-3 text-4xl">Asociacijos prezidentas</h2>
+            <div className="w-16 h-1 bg-gradient-to-r from-[#fe9a00] to-[#e17100] rounded-full mx-auto" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            {/* President Image */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="rounded-3xl overflow-hidden shadow-lg max-w-md w-full">
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src={president.photo?.asset?.url || "/placeholder.jpg"}
+                    alt={`${president.name} nuotrauka`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 448px"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* President Card */}
-            <div className="max-w-sm mx-auto lg:mx-0">
-              <LeadershipMemberCard
-                name={president.name}
-                position={president.position || ""}
-                image={president.photo?.asset?.url || "/placeholder.jpg"}
-                alt={`${president.name} nuotrauka`}
-                phone={president.phone || undefined}
-                email={president.email || undefined}
-                variant="president"
-              />
+            {/* President Quote and Info */}
+            <div className="flex flex-col">
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">{president.name}</h3>
+                <p className="text-gray-600">{president.position}</p>
+              </div>
+
+              {presidentMessage && (
+                <article className="prose prose-lg max-w-none text-gray-700 mb-8">
+                  <PortableText value={presidentMessage as any} />
+                </article>
+              )}
+
+              {/* Contact Information */}
+              {(president.phone || president.email) && (
+                <div className="pt-6 border-t border-gray-200">
+                  <div className="space-y-3">
+                    {president.phone && (
+                      <div className="flex items-center gap-3 text-gray-600">
+                        <div className="bg-orange-50 p-2 rounded-lg">
+                          <Phone className="size-4 text-[#fe9a00]" />
+                        </div>
+                        <span>{president.phone}</span>
+                      </div>
+                    )}
+                    {president.email && (
+                      <div className="flex items-center gap-3 text-gray-600">
+                        <div className="bg-orange-50 p-2 rounded-lg">
+                          <Mail className="size-4 text-[#fe9a00]" />
+                        </div>
+                        <span>{president.email}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>

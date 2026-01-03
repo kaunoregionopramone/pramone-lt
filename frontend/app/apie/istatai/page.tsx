@@ -23,9 +23,7 @@ import {
 export default async function IstataiPage() {
   const { data } = await sanityFetch({ query: legalDocumentsQuery });
   const statutesUrl: string | undefined = data?.statutesUrl || undefined;
-  const statutesName: string | undefined = data?.statutesName || undefined;
   const ethicsUrl: string | undefined = data?.ethicsUrl || undefined;
-  const ethicsName: string | undefined = data?.ethicsName || undefined;
 
   return (
     <div className="min-h-screen bg-white">
@@ -135,10 +133,10 @@ export default async function IstataiPage() {
 
             <div className="relative h-[550px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-orange-500/10 transition-shadow">
               <Image
-                src="https://images.unsplash.com/photo-1659355894099-b2c2b2884322?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWdhbCUyMGRvY3VtZW50cyUyMHByb2Zlc3Npb25hbHxlbnwxfHx8fDE3NjMzMTE2MDV8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Legal documents"
+                src="/images/EK.png"
+                alt="Etikos kodeksas"
                 fill
-                className="object-cover"
+                className="object-cover object-right"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
             </div>

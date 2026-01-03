@@ -8,52 +8,16 @@ export const istorija = defineType({
   icon: DocumentTextIcon,
   fields: [
     defineField({
+      name: 'turnover',
+      title: 'Pajamos (mlrd.)',
+      type: 'string',
+      description: 'Narių bendros pajamos, pvz. "3.5"',
+    }),
+    defineField({
       name: 'ourHistory',
       title: 'Mūsų istorija',
       type: 'blockContent',
       description: 'Istorijos skyriaus turinys',
-    }),
-    defineField({
-      name: 'kkpdaToday',
-      title: 'KKPDA šiandien',
-      type: 'blockContent',
-      description: 'KKPDA šiandien skyriaus turinys',
-    }),
-    defineField({
-      name: 'presidentMessage',
-      title: 'Prezidento žodis',
-      type: 'blockContent',
-    }),
-    defineField({
-      name: 'services',
-      title: 'Teikiamos paslaugos',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'service',
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Pavadinimas',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'description',
-              title: 'Aprašymas',
-              type: 'text',
-              rows: 3,
-            }),
-          ],
-          preview: {
-            select: {
-              title: 'title',
-              subtitle: 'description',
-            },
-          },
-        },
-      ],
     }),
     defineField({
       name: 'pastPresidents',

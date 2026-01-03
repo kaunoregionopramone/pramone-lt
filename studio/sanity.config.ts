@@ -9,6 +9,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './src/schemaTypes'
 import {structure} from './src/structure'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {media} from 'sanity-plugin-media'
 import {
   presentationTool,
   defineDocuments,
@@ -63,10 +64,6 @@ export default defineConfig({
         // The Main Document Resolver API provides a method of resolving a main document from a given route or route pattern. https://www.sanity.io/docs/presentation-resolver-api#57720a5678d9
         mainDocuments: defineDocuments([
           {
-            route: '/',
-            filter: `_type == "settings" && _id == "siteSettings"`,
-          },
-          {
             route: '/naujienos/:slug',
             filter: `_type == "news" && slug.current == $slug || _id == $slug`,
           },
@@ -77,11 +74,6 @@ export default defineConfig({
         ]),
         // Locations Resolver API allows you to define where data is being used in your application. https://www.sanity.io/docs/presentation-resolver-api#8d8bca7bfcd7
         locations: {
-          settings: defineLocations({
-            locations: [homeLocation],
-            message: 'This document is used on all pages',
-            tone: 'positive',
-          }),
           news: defineLocations({
             select: {
               title: 'title',
@@ -146,6 +138,7 @@ export default defineConfig({
     unsplashImageAsset(),
     assist(),
     visionTool(),
+    media(),
   ],
 
   // Schema configuration, imported from ./src/schemaTypes/index.ts

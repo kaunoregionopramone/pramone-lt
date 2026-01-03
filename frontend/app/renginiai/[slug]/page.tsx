@@ -8,6 +8,7 @@ import { GoogleMap } from "@/app/components/GoogleMap";
 import { ShareButtons } from "@/app/components/ShareButtons";
 import { createExcerpt } from "@/lib/portableTextUtils";
 import type { Metadata } from "next";
+import type { RecentNewsQueryResult } from "@/sanity.types";
 import {
   Calendar,
   MapPin,
@@ -169,7 +170,7 @@ export default async function EventDetailPage({
 
   // Filter recent events to show only events
   const filteredRecentEvents = recentEvents
-    ?.filter((item) => item.type === "renginys" && item._id !== event._id)
+    ?.filter((item: RecentNewsQueryResult[number]) => item.type === "renginys" && item._id !== event._id)
     .slice(0, 3);
 
   return (

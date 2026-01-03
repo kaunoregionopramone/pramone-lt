@@ -1,26 +1,39 @@
 import type { BlockContent } from "@/sanity.types";
+import { stegaClean } from "@sanity/client/stega";
+
+// Regex to remove all zero-width and invisible Unicode characters used by stega
+const INVISIBLE_CHARS_REGEX = /[\u200B-\u200D\u2060\u2061\u2062\u2063\u2064\uFEFF\u00AD\u034F\u061C\u115F\u1160\u17B4\u17B5\u180B-\u180E\u2000-\u200F\u202A-\u202F\u205F-\u206F\u3000\u3164\uFE00-\uFE0F]/g;
+
+/**
+ * Aggressively cleans all invisible/stega characters from a string
+ */
+function cleanInvisibleChars(text: string): string {
+  return stegaClean(text).replace(INVISIBLE_CHARS_REGEX, '');
+}
 
 /**
  * Extracts plain text from Portable Text content
+ * Cleans stega encoding to prevent corruption when truncating
  */
 export function toPlainText(blocks: BlockContent | null | undefined): string {
   if (!blocks) return "";
 
-  return (
-    (blocks as any[])
-      // Only process text blocks
-      .filter((block: any) => block._type === "block")
-      // Get all children text
-      .map((block: any) => {
-        return (block.children || [])
-          .map((child: any) => child.text || "")
-          .join("");
-      })
-      .join(" ")
-      // Clean up whitespace
-      .replace(/\s+/g, " ")
-      .trim()
-  );
+  const rawText = (blocks as any[])
+    // Only process text blocks
+    .filter((block: any) => block._type === "block")
+    // Get all children text - clean each piece individually
+    .map((block: any) => {
+      return (block.children || [])
+        .map((child: any) => cleanInvisibleChars(child.text || ""))
+        .join("");
+    })
+    .join(" ")
+    // Clean up whitespace
+    .replace(/\s+/g, " ")
+    .trim();
+
+  // Final cleanup pass
+  return cleanInvisibleChars(rawText);
 }
 
 /**

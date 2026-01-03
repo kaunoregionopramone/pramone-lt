@@ -1,46 +1,28 @@
-import Image from "next/image";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
-  leadershipQuery,
-  pastPresidentsQuery,
+  istorijaQuery,
   membersCountQuery,
 } from "@/sanity/lib/queries";
+import type { IstorijaQueryResult } from "@/sanity.types";
 import { HistoryTimeline } from "@/app/components/HistoryTimeline";
-import { ServiceCard } from "@/app/components/ServiceCard";
 import PortableText from "@/app/components/PortableText";
 import {
   Users,
   TrendingUp,
   Calendar as CalendarIcon,
-  Building2,
-  Globe,
-  Handshake,
 } from "lucide-react";
 
 export default async function IstorijaPage() {
-  const [
-    { data: leadershipData },
-    { data: istorijaData },
-    { data: membersCount },
-  ] = await Promise.all([
-    sanityFetch({ query: leadershipQuery }),
-    sanityFetch({ query: pastPresidentsQuery }),
+  const [{ data: istorijaData }, { data: membersCount }] = await Promise.all([
+    sanityFetch({ query: istorijaQuery }),
     sanityFetch({ query: membersCountQuery }),
   ]);
 
-  const pastPresidents = istorijaData?.pastPresidents || [];
-  const presidentMessage = istorijaData?.presidentMessage;
-  const services = istorijaData?.services || [];
-  const ourHistory = istorijaData?.ourHistory;
-  const kkpdaToday = istorijaData?.kkpdaToday;
-
-  // Find the current president
-  const president = leadershipData?.find(
-    (member: any) =>
-      member.role?.trim().replace(/[\u200B-\u200D\uFEFF]/g, "") ===
-      "prezidentas"
-  );
+  const data = istorijaData as IstorijaQueryResult;
+  const pastPresidents = data?.pastPresidents || [];
+  const ourHistory = data?.ourHistory;
+  const turnover = data?.turnover;
 
   // Calculate years of activity (from 1989 to current year)
   const foundingYear = 1989;
@@ -143,52 +125,11 @@ export default async function IstorijaPage() {
                 <CalendarIcon className="w-6 h-6 text-white" />
               </div>
             </div>
-            <div className="text-3xl font-bold text-[#101828] mb-1">500+</div>
-            <div className="text-sm text-[#4a5565]">Renginių</div>
+            <div className="text-3xl font-bold text-[#101828] mb-1">{turnover || "0"} mlrd.</div>
+            <div className="text-sm text-[#4a5565]">Pajamų</div>
           </div>
         </div>
 
-        {/* KKPDA šiandien Section */}
-        {kkpdaToday && (
-          <div className="mb-16">
-            <h2 className="text-2xl text-[#101828] mb-6">KKPDA šiandien</h2>
-            <article className="prose prose-lg max-w-none text-[#4a5565]">
-              <PortableText value={kkpdaToday as any} />
-            </article>
-          </div>
-        )}
-      </div>
-
-      {/* Values Statement Section - Hardcoded */}
-      <div className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-8">
-          <div className="relative">
-            {/* Decorative gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-amber-50 to-orange-50 rounded-3xl opacity-60"></div>
-            
-            {/* Content */}
-            <div className="relative p-12 md:p-16">
-              {/* Quotation mark decoration */}
-              <div className="absolute top-8 left-8 text-8xl text-[#FE9A00] opacity-20 leading-none">&ldquo;</div>
-              
-              <div className="relative z-10 text-center">
-                <h2 className="text-3xl md:text-4xl text-[#101828] mb-8 leading-tight">
-                  Mūsų nariai – mūsų vertybė.
-                </h2>
-                
-                <div className="w-16 h-1 bg-gradient-to-r from-[#FE9A00] to-[#E17100] mx-auto mb-8 rounded-full"></div>
-                
-                <p className="text-xl md:text-2xl text-[#4a5565] leading-relaxed mb-6">
-                  Tai šūkis, kuris iš kasdienės veiklos tapo žodiniu kūnu.
-                </p>
-                
-                <p className="text-lg text-[#4a5565] leading-[1.7] max-w-2xl mx-auto">
-                  KKPDA – išskirtinė asocijuota struktūra, kurios veikimo pagrindą sudaro stipri, darni ir aktyvi bendruomenė bei dėmesys kiekvienam nariui.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Timeline Section */}
@@ -210,77 +151,7 @@ export default async function IstorijaPage() {
         </div>
       )}
 
-      {/* President's Message */}
-      {president && (
-        <div className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-[#101828] mb-4">
-                Asociacijos prezidento žodis
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#FE9A00] to-[#E17100] mx-auto rounded-full"></div>
-            </div>
 
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div>
-                <Image
-                  src={president.photo?.asset?.url || "/placeholder.jpg"}
-                  alt={`${president.name} nuotrauka`}
-                  width={600}
-                  height={750}
-                  className="rounded-2xl shadow-2xl w-full aspect-[4/5] object-cover"
-                />
-              </div>
-
-              <div>
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-[#101828] mb-2">
-                    {president.name}
-                  </h3>
-                  <p className="text-lg text-[#FE9A00] font-semibold">
-                    {president.position || "Asociacijos prezidentas"}
-                  </p>
-                </div>
-
-                {presidentMessage && (
-                  <article className="prose prose-lg max-w-none text-[#4a5565]">
-                    <PortableText value={presidentMessage as any} />
-                  </article>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Services Section */}
-      {services.length > 0 && (
-        <div className="py-20 bg-gray-50 border-t border-gray-100">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-[#101828] mb-4">
-                Teikiamos paslaugos
-              </h2>
-              <p className="text-lg text-[#4a5565] leading-[1.7] max-w-2xl mx-auto">
-                Siūlome platų paslaugų spektrą, padedantį nariams augti ir
-                sėkmingai plėtoti verslą
-              </p>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#FE9A00] to-[#E17100] mx-auto mt-6 rounded-full"></div>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <ServiceCard
-                  key={service._key}
-                  number={index + 1}
-                  title={service.title}
-                  description={service.description || ""}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

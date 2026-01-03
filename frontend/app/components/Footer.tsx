@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail, Phone, MapPin, Building2 } from "lucide-react";
 import { sanityFetch } from "@/sanity/lib/live";
 import { contactInfoQuery } from "@/sanity/lib/queries";
+import Image from "next/image";
 
 export default async function Footer() {
   const { data: contactInfo } = await sanityFetch({
@@ -13,17 +14,14 @@ export default async function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand & Description */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="size-10 bg-gradient-to-b from-[#fe9a00] to-[#e17100] rounded-lg flex items-center justify-center">
-                <Building2 className="size-6 text-white" />
-              </div>
-              <div>
-                <div className="font-medium">KAUNO KRAŠTO</div>
-                <div className="text-xs text-gray-400">
-                  Pramonininkų ir darbdavių asociacija
-                </div>
-              </div>
-            </div>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/images/logo-white.png"
+                alt="Logo"
+                width={220}
+                height={64}
+              />
+            </Link>
             <p className="text-gray-400 text-sm">
               Kauno krašto pramonininkų ir darbdavių asociacija - viena
               seniausių ir įtakingiausių verslo organizacijų Lietuvoje, įsteigta
