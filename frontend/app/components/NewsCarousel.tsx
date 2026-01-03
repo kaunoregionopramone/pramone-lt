@@ -5,6 +5,14 @@ import { ChevronLeft, ChevronRight, Calendar, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './ImageWithFallback';
 import Link from 'next/link';
+import { stegaClean } from '@sanity/client/stega';
+
+// Regex to remove all zero-width and invisible Unicode characters
+const INVISIBLE_CHARS_REGEX = /[\u200B-\u200D\u2060\u2061\u2062\u2063\u2064\uFEFF\u00AD\u034F\u061C\u115F\u1160\u17B4\u17B5\u180B-\u180E\u2000-\u200F\u202A-\u202F\u205F-\u206F\u3000\u3164\uFE00-\uFE0F]/g;
+
+function cleanText(text: string): string {
+  return stegaClean(text).replace(INVISIBLE_CHARS_REGEX, '');
+}
 
 interface NewsItem {
   date: string;
@@ -51,21 +59,21 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
             <div className="flex flex-wrap gap-3">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-amber-200 text-amber-700 rounded-xl shadow-sm">
                 <Calendar className="w-4 h-4" />
-                <span className="text-sm">{news[currentSlide].date}</span>
+                <span className="text-sm">{cleanText(news[currentSlide].date)}</span>
               </div>
               <div className="inline-flex items-center px-4 py-2 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-xl shadow-lg text-sm">
-                {news[currentSlide].category}
+                {cleanText(news[currentSlide].category)}
               </div>
             </div>
 
             {/* Title */}
             <h1 className="text-3xl lg:text-4xl xl:text-5xl text-gray-900 leading-tight">
-              {news[currentSlide].title}
+              {cleanText(news[currentSlide].title)}
             </h1>
 
             {/* Description */}
             <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
-              {news[currentSlide].excerpt}
+              {cleanText(news[currentSlide].excerpt)}
             </p>
 
             {/* CTA Buttons */}
