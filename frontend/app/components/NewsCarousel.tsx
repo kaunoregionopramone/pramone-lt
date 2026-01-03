@@ -55,7 +55,6 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: Text Content */}
           <div className="order-2 lg:order-1 space-y-6 lg:space-y-8">
-            {/* Badges */}
             <div className="flex flex-wrap gap-3">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-amber-200 text-amber-700 rounded-xl shadow-sm">
                 <Calendar className="w-4 h-4" />
