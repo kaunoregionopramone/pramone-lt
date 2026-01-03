@@ -37,6 +37,12 @@ export const membershipInfo = defineType({
               type: 'file',
               options: {storeOriginalFilename: true},
             }),
+            defineField({
+              name: 'buttonText',
+              title: 'Mygtuko tekstas (nebūtina)',
+              type: 'string',
+              description: 'Pavyzdžiui: "Jūsų dokumentas" arba "Atsisiųsti". Jei neužpildyta, bus rodoma "Jūsų dokumentas"',
+            }),
           ],
           preview: {
             select: {title: 'title', file: 'file.asset->originalFilename'},

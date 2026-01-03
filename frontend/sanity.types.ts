@@ -706,20 +706,14 @@ export type SingleNewsQueryResult = {
   }> | null;
 } | null;
 // Variable: istorijaQuery
-// Query: *[_id == "istorija"][0] {    turnover,    ourHistory,    "services": services[] {      _key,      title,      description    },    "pastPresidents": pastPresidents[] {      _key,      name,      startYear,      endYear    }  }
+// Query: *[_id == "istorija"][0] {    turnover,    ourHistory,    "pastPresidents": pastPresidents[] {      _key,      name,      startYear,      endYear    }  }
 export type IstorijaQueryResult = {
   turnover: null;
   ourHistory: null;
-  services: null;
   pastPresidents: null;
 } | {
   turnover: string | null;
   ourHistory: BlockContent | null;
-  services: Array<{
-    _key: string;
-    title: string;
-    description: string | null;
-  }> | null;
   pastPresidents: Array<{
     _key: string;
     name: string;
@@ -816,7 +810,7 @@ export type EventsListQueryResult = Array<never>;
 // Query: *[_type == "event" && slug.current == $slug][0] {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    locationLat,    locationLng,    organizers,    excerpt,    content,    images[]{ asset->{ _id, url } }  }
 export type SingleEventQueryResult = null;
 // Variable: membershipInfoQuery
-// Query: *[_id == "membershipInfo"][0] {    whyJoinText,    requiredDocuments[] {      _key,      title,      description,      "fileUrl": file.asset->url,      "fileName": file.asset->originalFilename    }  }
+// Query: *[_id == "membershipInfo"][0] {    whyJoinText,    requiredDocuments[] {      _key,      title,      description,      "fileUrl": file.asset->url,      "fileName": file.asset->originalFilename,      buttonText    }  }
 export type MembershipInfoQueryResult = {
   whyJoinText: null;
   requiredDocuments: null;
@@ -828,6 +822,7 @@ export type MembershipInfoQueryResult = {
     description: string | null;
     fileUrl: string | null;
     fileName: string | null;
+    buttonText: null;
   }> | null;
 } | null;
 // Variable: narystesNaudosQuery
@@ -854,7 +849,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"news\"] | order(isFeatured desc, publishedAt desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt,\n    eventStartDate,\n    eventEndDate,\n    organizers,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
     "\n  *[_type == \"news\"] | order(publishedAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    publishedAt\n  }\n": RecentNewsQueryResult;
     "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt,\n    eventStartDate,\n    eventEndDate,\n    organizers,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    program,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
-    "\n  *[_id == \"istorija\"][0] {\n    turnover,\n    ourHistory,\n    \"services\": services[] {\n      _key,\n      title,\n      description\n    },\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
+    "\n  *[_id == \"istorija\"][0] {\n    turnover,\n    ourHistory,\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
     "\n  *[_id == \"valdymasSettings\"][0] {\n    presidentMessage\n  }\n": ValdymasSettingsQueryResult;
     "\n  count(*[_type == \"member\"])\n": MembersCountQueryResult;
     "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo{\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n": MembersQueryResult;
@@ -865,7 +860,7 @@ declare module "@sanity/client" {
     "\n  *[_id == \"veikla\"][0] {\n    \"reports\": ataskaitos[] {\n      _key,\n      period,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename\n    }\n  }\n": ActivityReportsQueryResult;
     "\n  *[_type == \"event\" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    \"plainContent\": pt::text(content),\n    \"cover\": images[0]{ asset->{ _id, url } }\n  }\n": EventsListQueryResult;
     "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n": SingleEventQueryResult;
-    "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename\n    }\n  }\n": MembershipInfoQueryResult;
+    "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    }\n  }\n": MembershipInfoQueryResult;
     "\n  *[_id == \"narystesNaudos\"][0] {\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    }\n  }\n": NarystesNaudosQueryResult;
   }
 }

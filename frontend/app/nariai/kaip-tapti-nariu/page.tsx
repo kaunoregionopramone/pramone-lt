@@ -168,23 +168,23 @@ export default async function KaipTaptiNariuPage() {
                   key={doc._key || index}
                   className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-[#fe9a00] hover:shadow-md transition-all group"
                 >
-                  <div className="flex items-start md:items-center gap-4 flex-col md:flex-row">
-                    <div className="flex items-start gap-4 flex-1">
+                  <div className="flex items-center justify-between gap-4 flex-col md:flex-row">
+                    <div className="flex items-center gap-4 flex-1">
                       <div className="size-12 shrink-0 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg flex items-center justify-center group-hover:from-[#fe9a00] group-hover:to-[#e17100] transition-all">
                         <FileText className="size-6 text-[#fe9a00] group-hover:text-white transition-all" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg text-[#2c3e5a] mb-2">{doc.title}</h3>
+                        <h3 className="text-lg text-[#2c3e5a]">{doc.title}</h3>
                         <p className="text-sm leading-relaxed text-[#4a5565]">
                           {doc.description}
                         </p>
                       </div>
                     </div>
                     {doc.fileUrl ? (
-                          <a
-                            href={doc.fileUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                      <a
+                        href={doc.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white px-6 py-2.5 rounded-lg text-sm hover:shadow-lg transition-all flex items-center gap-2 whitespace-nowrap"
                       >
                         <svg
@@ -202,11 +202,11 @@ export default async function KaipTaptiNariuPage() {
                         </svg>
                         {doc.fileName || "Atsisiųsti (PDF)"}
                       </a>
-                    ) : (
+                    ) : doc.buttonText ? (
                       <div className="bg-gray-100 text-[#4a5565] px-6 py-2.5 rounded-lg text-sm whitespace-nowrap">
-                        Jūsų dokumentas
+                        {doc.buttonText}
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               ))

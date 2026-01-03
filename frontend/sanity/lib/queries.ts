@@ -108,11 +108,6 @@ export const istorijaQuery = defineQuery(`
   *[_id == "istorija"][0] {
     turnover,
     ourHistory,
-    "services": services[] {
-      _key,
-      title,
-      description
-    },
     "pastPresidents": pastPresidents[] {
       _key,
       name,
@@ -251,7 +246,8 @@ export const membershipInfoQuery = defineQuery(`
       title,
       description,
       "fileUrl": file.asset->url,
-      "fileName": file.asset->originalFilename
+      "fileName": file.asset->originalFilename,
+      buttonText
     }
   }
 `);

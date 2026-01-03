@@ -20,37 +20,6 @@ export const istorija = defineType({
       description: 'Istorijos skyriaus turinys',
     }),
     defineField({
-      name: 'services',
-      title: 'Teikiamos paslaugos',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'service',
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Pavadinimas',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'description',
-              title: 'Aprašymas',
-              type: 'text',
-              rows: 3,
-            }),
-          ],
-          preview: {
-            select: {
-              title: 'title',
-              subtitle: 'description',
-            },
-          },
-        },
-      ],
-    }),
-    defineField({
       name: 'pastPresidents',
       title: 'Buvę prezidentai',
       type: 'array',

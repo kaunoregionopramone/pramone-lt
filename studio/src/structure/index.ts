@@ -68,7 +68,11 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.listItem()
         .title('Veikla')
         .child(S.document().schemaType('veikla').documentId('veikla')),
-      // Rest of types excluding disabled ones and the explicitly added singletons
+      // Rest of schema types
       ...S.documentTypeListItems()
-        .filter((listItem: any) => !DISABLED_TYPES.includes(listItem.getId()) && listItem.getId() !== 'contact' && listItem.getId() !== 'contactsSettings' && listItem.getId() !== 'contactsPage' && listItem.getId() !== 'contactInfo' && listItem.getId() !== 'istatai' && listItem.getId() !== 'membershipInfo' && listItem.getId() !== 'narystesNaudos' && listItem.getId() !== 'member' && listItem.getId() !== 'istorija' && listItem.getId() !== 'valdymasSettings' && listItem.getId() !== 'leadership' && listItem.getId() !== 'pastPresident' && listItem.getId() !== 'partneriai' && listItem.getId() !== 'veikla' && listItem.getId() !== 'activityReport' && listItem.getId() !== 'strategicDirection'),
+        .filter((listItem: any) => {
+          const id = listItem.getId();
+          const manuallyAdded = ['contactInfo', 'istatai', 'membershipInfo', 'narystesNaudos', 'member', 'istorija', 'valdymasSettings', 'leadership', 'partneriai', 'veikla'];
+          return !DISABLED_TYPES.includes(id) && !manuallyAdded.includes(id);
+        }),
     ])

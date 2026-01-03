@@ -87,11 +87,6 @@ export default async function NarystesNaudosPage() {
                     className={`bg-gradient-to-br ${colorScheme.bg} border ${colorScheme.border} rounded-2xl p-8 hover:shadow-lg transition-all`}
                   >
                     <div className="flex items-start gap-4 mb-6">
-                      <div className="size-14 shrink-0 bg-gradient-to-br from-[#fe9a00] to-[#e17100] rounded-xl flex items-center justify-center">
-                        <span className="text-white text-2xl">
-                          {index + 1}
-                        </span>
-                      </div>
                       <div>
                         <h3 className="text-[24px] leading-[32px] text-[#2c3e5a] mb-2">
                           {benefit.title}

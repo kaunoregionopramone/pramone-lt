@@ -6,7 +6,6 @@ import {
 } from "@/sanity/lib/queries";
 import type { IstorijaQueryResult } from "@/sanity.types";
 import { HistoryTimeline } from "@/app/components/HistoryTimeline";
-import { ServiceCard } from "@/app/components/ServiceCard";
 import PortableText from "@/app/components/PortableText";
 import {
   Users,
@@ -22,7 +21,6 @@ export default async function IstorijaPage() {
 
   const data = istorijaData as IstorijaQueryResult;
   const pastPresidents = data?.pastPresidents || [];
-  const services = data?.services || [];
   const ourHistory = data?.ourHistory;
   const turnover = data?.turnover;
 
@@ -154,34 +152,6 @@ export default async function IstorijaPage() {
       )}
 
 
-      {/* Services Section */}
-      {services.length > 0 && (
-        <div className="py-20 bg-gray-50 border-t border-gray-100">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-[#101828] mb-4">
-                Teikiamos paslaugos
-              </h2>
-              <p className="text-lg text-[#4a5565] leading-[1.7] max-w-2xl mx-auto">
-                Siūlome platų paslaugų spektrą, padedantį nariams augti ir
-                sėkmingai plėtoti verslą
-              </p>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#FE9A00] to-[#E17100] mx-auto mt-6 rounded-full"></div>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <ServiceCard
-                  key={service._key}
-                  number={index + 1}
-                  title={service.title}
-                  description={service.description || ""}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
