@@ -18,75 +18,75 @@ export function MembersGrid({ members }: MembersGridProps) {
   });
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-8">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-50 to-orange-100 rounded-full px-4 py-2 mb-4 border border-orange-200">
-            <Building2 className="size-5 text-[#fe9a00]" />
-            <span className="text-gray-900 font-medium">Mūsų nariai</span>
-          </div>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-            Įvairių sektorių lyderiai, kurie prisideda prie regiono ekonomikos
-            augimo
-          </p>
+    <section className="py-20 bg-white relative overflow-hidden">
+      {/* Subtle background decoration */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-slate-100 rounded-full blur-3xl" />
+        <div className="absolute bottom-40 left-0 w-[400px] h-[400px] bg-gray-100 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-8 lg:px-12 relative">
+        {/* Search Section */}
+        <div className="max-w-2xl mx-auto mb-16">
 
           {/* Search Bar */}
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Ieškoti narių pagal pavadinimą..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#fe9a00] focus:border-transparent text-gray-900 placeholder:text-gray-400"
-              />
-            </div>
-
-            {searchQuery && (
-              <p className="mt-4 text-sm text-gray-600 text-center">
-                Rasta{" "}
-                <span className="font-medium text-[#fe9a00]">
-                  {filteredMembers.length}
-                </span>{" "}
-                organizacijų
-              </p>
-            )}
+          <div className="relative">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Ieškoti narių pagal pavadinimą..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-14 pr-6 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent focus:bg-white text-gray-900 placeholder:text-gray-400 transition-all"
+            />
           </div>
+
+          {searchQuery && (
+            <p className="mt-4 text-sm text-gray-600 text-center">
+              Rasta{" "}
+              <span className="font-semibold text-slate-700">
+                {filteredMembers.length}
+              </span>{" "}
+              organizacijų
+            </p>
+          )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredMembers.map((member, index) => (
+        {/* Members Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
+          {filteredMembers.map((member) => (
             <div
               key={member._id}
-              className="group bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 rounded-xl p-4 hover:shadow-lg transition-all duration-300 relative overflow-hidden"
+              className="group bg-white hover:bg-gray-50 border border-gray-200 hover:border-slate-300 rounded-2xl p-5 hover:shadow-xl transition-all duration-300 relative overflow-hidden"
             >
+              {/* Decorative corner accent */}
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-slate-50 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+
               <div className="relative">
                 {/* Logo */}
-                <div className="bg-white rounded-lg p-4 mb-3 h-32 flex items-center justify-center transition-all overflow-hidden">
+                <div className="bg-white rounded-xl p-3 mb-4 h-28 flex items-center justify-center transition-all overflow-hidden border border-gray-100 group-hover:border-slate-200">
                   {member.logo?.asset?.url ? (
                     <div className="relative w-full h-full">
                       <Image
                         src={member.logo.asset.url}
                         alt={`${member.company} logotipas`}
                         fill
-                        className="object-contain"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                        className="object-contain group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                       />
                     </div>
                   ) : (
                     <div className="text-center">
-                      <Building2 className="size-10 text-gray-300 group-hover:text-gray-400 transition-colors mx-auto mb-2" />
-                      <p className="text-xs text-gray-400 group-hover:text-gray-500 transition-colors">
-                        LOGO
-                      </p>
+                      <div className="size-14 mx-auto rounded-xl bg-slate-100 flex items-center justify-center mb-2 group-hover:bg-slate-200 transition-colors">
+                        <Building2 className="size-7 text-slate-400 group-hover:text-slate-500 transition-colors" />
+                      </div>
                     </div>
                   )}
                 </div>
 
                 {/* Company name */}
                 <div className="text-center">
-                  <h3 className="text-lg font-medium text-gray-900 transition-colors">
+                  <h3 className="text-sm font-medium text-gray-900 leading-tight line-clamp-2">
                     {member.company}
                   </h3>
                 </div>
@@ -95,15 +95,27 @@ export function MembersGrid({ members }: MembersGridProps) {
           ))}
         </div>
 
+        {/* Empty state */}
         {filteredMembers.length === 0 && (
-          <div className="text-center py-16">
-            <div className="inline-flex items-center justify-center size-20 bg-gray-100 rounded-full mb-4">
-              <Search className="size-10 text-gray-400" />
+          <div className="text-center py-20">
+            <div className="inline-flex items-center justify-center size-24 bg-gray-100 rounded-full mb-6">
+              <Search className="size-12 text-gray-400" />
             </div>
-            <h3 className="text-gray-900 mb-2 font-medium">Narių nerasta</h3>
-            <p className="text-gray-600">
-              Pabandykite pakeisti paieškos kriterijus
+            <h3 className="text-xl text-gray-900 mb-3 font-medium">
+              Narių nerasta
+            </h3>
+            <p className="text-gray-600 max-w-md mx-auto">
+              Pabandykite pakeisti paieškos kriterijus arba patikrinkite
+              rašybą
             </p>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="mt-6 inline-flex items-center gap-2 text-slate-600 hover:text-slate-800 font-medium transition-colors"
+              >
+                Išvalyti paiešką
+              </button>
+            )}
           </div>
         )}
       </div>
