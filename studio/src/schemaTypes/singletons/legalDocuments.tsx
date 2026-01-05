@@ -69,7 +69,6 @@ export const legalDocuments = defineType({
               title: 'Pavadinimas',
               type: 'string',
               validation: (Rule) => Rule.required(),
-              description: 'Pirma raidė bus naudojama kaip ikona',
             }),
           ],
           preview: {
@@ -77,13 +76,12 @@ export const legalDocuments = defineType({
             prepare({title}) {
               return {
                 title: title || 'Vertybė',
-                subtitle: title ? `Ikona: ${title.charAt(0).toUpperCase()}` : '',
               }
             },
           },
         },
       ],
-      description: 'Pirma kiekvienos vertybės raidė automatiškai tampa ikona',
+      description: 'Etikos vertybių sąrašas',
     }),
     defineField({
       name: 'ethicsNotes',
@@ -124,6 +122,28 @@ export const legalDocuments = defineType({
       type: 'file',
       options: {storeOriginalFilename: true},
       description: 'Įkelkite etikos kodeksą PDF formatu',
+    }),
+
+    // Privacy Policy Section
+    defineField({
+      name: 'privacyTitle',
+      title: 'Privatumo politikos pavadinimas',
+      type: 'string',
+      description: 'Pvz.: "Privatumo politika"',
+    }),
+    defineField({
+      name: 'privacyDescription',
+      title: 'Privatumo politikos aprašymas',
+      type: 'text',
+      rows: 3,
+      description: 'Trumpas privatumo politikos aprašymas',
+    }),
+    defineField({
+      name: 'privacyFile',
+      title: 'Privatumo politika (PDF)',
+      type: 'file',
+      options: {storeOriginalFilename: true},
+      description: 'Įkelkite privatumo politiką PDF formatu',
     }),
   ],
   preview: {

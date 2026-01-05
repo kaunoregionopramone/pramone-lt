@@ -5,11 +5,6 @@ import { legalDocumentsQuery } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
 import { ExternalLink } from "lucide-react";
 
-// Get first letter from title for dynamic badge
-function getInitial(title: string): string {
-  return title.charAt(0).toUpperCase();
-}
-
 export default async function IstataiPage() {
   const { data } = await sanityFetch({ query: legalDocumentsQuery });
 
@@ -24,6 +19,9 @@ export default async function IstataiPage() {
   const ethicsValues = data?.ethicsValues;
   const ethicsNotes = data?.ethicsNotes;
   const ethicsUrl = data?.ethicsUrl;
+  const privacyTitle = data?.privacyTitle;
+  const privacyDescription = data?.privacyDescription;
+  const privacyUrl = data?.privacyUrl;
 
   return (
     <div className="min-h-screen bg-white">
@@ -161,22 +159,12 @@ export default async function IstataiPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {ethicsValues.map(
                       (value: { title: string }, index: number) => {
-                        const number = String(index + 1).padStart(2, "0");
-                        const initial = getInitial(value.title);
-
                         return (
                           <div key={index} className="group relative">
-                            {/* Large decorative number */}
-                            <div className="absolute -top-5 -left-3 text-[100px] font-bold text-slate-100 select-none pointer-events-none transition-colors duration-300 group-hover:text-slate-200 leading-none">
-                              {number}
-                            </div>
-
                             {/* Card content */}
                             <div className="relative p-6 rounded-2xl bg-white border border-gray-200 hover:border-slate-300 hover:shadow-xl transition-all duration-300 h-full">
                               {/* Accent bar */}
                               <div className="w-12 h-1 bg-gradient-to-r from-slate-700 to-slate-500 rounded-full mb-5"></div>
-
-                              {/* Letter badge */}
 
                               <span className="text-gray-900 font-semibold leading-snug block">
                                 {value.title}
@@ -203,8 +191,6 @@ export default async function IstataiPage() {
                         note: { text: string; isItalic?: boolean },
                         index: number
                       ) => {
-                        const number = String(index + 1).padStart(2, "0");
-
                         return (
                           <div
                             key={index}
@@ -240,6 +226,42 @@ export default async function IstataiPage() {
                 )}
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* Privacy Policy Section */}
+      {(privacyTitle || privacyDescription || privacyUrl) && (
+        <section className="py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-8 lg:px-12">
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 sm:p-10 lg:p-12">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div>
+                  {privacyTitle && (
+                    <h2 className="text-2xl sm:text-3xl text-gray-900 mb-3">
+                      {privacyTitle}
+                    </h2>
+                  )}
+                  {privacyDescription && (
+                    <p className="text-gray-600 leading-relaxed max-w-2xl">
+                      {privacyDescription}
+                    </p>
+                  )}
+                </div>
+
+                {privacyUrl && (
+                  <a
+                    href={privacyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-3 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-xl font-medium hover:from-slate-800 hover:to-slate-900 hover:shadow-xl hover:-translate-y-0.5 transition-all shrink-0"
+                  >
+                    Peržiūrėti dokumentą
+                    <ExternalLink className="size-4 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
         </section>
       )}

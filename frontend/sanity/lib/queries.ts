@@ -210,7 +210,11 @@ export const legalDocumentsQuery = defineQuery(`
       isItalic
     },
     "ethicsUrl": ethicsFile.asset->url,
-    "ethicsName": ethicsFile.asset->originalFilename
+    "ethicsName": ethicsFile.asset->originalFilename,
+    privacyTitle,
+    privacyDescription,
+    "privacyUrl": privacyFile.asset->url,
+    "privacyName": privacyFile.asset->originalFilename
   }
 `);
 

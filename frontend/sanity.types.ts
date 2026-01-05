@@ -797,7 +797,7 @@ export type ContactInfoQueryResult = {
   googleAddress: string | null;
 } | null;
 // Variable: legalDocumentsQuery
-// Query: *[_type == "istatai"][0] {    introTitle,    introText,    "introImageUrl": introImage.asset->url,    "statutesUrl": statutesFile.asset->url,    "statutesName": statutesFile.asset->originalFilename,    ethicsTitle,    ethicsDescription,    ethicsValuesIntro,    ethicsValues[] {      title    },    ethicsNotes[] {      text,      isItalic    },    "ethicsUrl": ethicsFile.asset->url,    "ethicsName": ethicsFile.asset->originalFilename  }
+// Query: *[_type == "istatai"][0] {    introTitle,    introText,    "introImageUrl": introImage.asset->url,    "statutesUrl": statutesFile.asset->url,    "statutesName": statutesFile.asset->originalFilename,    ethicsTitle,    ethicsDescription,    ethicsValuesIntro,    ethicsValues[] {      title    },    ethicsNotes[] {      text,      isItalic    },    "ethicsUrl": ethicsFile.asset->url,    "ethicsName": ethicsFile.asset->originalFilename,    privacyTitle,    privacyDescription,    "privacyUrl": privacyFile.asset->url,    "privacyName": privacyFile.asset->originalFilename  }
 export type LegalDocumentsQueryResult = {
   introTitle: null;
   introText: null;
@@ -811,6 +811,10 @@ export type LegalDocumentsQueryResult = {
   ethicsNotes: null;
   ethicsUrl: string | null;
   ethicsName: string | null;
+  privacyTitle: null;
+  privacyDescription: null;
+  privacyUrl: null;
+  privacyName: null;
 } | null;
 // Variable: eventsListQuery
 // Query: *[_type == "event" &&    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))  ] | order(coalesce(startAt, dateTime(date)) desc) {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    organizers,    excerpt,    "plainContent": pt::text(content),    "cover": images[0]{ asset->{ _id, url } }  }
@@ -883,7 +887,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo{\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n": MembersQueryResult;
     "\n  *[_id == \"partneriai\"][0] {\n    \"cooperate\": partnersCooperate[] {\n      _key,\n      title,\n      \"logo\": logo.asset->url,\n      extra\n    },\n    \"agreements\": partnersAgreements[] {\n      _key,\n      title,\n      extra\n    }\n  }\n": PartnersQueryResult;
     "\n  *[_type == \"contactInfo\"][0] {\n    address,\n    phone,\n    email,\n    googleAddress\n  }\n": ContactInfoQueryResult;
-    "\n  *[_type == \"istatai\"][0] {\n    introTitle,\n    introText,\n    \"introImageUrl\": introImage.asset->url,\n    \"statutesUrl\": statutesFile.asset->url,\n    \"statutesName\": statutesFile.asset->originalFilename,\n    ethicsTitle,\n    ethicsDescription,\n    ethicsValuesIntro,\n    ethicsValues[] {\n      title\n    },\n    ethicsNotes[] {\n      text,\n      isItalic\n    },\n    \"ethicsUrl\": ethicsFile.asset->url,\n    \"ethicsName\": ethicsFile.asset->originalFilename\n  }\n": LegalDocumentsQueryResult;
+    "\n  *[_type == \"istatai\"][0] {\n    introTitle,\n    introText,\n    \"introImageUrl\": introImage.asset->url,\n    \"statutesUrl\": statutesFile.asset->url,\n    \"statutesName\": statutesFile.asset->originalFilename,\n    ethicsTitle,\n    ethicsDescription,\n    ethicsValuesIntro,\n    ethicsValues[] {\n      title\n    },\n    ethicsNotes[] {\n      text,\n      isItalic\n    },\n    \"ethicsUrl\": ethicsFile.asset->url,\n    \"ethicsName\": ethicsFile.asset->originalFilename,\n    privacyTitle,\n    privacyDescription,\n    \"privacyUrl\": privacyFile.asset->url,\n    \"privacyName\": privacyFile.asset->originalFilename\n  }\n": LegalDocumentsQueryResult;
     "\n  *[_type == \"event\" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    \"plainContent\": pt::text(content),\n    \"cover\": images[0]{ asset->{ _id, url } }\n  }\n": EventsListQueryResult;
     "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n": SingleEventQueryResult;
     "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    }\n  }\n": MembershipInfoQueryResult;
