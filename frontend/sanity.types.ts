@@ -823,12 +823,20 @@ export type EventsListQueryResult = Array<never>;
 // Query: *[_type == "event" && slug.current == $slug][0] {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    locationLat,    locationLng,    organizers,    excerpt,    content,    images[]{ asset->{ _id, url } }  }
 export type SingleEventQueryResult = null;
 // Variable: membershipInfoQuery
-// Query: *[_id == "membershipInfo"][0] {    whyJoinText,    requiredDocuments[] {      _key,      title,      description,      "fileUrl": file.asset->url,      "fileName": file.asset->originalFilename,      buttonText    }  }
+// Query: *[_id == "membershipInfo"][0] {    whyJoinText,    whoCanJoinTitle,    whoCanJoinText,    whoCanJoinHighlights[] {      _key,      title,      description    },    requiredDocuments[] {      _key,      title,      description,      "fileUrl": file.asset->url,      "fileName": file.asset->originalFilename,      buttonText    },    ctaTitle,    ctaText  }
 export type MembershipInfoQueryResult = {
   whyJoinText: null;
+  whoCanJoinTitle: null;
+  whoCanJoinText: null;
+  whoCanJoinHighlights: null;
   requiredDocuments: null;
+  ctaTitle: null;
+  ctaText: null;
 } | {
   whyJoinText: BlockContent | null;
+  whoCanJoinTitle: null;
+  whoCanJoinText: null;
+  whoCanJoinHighlights: null;
   requiredDocuments: Array<{
     _key: string;
     title: string;
@@ -837,6 +845,8 @@ export type MembershipInfoQueryResult = {
     fileName: string | null;
     buttonText: null;
   }> | null;
+  ctaTitle: null;
+  ctaText: null;
 } | null;
 // Variable: narystesNaudosQuery
 // Query: *[_id == "narystesNaudos"][0] {    benefitsText[] {      _key,      title,      description1,      description2,      description3,      description4    }  }
@@ -890,7 +900,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"istatai\"][0] {\n    introTitle,\n    introText,\n    \"introImageUrl\": introImage.asset->url,\n    \"statutesUrl\": statutesFile.asset->url,\n    \"statutesName\": statutesFile.asset->originalFilename,\n    ethicsTitle,\n    ethicsDescription,\n    ethicsValuesIntro,\n    ethicsValues[] {\n      title\n    },\n    ethicsNotes[] {\n      text,\n      isItalic\n    },\n    \"ethicsUrl\": ethicsFile.asset->url,\n    \"ethicsName\": ethicsFile.asset->originalFilename,\n    privacyTitle,\n    privacyDescription,\n    \"privacyUrl\": privacyFile.asset->url,\n    \"privacyName\": privacyFile.asset->originalFilename\n  }\n": LegalDocumentsQueryResult;
     "\n  *[_type == \"event\" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    \"plainContent\": pt::text(content),\n    \"cover\": images[0]{ asset->{ _id, url } }\n  }\n": EventsListQueryResult;
     "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n": SingleEventQueryResult;
-    "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    }\n  }\n": MembershipInfoQueryResult;
+    "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    whoCanJoinTitle,\n    whoCanJoinText,\n    whoCanJoinHighlights[] {\n      _key,\n      title,\n      description\n    },\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    },\n    ctaTitle,\n    ctaText\n  }\n": MembershipInfoQueryResult;
     "\n  *[_id == \"narystesNaudos\"][0] {\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    }\n  }\n": NarystesNaudosQueryResult;
     "\n  *[_id == \"atstovavimas\"][0] {\n    nationalActivities[] {\n      _key,\n      title,\n      description\n    },\n    regionalActivities[] {\n      _key,\n      title,\n      description\n    }\n  }\n": AtstovavimasQueryResult;
     "\n  *[_id == \"veiklosAtaskaitos\"][0] {\n    \"ataskaitos\": ataskaitos[] {\n      _key,\n      period,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename\n    }\n  }\n": VeiklosAtaskaitosQueryResult;
