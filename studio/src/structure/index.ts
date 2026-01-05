@@ -1,4 +1,4 @@
-import {FolderIcon} from '@sanity/icons'
+import {FolderIcon, UsersIcon, InfoOutlineIcon, ActivityIcon, DocumentTextIcon} from '@sanity/icons'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 
 /**
@@ -13,26 +13,65 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
     .title('Website Content')
     .items([
-      // Apie KKPDA singleton
+      // Apie mus category
       S.listItem()
-        .title('Apie KKPDA')
-        .child(S.document().schemaType('apieKkpda').documentId('apieKkpda')),
-      // Atstovavimas singleton
+        .title('Apie mus')
+        .icon(InfoOutlineIcon)
+        .child(
+          S.list()
+            .title('Apie mus')
+            .items([
+              S.listItem()
+                .title('Apie KKPDA')
+                .child(S.document().schemaType('apieKkpda').documentId('apieKkpda')),
+              S.listItem()
+                .title('Istorija')
+                .child(S.document().schemaType('istorija').documentId('istorija')),
+              S.listItem()
+                .title('Įstatai')
+                .child(S.document().schemaType('istatai').documentId('istatai')),
+              S.listItem()
+                .title('Valdymas')
+                .icon(FolderIcon)
+                .child(
+                  S.list()
+                    .title('Valdymas')
+                    .items([
+                      S.listItem()
+                        .title('Nustatymai')
+                        .child(S.document().schemaType('valdymasSettings').documentId('valdymasSettings')),
+                      S.listItem()
+                        .title('Nariai')
+                        .child(S.documentTypeList('leadership').title('Valdymo nariai')),
+                    ])
+                ),
+              S.listItem()
+                .title('Partneriai')
+                .child(S.document().schemaType('partneriai').documentId('partneriai')),
+            ])
+        ),
+
+      // Veikla category
       S.listItem()
-        .title('Atstovavimas')
-        .child(S.document().schemaType('atstovavimas').documentId('atstovavimas')),
-      // Contacts singleton
-      S.listItem()
-        .title('Kontaktai')
-        .child(S.document().schemaType('contactInfo').documentId('contactInfo')),
-      // Legal Documents singleton
-      S.listItem()
-        .title('Įstatai')
-        .child(S.document().schemaType('istatai').documentId('istatai')),
-      // Nariai - combined section with membership info and members
+        .title('Veikla')
+        .icon(ActivityIcon)
+        .child(
+          S.list()
+            .title('Veikla')
+            .items([
+              S.listItem()
+                .title('Atstovavimas')
+                .child(S.document().schemaType('atstovavimas').documentId('atstovavimas')),
+              S.listItem()
+                .title('Veiklos ataskaitos')
+                .child(S.document().schemaType('veiklosAtaskaitos').documentId('veiklosAtaskaitos')),
+            ])
+        ),
+
+      // Nariai category
       S.listItem()
         .title('Nariai')
-        .icon(FolderIcon)
+        .icon(UsersIcon)
         .child(
           S.list()
             .title('Nariai')
@@ -48,39 +87,37 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 .child(S.documentTypeList('member').title('Nariai')),
             ])
         ),
-      // Istorija singleton
+
+      // Naujienos ir renginiai
       S.listItem()
-        .title('Istorija')
-        .child(S.document().schemaType('istorija').documentId('istorija')),
-      // Valdymas - combined section with settings and leadership members
+        .title('Naujienos ir renginiai')
+        .icon(DocumentTextIcon)
+        .child(S.documentTypeList('news').title('Naujienos ir renginiai')),
+
+      // Contacts singleton
       S.listItem()
-        .title('Valdymas')
-        .icon(FolderIcon)
-        .child(
-          S.list()
-            .title('Valdymas')
-            .items([
-              S.listItem()
-                .title('Nustatymai')
-                .child(S.document().schemaType('valdymasSettings').documentId('valdymasSettings')),
-              S.listItem()
-                .title('Nariai')
-                .child(S.documentTypeList('leadership').title('Valdymo nariai')),
-            ])
-        ),
-      // Partneriai singleton
-      S.listItem()
-        .title('Partneriai')
-        .child(S.document().schemaType('partneriai').documentId('partneriai')),
-      // Veiklos ataskaitos singleton
-      S.listItem()
-        .title('Veiklos ataskaitos')
-        .child(S.document().schemaType('veiklosAtaskaitos').documentId('veiklosAtaskaitos')),
+        .title('Kontaktai')
+        .child(S.document().schemaType('contactInfo').documentId('contactInfo')),
+
       // Rest of schema types
       ...S.documentTypeListItems()
         .filter((listItem: any) => {
           const id = listItem.getId();
-          const manuallyAdded = ['apieKkpda', 'atstovavimas', 'contactInfo', 'istatai', 'membershipInfo', 'narystesNaudos', 'member', 'istorija', 'valdymasSettings', 'leadership', 'partneriai', 'veiklosAtaskaitos'];
+          const manuallyAdded = [
+            'apieKkpda',
+            'atstovavimas',
+            'contactInfo',
+            'istatai',
+            'membershipInfo',
+            'narystesNaudos',
+            'member',
+            'istorija',
+            'valdymasSettings',
+            'leadership',
+            'partneriai',
+            'veiklosAtaskaitos',
+            'news',
+          ];
           return !DISABLED_TYPES.includes(id) && !manuallyAdded.includes(id);
         }),
     ])
