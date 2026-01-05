@@ -261,6 +261,13 @@ export const singleEventQuery = defineQuery(`
 export const membershipInfoQuery = defineQuery(`
   *[_id == "membershipInfo"][0] {
     whyJoinText,
+    whoCanJoinTitle,
+    whoCanJoinText,
+    whoCanJoinHighlights[] {
+      _key,
+      title,
+      description
+    },
     requiredDocuments[] {
       _key,
       title,
@@ -268,7 +275,9 @@ export const membershipInfoQuery = defineQuery(`
       "fileUrl": file.asset->url,
       "fileName": file.asset->originalFilename,
       buttonText
-    }
+    },
+    ctaTitle,
+    ctaText
   }
 `);
 

@@ -11,6 +11,50 @@ export const membershipInfo = defineType({
       type: 'blockContent',
     }),
 
+    // Kas gali tapti nariu section
+    defineField({
+      name: 'whoCanJoinTitle',
+      title: 'Kas gali tapti nariu – antraštė',
+      type: 'string',
+      description: 'Pvz.: "Kas gali tapti nariu"',
+    }),
+    defineField({
+      name: 'whoCanJoinText',
+      title: 'Kas gali tapti nariu – tekstas',
+      type: 'text',
+      rows: 4,
+      description: 'Aprašymas kas gali tapti KKPDA nariu',
+    }),
+    defineField({
+      name: 'whoCanJoinHighlights',
+      title: 'Kas gali tapti nariu – papildomi punktai',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'highlightItem',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Antraštė',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Aprašymas',
+              type: 'text',
+              rows: 3,
+            }),
+          ],
+          preview: {
+            select: {title: 'title'},
+          },
+        },
+      ],
+      description: 'Papildomi punktai, pvz.: "Aktyvi bendruomenė", "Prezidiumas tvirtina"',
+    }),
+
     defineField({
       name: 'requiredDocuments',
       title: 'Kokie dokumentai reikalingi? – dokumentų sąrašas',
@@ -52,6 +96,20 @@ export const membershipInfo = defineType({
           },
         },
       ],
+    }),
+
+    // CTA Section
+    defineField({
+      name: 'ctaTitle',
+      title: 'CTA sekcijos antraštė',
+      type: 'string',
+      description: 'Pvz.: "Narystė – bendruomenė, ne formalumas"',
+    }),
+    defineField({
+      name: 'ctaText',
+      title: 'CTA sekcijos tekstas',
+      type: 'blockContent',
+      description: 'Tekstas prie CTA sekcijos (palaikomas formatavimas)',
     }),
   ],
   preview: {prepare: () => ({title: 'Narystė – Kaip tapti nariu'})},
