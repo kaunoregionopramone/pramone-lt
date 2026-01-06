@@ -42,7 +42,7 @@ export const leadershipQuery = defineQuery(`
 `);
 
 export const newsQuery = defineQuery(`
-  *[_type == "news"] | order(publishedAt desc) [0...5] {
+  *[_type == "news"] | order(_createdAt desc) [0...5] {
     _id,
     title,
     slug,
@@ -55,12 +55,12 @@ export const newsQuery = defineQuery(`
         url
       }
     },
-    publishedAt
+    _createdAt
   }
 `);
 
 export const allNewsQuery = defineQuery(`
-  *[_type == "news"] | order(isFeatured desc, publishedAt desc) {
+  *[_type == "news"] | order(isFeatured desc, _createdAt desc) {
     _id,
     title,
     slug,
@@ -73,22 +73,21 @@ export const allNewsQuery = defineQuery(`
         url
       }
     },
-    publishedAt,
+    _createdAt,
     eventStartDate,
     eventEndDate,
-    organizers,
     location,
     googleMapsLocation
   }
 `);
 
 export const recentNewsQuery = defineQuery(`
-  *[_type == "news"] | order(publishedAt desc) [0...5] {
+  *[_type == "news"] | order(_createdAt desc) [0...5] {
     _id,
     title,
     slug,
     type,
-    publishedAt
+    _createdAt
   }
 `);
 
@@ -105,16 +104,14 @@ export const singleNewsQuery = defineQuery(`
         url
       }
     },
-    publishedAt,
+    _createdAt,
     eventStartDate,
     eventEndDate,
-    organizers,
     location,
     googleMapsLocation,
     entrance,
     registrationUrl,
     timeSlots,
-    program,
     "documents": documents[]{
       title,
       "file": file.asset->{

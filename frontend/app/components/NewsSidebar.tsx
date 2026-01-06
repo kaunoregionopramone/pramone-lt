@@ -6,7 +6,7 @@ interface RecentNewsItem {
   title: string;
   slug: { current: string };
   type: "naujiena" | "renginys" | null;
-  publishedAt: string;
+  _createdAt: string;
 }
 
 interface NewsSidebarProps {
@@ -79,7 +79,7 @@ export function NewsSidebar({ recentNews, currentNewsId }: NewsSidebarProps) {
                   </p>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
                     <Clock className="size-3" />
-                    <span>{formatDate(news.publishedAt)}</span>
+                    <span>{formatDate(news._createdAt)}</span>
                   </div>
                 </div>
               </div>

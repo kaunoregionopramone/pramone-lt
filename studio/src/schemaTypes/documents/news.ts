@@ -125,13 +125,6 @@ export const news = defineType({
         hotspot: true,
       },
     }),
-    defineField({
-      name: 'publishedAt',
-      title: 'Publikavimo data',
-      type: 'date',
-      initialValue: () => new Date().toISOString().split('T')[0],
-      validation: (rule) => rule.required(),
-    }),
     // Event-specific fields (only relevant when type is 'renginys')
     defineField({
       name: 'eventStartDate',
@@ -145,14 +138,6 @@ export const news = defineType({
       title: 'Renginio pabaiga',
       type: 'datetime',
       description: 'Renginio pabaigos data ir laikas',
-      hidden: ({document}) => document?.type !== 'renginys',
-    }),
-    defineField({
-      name: 'organizers',
-      title: 'Organizatoriai',
-      type: 'array',
-      of: [{type: 'string'}],
-      description: 'Renginio organizatoriai (pridėkite po vieną)',
       hidden: ({document}) => document?.type !== 'renginys',
     }),
     defineField({
@@ -191,58 +176,6 @@ export const news = defineType({
       description:
         'Skirtingi laiko intervalai skirtingoms dienoms (pvz., "10:00 - 18:00 (pirmosios dvi dienos)")',
       of: [{type: 'string'}],
-      hidden: ({document}) => document?.type !== 'renginys',
-    }),
-    defineField({
-      name: 'program',
-      title: 'Renginio programa',
-      type: 'array',
-      description: 'Renginio programos punktai pagal dienas',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'date',
-              title: 'Data',
-              type: 'date',
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: 'title',
-              title: 'Pavadinimas',
-              type: 'string',
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: 'time',
-              title: 'Laikas',
-              type: 'string',
-              description: 'Pvz., "10:00 - 18:00"',
-            }),
-            defineField({
-              name: 'description',
-              title: 'Aprašymas',
-              type: 'text',
-              rows: 2,
-            }),
-          ],
-          preview: {
-            select: {
-              title: 'title',
-              date: 'date',
-              time: 'time',
-            },
-            prepare({title, date, time}) {
-              const dateStr = date ? new Date(date).toLocaleDateString('lt-LT') : ''
-              return {
-                title: title,
-                subtitle: `${dateStr} ${time ? `• ${time}` : ''}`,
-              }
-            },
-          },
-        },
-      ],
       hidden: ({document}) => document?.type !== 'renginys',
     }),
     defineField({
@@ -334,9 +267,9 @@ export const news = defineType({
   ],
   orderings: [
     {
-      title: 'Pagal publikavimo datą (naujausios pirmos)',
-      name: 'publishedAtDesc',
-      by: [{field: 'publishedAt', direction: 'desc'}],
+      title: 'Pagal sukūrimo datą (naujausios pirmos)',
+      name: 'createdAtDesc',
+      by: [{field: '_createdAt', direction: 'desc'}],
     },
   ],
   preview: {
@@ -345,17 +278,15 @@ export const news = defineType({
       type: 'type',
       isFeatured: 'isFeatured',
       media: 'coverImage',
-      publishedAt: 'publishedAt',
     },
-    prepare({title, type, isFeatured, media, publishedAt}) {
+    prepare({title, type, isFeatured, media}) {
       const typeLabel =
         type === 'naujiena' ? 'Naujiena' : type === 'renginys' ? 'Renginys' : 'Nenurodyta'
       const featuredLabel = isFeatured ? '⭐ Viršuje' : ''
-      const date = publishedAt ? new Date(publishedAt).toLocaleDateString('lt-LT') : ''
 
       const subtitle = featuredLabel
-        ? `${typeLabel} • ${featuredLabel} • ${date}`
-        : `${typeLabel} • ${date}`
+        ? `${typeLabel} • ${featuredLabel}`
+        : typeLabel
 
       return {
         title,

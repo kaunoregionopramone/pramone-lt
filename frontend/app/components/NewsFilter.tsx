@@ -26,10 +26,9 @@ interface NewsItem {
       url: string;
     };
   };
-  publishedAt: string;
+  _createdAt: string;
   eventStartDate?: string;
   eventEndDate?: string;
-  organizers?: string[];
   location?: string;
   googleMapsLocation?: string;
 }
@@ -169,9 +168,6 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
         <section className="py-10 bg-white border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-8 lg:px-12">
             <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-2xl hover:border-slate-300 transition-all duration-500 group">
-              {/* Decorative corner accent */}
-              <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-slate-100 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
-
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 <div className="relative h-[300px] lg:h-[360px] overflow-hidden">
                   {featuredArticle.coverImage?.asset?.url ? (
@@ -207,7 +203,7 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                           featuredArticle.eventStartDate,
                           featuredArticle.eventEndDate
                         )
-                      : formatDate(featuredArticle.publishedAt)}
+                      : formatDate(featuredArticle._createdAt)}
                   </div>
 
                   <h2 className="text-2xl lg:text-2xl text-gray-900 mb-3 font-semibold">
@@ -270,9 +266,6 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                   key={article._id}
                   className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col"
                 >
-                  {/* Decorative hover accent */}
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
-
                   <div className="relative h-56 overflow-hidden">
                     {article.coverImage?.asset?.url ? (
                       <Image
@@ -301,7 +294,7 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                             article.eventStartDate,
                             article.eventEndDate
                           )
-                        : formatDate(article.publishedAt)}
+                        : formatDate(article._createdAt)}
                     </div>
 
                     <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-slate-700 transition-colors line-clamp-2">

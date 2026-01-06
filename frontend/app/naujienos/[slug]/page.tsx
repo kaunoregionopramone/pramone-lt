@@ -12,7 +12,6 @@ import type { Metadata } from "next";
 import {
   Calendar,
   MapPin,
-  Users,
   Clock,
   Tag,
   ArrowLeft,
@@ -100,7 +99,7 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
-      publishedTime: news.publishedAt,
+      publishedTime: news._createdAt,
       authors: ["KKPDA"],
       images: coverImageUrl
         ? [
@@ -222,7 +221,7 @@ export default async function NewsDetailPage({
                 <span>
                   {news.type === "renginys" && news.eventStartDate
                     ? formatEventTime(news.eventStartDate, news.eventEndDate)
-                    : formatDate(news.publishedAt)}
+                    : formatDate(news._createdAt)}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -296,20 +295,6 @@ export default async function NewsDetailPage({
                         </div>
                       </div>
                     )}
-                    {news.organizers &&
-                      (news.organizers as string[])?.length > 0 && (
-                        <div className="flex items-start gap-3">
-                          <Users className="size-5 text-slate-600 mt-0.5 shrink-0" />
-                          <div>
-                            <div className="text-sm font-medium text-gray-700">
-                              Organizatoriai
-                            </div>
-                            <div className="text-gray-900">
-                              {(news.organizers as string[])?.join(", ")}
-                            </div>
-                          </div>
-                        </div>
-                      )}
                   </div>
                 </div>
               )}

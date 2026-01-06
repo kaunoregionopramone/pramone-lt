@@ -43,12 +43,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const newsItem of allNews) {
       const typedNewsItem = newsItem as {
         slug?: { current?: string };
-        publishedAt?: string;
+        _createdAt?: string;
       };
       if (typedNewsItem.slug?.current) {
         sitemap.push({
           url: `https://${domain}/naujienos/${typedNewsItem.slug.current}`,
-          lastModified: typedNewsItem.publishedAt ? new Date(typedNewsItem.publishedAt) : new Date(),
+          lastModified: typedNewsItem._createdAt ? new Date(typedNewsItem._createdAt) : new Date(),
           priority: 0.6,
           changeFrequency: "never",
         });

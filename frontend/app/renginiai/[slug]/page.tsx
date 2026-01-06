@@ -126,7 +126,7 @@ export async function generateMetadata({
       title,
       description: fullDescription,
       type: "article",
-      publishedTime: event.publishedAt,
+      publishedTime: event._createdAt,
       authors: ["KKPDA"],
       images: coverImageUrl
         ? [
@@ -322,62 +322,6 @@ export default async function EventDetailPage({
                   <article className="prose prose-lg max-w-none">
                     <PortableText value={event.content as any} />
                   </article>
-                </div>
-              )}
-
-              {/* Event Program */}
-              {event.program && event.program.length > 0 && (
-                <div className="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="size-12 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl flex items-center justify-center">
-                      <Calendar className="size-6 text-white" />
-                    </div>
-                    <h2 className="text-2xl font-semibold mb-0">
-                      Renginio programa
-                    </h2>
-                  </div>
-                  <div className="space-y-4">
-                    {event.program.map((item: any, index: number) => {
-                      const date = new Date(item.date);
-                      const day = date.getDate();
-                      const month = date.toLocaleDateString("lt-LT", {
-                        month: "long",
-                      });
-
-                      return (
-                        <div
-                          key={index}
-                          className="bg-white rounded-xl p-4 border border-slate-100"
-                        >
-                          <div className="flex items-start gap-4">
-                            <div className="text-center shrink-0">
-                              <div className="text-2xl font-semibold text-slate-700">
-                                {day}
-                              </div>
-                              <div className="text-sm text-gray-600 capitalize">
-                                {month}
-                              </div>
-                            </div>
-                            <div className="flex-1">
-                              <div className="font-medium text-gray-900 mb-1">
-                                {item.title}
-                              </div>
-                              {item.time && (
-                                <div className="text-sm text-gray-600">
-                                  {item.time}
-                                </div>
-                              )}
-                              {item.description && (
-                                <p className="text-sm text-gray-600 mt-2">
-                                  {item.description}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
                 </div>
               )}
 
@@ -588,7 +532,7 @@ export default async function EventDetailPage({
                               <div className="flex items-center gap-2 text-xs text-gray-500">
                                 <Calendar className="size-3" />
                                 <span>
-                                  {formatDate(recentEvent.publishedAt)}
+                                  {formatDate(recentEvent._createdAt)}
                                 </span>
                               </div>
                             </div>
