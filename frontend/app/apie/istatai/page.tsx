@@ -2,40 +2,46 @@ import Image from "next/image";
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
 import { legalDocumentsQuery } from "@/sanity/lib/queries";
-import {
-  Calendar,
-  Users,
-  Scale,
-  CheckCircle,
-  FileText,
-  Download,
-  BookOpen,
-  Shield,
-  ExternalLink,
-  Eye,
-  Heart,
-  Handshake,
-  Leaf,
-  ShieldX,
-  Lock,
-} from "lucide-react";
+import PortableText from "@/app/components/PortableText";
+import { ExternalLink } from "lucide-react";
 
 export default async function IstataiPage() {
   const { data } = await sanityFetch({ query: legalDocumentsQuery });
-  const statutesUrl: string | undefined = data?.statutesUrl || undefined;
-  const ethicsUrl: string | undefined = data?.ethicsUrl || undefined;
+
+  // Extract data
+  const introTitle = data?.introTitle;
+  const introText = data?.introText;
+  const introImageUrl = data?.introImageUrl;
+  const statutesUrl = data?.statutesUrl;
+  const ethicsTitle = data?.ethicsTitle;
+  const ethicsDescription = data?.ethicsDescription;
+  const ethicsValuesIntro = data?.ethicsValuesIntro;
+  const ethicsValues = data?.ethicsValues;
+  const ethicsNotes = data?.ethicsNotes;
+  const ethicsUrl = data?.ethicsUrl;
+  const privacyTitle = data?.privacyTitle;
+  const privacyDescription = data?.privacyDescription;
+  const privacyUrl = data?.privacyUrl;
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header Section */}
-      <div className="bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 py-16">
-          <div className="flex items-center gap-2 text-sm mb-6">
-            <Link href="/" className="text-gray-500 hover:text-gray-700">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 pt-12 pb-16 border-b border-gray-200/50 overflow-hidden">
+        {/* Decorative Shapes */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-gray-100/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-tr from-gray-200/20 to-transparent rounded-full blur-2xl" />
+        <div className="absolute top-1/2 right-1/4 w-32 h-32 border-2 border-gray-200/40 rounded-2xl rotate-12" />
+        <div className="absolute bottom-8 right-12 w-24 h-24 border-2 border-blue-200/30 rounded-full" />
+        <div className="absolute top-8 left-1/2 w-16 h-16 bg-gray-300/10 rounded-lg rotate-45" />
+
+        <div className="max-w-7xl mx-auto px-8 lg:px-12 relative">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 mb-8 text-gray-500">
+            <Link href="/" className="hover:text-gray-700">
               Pradžia
             </Link>
             <svg
-              className="size-3.5 text-gray-400"
+              className="size-4 text-gray-400"
               fill="none"
               viewBox="0 0 14 14"
             >
@@ -47,14 +53,11 @@ export default async function IstataiPage() {
                 strokeWidth="1.16667"
               />
             </svg>
-            <Link
-              href="/apie/istorija"
-              className="text-gray-500 hover:text-gray-700"
-            >
+            <Link href="/apie/istorija" className="hover:text-gray-700">
               Apie mus
             </Link>
             <svg
-              className="size-3.5 text-gray-400"
+              className="size-4 text-gray-400"
               fill="none"
               viewBox="0 0 14 14"
             >
@@ -69,225 +72,199 @@ export default async function IstataiPage() {
             <span className="text-gray-900">Įstatai</span>
           </div>
 
-          <h1 className="mb-6 text-5xl text-gray-900">Įstatai</h1>
-          <p className="text-gray-600 max-w-3xl text-xl">
-            Asociacijos veiklą reglamentuojantys pagrindiniai dokumentai
-          </p>
-
-          <div className="mt-6 w-16 h-1 bg-gradient-to-r from-[#fe9a00] to-[#e17100] rounded-full" />
+          <div className="mb-12">
+            <h1 className="mb-3 text-5xl md:text-6xl lg:text-7xl">Įstatai</h1>
+          </div>
         </div>
       </div>
 
       {/* Introduction Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-2xl text-gray-900 mb-8">
-                Teisinė ir etinė struktūra
-              </h2>
+      {(introTitle || introText || introImageUrl || statutesUrl) && (
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-8 lg:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                {introTitle && (
+                  <h2 className="text-3xl text-gray-900 mb-8">{introTitle}</h2>
+                )}
 
-              <div className="space-y-5 text-gray-600 leading-relaxed text-lg">
-                <p>
-                  Kauno krašto pramonininkų ir darbdavių asociacija (KKPDA) –
-                  ribotos civilinės atsakomybės viešasis juridinis asmuo,
-                  veikiantis asociacijos teisine forma.
-                </p>
-                <p>
-                  Asociacija vienija gamybos, paslaugų, švietimo, mokslo ir
-                  kitų sričių organizacijas, siekiančias stiprinti Kauno
-                  regiono ir visos šalies ekonominę, socialinę bei
-                  technologinę pažangą.
-                </p>
-                <p>
-                  Asociacijos veiklą reglamentuoja{" "}
-                  <span className="font-medium text-gray-900">
-                    KKPDA įstatai
-                  </span>
-                  , įregistruoti Juridinių asmenų registre{" "}
-                  <span className="font-medium text-gray-900">
-                    2021 m. gruodžio 7 d.
-                  </span>
-                </p>
+                {introText && (
+                  <article className="prose prose-lg max-w-none text-gray-600">
+                    <PortableText value={introText as any} />
+                  </article>
+                )}
+
+                {statutesUrl && (
+                  <a
+                    href={statutesUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group mt-10 inline-flex items-center gap-3 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-xl font-medium hover:from-slate-800 hover:to-slate-900 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                  >
+                    Peržiūrėti KKPDA įstatus
+                    <ExternalLink className="size-4 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+                )}
               </div>
 
-              {statutesUrl ? (
-                <a
-                  href={statutesUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group mt-10 inline-flex items-center gap-3 bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white px-8 py-4 rounded-xl font-medium hover:shadow-xl hover:shadow-orange-500/20 hover:scale-[1.02] transition-all"
-                >
-                  <FileText className="size-5" />
-                  Peržiūrėti KKPDA įstatus
-                  <ExternalLink className="size-4 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              ) : (
-                <div className="group mt-10 inline-flex items-center gap-3 bg-gray-300 text-gray-500 px-8 py-4 rounded-xl font-medium cursor-not-allowed">
-                  <FileText className="size-5" />
-                  Peržiūrėti KKPDA įstatus
-                  <ExternalLink className="size-4 opacity-75" />
+              {introImageUrl && (
+                <div className="relative h-[550px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-slate-500/10 transition-shadow">
+                  <Image
+                    src={introImageUrl}
+                    alt="Įstatai"
+                    fill
+                    className="object-cover object-right"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
                 </div>
               )}
             </div>
-
-            <div className="relative h-[550px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-orange-500/10 transition-shadow">
-              <Image
-                src="/images/EK.png"
-                alt="Etikos kodeksas"
-                fill
-                className="object-cover object-right"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Ethics Code Detailed Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-8">
-          {/* Header */}
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-2 bg-orange-50 rounded-full px-4 py-2 mb-4">
-              <Shield className="size-4 text-[#fe9a00]" />
-              <span className="text-[#fe9a00] font-medium text-sm">
-                Etikos kodeksas
-              </span>
-            </div>
-            <h2 className="text-2xl text-gray-900 mb-4">
-              Vertybės ir principai
-            </h2>
-            <p className="text-gray-600 leading-relaxed max-w-3xl">
-              KKPDA Etikos kodeksas – tai{" "}
-              <span className="font-medium text-gray-900">
-                bendruomenės veikimo kultūros pagrindas
-              </span>
-              , apibrėžiantis elgesio ir atsakomybės principus, kurių laikosi
-              visi asociacijos nariai, vadovai ir atstovaujančios įstaigos.
-            </p>
+      {(ethicsTitle ||
+        ethicsDescription ||
+        ethicsValues?.length ||
+        ethicsNotes?.length ||
+        ethicsUrl) && (
+        <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50/20">
+          <div className="max-w-6xl mx-auto px-8 lg:px-12">
+            {/* Header */}
+            {(ethicsTitle || ethicsDescription) && (
+              <div className="mb-12">
+                {ethicsTitle && (
+                  <h2 className="text-3xl text-gray-900 mb-4">{ethicsTitle}</h2>
+                )}
+                {ethicsDescription && (
+                  <p className="text-gray-600 leading-relaxed">
+                    {ethicsDescription}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Core Values - Highlighted Section */}
+            {(ethicsValuesIntro ||
+              (ethicsValues && ethicsValues.length > 0)) && (
+              <div className="bg-white border border-gray-200 rounded-3xl p-8 sm:p-10 lg:p-12 shadow-lg mb-16">
+                {ethicsValuesIntro && (
+                  <p className="text-gray-800 text-xl sm:text-2xl leading-relaxed mb-10 text-center">
+                    {ethicsValuesIntro}
+                  </p>
+                )}
+
+                {ethicsValues && ethicsValues.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {ethicsValues.map(
+                      (value: { title: string }, index: number) => {
+                        return (
+                          <div key={index} className="group relative">
+                            {/* Card content */}
+                            <div className="relative p-6 rounded-2xl bg-white border border-gray-200 hover:border-slate-300 hover:shadow-xl transition-all duration-300 h-full">
+                              {/* Accent bar */}
+                              <div className="w-12 h-1 bg-gradient-to-r from-slate-700 to-slate-500 rounded-full mb-5"></div>
+
+                              <span className="text-gray-900 font-semibold leading-snug block">
+                                {value.title}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Bottom Section */}
+            {((ethicsNotes && ethicsNotes.length > 0) || ethicsUrl) && (
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-sm">
+                {ethicsNotes && ethicsNotes.length > 0 && (
+                  <div
+                    className={`grid grid-cols-1 ${ethicsNotes.length >= 3 ? "lg:grid-cols-3" : ethicsNotes.length === 2 ? "lg:grid-cols-2" : ""} gap-6 lg:gap-8 mb-8 lg:mb-10`}
+                  >
+                    {ethicsNotes.map(
+                      (
+                        note: { text: string; isItalic?: boolean },
+                        index: number
+                      ) => {
+                        return (
+                          <div
+                            key={index}
+                            className="group relative pl-5 border-l-2 border-slate-200 hover:border-slate-500 transition-colors"
+                          >
+                            <p
+                              className={`text-gray-700 leading-relaxed text-sm ${
+                                note.isItalic ? "italic" : ""
+                              }`}
+                            >
+                              {note.text}
+                            </p>
+                          </div>
+                        );
+                      }
+                    )}
+                  </div>
+                )}
+
+                {/* CTA Button */}
+                {ethicsUrl && (
+                  <div className="text-center pt-2 lg:pt-4">
+                    <a
+                      href={ethicsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-3 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-xl font-medium hover:from-slate-800 hover:to-slate-900 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                    >
+                      Peržiūrėti Etikos Kodeksą
+                      <ExternalLink className="size-4 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
+        </section>
+      )}
 
-          {/* Core Values - Highlighted Section */}
-          <div className="bg-gradient-to-br from-gray-50 via-orange-50/30 to-gray-50 border-2 border-orange-200 rounded-3xl p-8 sm:p-10 lg:p-12 shadow-xl mb-16">
-            <p className="text-gray-800 text-xl sm:text-2xl leading-relaxed mb-8 text-center">
-              Kodeksas nustato aiškias vertybes, kuriomis grindžiami KKPDA
-              narių tarpusavio santykiai ir bendravimas su išoriniais
-              partneriais:
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="flex items-center gap-4 bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-[#fe9a00] hover:shadow-lg transition-all">
-                <div className="size-12 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Eye className="size-7 text-[#fe9a00]" />
+      {/* Privacy Policy Section */}
+      {(privacyTitle || privacyDescription || privacyUrl) && (
+        <section className="py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-8 lg:px-12">
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 sm:p-10 lg:p-12">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div>
+                  {privacyTitle && (
+                    <h2 className="text-2xl sm:text-3xl text-gray-900 mb-3">
+                      {privacyTitle}
+                    </h2>
+                  )}
+                  {privacyDescription && (
+                    <p className="text-gray-600 leading-relaxed max-w-2xl">
+                      {privacyDescription}
+                    </p>
+                  )}
                 </div>
-                <span className="text-gray-900 font-medium leading-tight">
-                  Skaidrumas ir sąžiningumas
-                </span>
-              </div>
 
-              <div className="flex items-center gap-4 bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-[#fe9a00] hover:shadow-lg transition-all">
-                <div className="size-12 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Heart className="size-7 text-[#fe9a00]" />
-                </div>
-                <span className="text-gray-900 font-medium leading-tight">
-                  Pagarba ir pasitikėjimas
-                </span>
+                {privacyUrl && (
+                  <a
+                    href={privacyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-3 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-xl font-medium hover:from-slate-800 hover:to-slate-900 hover:shadow-xl hover:-translate-y-0.5 transition-all shrink-0"
+                  >
+                    Peržiūrėti dokumentą
+                    <ExternalLink className="size-4 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+                )}
               </div>
-
-              <div className="flex items-center gap-4 bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-[#fe9a00] hover:shadow-lg transition-all">
-                <div className="size-12 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Handshake className="size-7 text-[#fe9a00]" />
-                </div>
-                <span className="text-gray-900 font-medium leading-tight">
-                  Etiškas konkuravimas ir verslo solidarumas
-                </span>
-              </div>
-
-              <div className="flex items-center gap-4 bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-[#fe9a00] hover:shadow-lg transition-all">
-                <div className="size-12 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Leaf className="size-7 text-[#fe9a00]" />
-                </div>
-                <span className="text-gray-900 font-medium leading-tight">
-                  Žmogaus teisių ir tvarumo principai
-                </span>
-              </div>
-
-              <div className="flex items-center gap-4 bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-[#fe9a00] hover:shadow-lg transition-all">
-                <div className="size-12 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center shrink-0">
-                  <ShieldX className="size-7 text-[#fe9a00]" />
-                </div>
-                <span className="text-gray-900 font-medium leading-tight">
-                  Korupcijos netoleravimas
-                </span>
-              </div>
-
-              <div className="flex items-center gap-4 bg-white border-2 border-gray-200 rounded-xl p-5 hover:border-[#fe9a00] hover:shadow-lg transition-all">
-                <div className="size-12 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Lock className="size-7 text-[#fe9a00]" />
-                </div>
-                <span className="text-gray-900 font-medium leading-tight">
-                  Reputacijos ir konfidencialumo apsauga
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Section */}
-          <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl p-6 sm:p-8 lg:p-10">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10 mb-8 lg:mb-10">
-              <div className="flex gap-3">
-                <CheckCircle className="size-5 text-[#fe9a00] shrink-0 mt-0.5" />
-                <p className="text-gray-700 leading-relaxed text-sm">
-                  Etikos kodeksas įpareigoja visus KKPDA narius elgtis
-                  atsakingai, laikytis sąžiningumo, protingumo ir teisingumo
-                  principų. Jo laikymasis – kiekvieno nario garbės reikalas.
-                </p>
-              </div>
-
-              <div className="flex gap-3">
-                <Scale className="size-5 text-[#fe9a00] shrink-0 mt-0.5" />
-                <p className="text-gray-700 leading-relaxed text-sm">
-                  Pažeidimų atveju sprendimus priima Asociacijos Prezidiumas,
-                  užtikrindamas vienodą, skaidrią ir garbingą standartų
-                  taikymą.
-                </p>
-              </div>
-
-              <div className="flex gap-3">
-                <Shield className="size-5 text-[#fe9a00] shrink-0 mt-0.5" />
-                <p className="text-gray-700 leading-relaxed text-sm italic">
-                  Etika KKPDA – tai ne dokumentas ar veikimo kultūros
-                  pagrindas. Ji grįsta pagarba, atsakomybe ir pasitikėjimu,
-                  kurie kuria stiprų ir patikimą bendruomenės stimulą.
-                </p>
-              </div>
-            </div>
-
-            {/* CTA Button */}
-            <div className="text-center pt-2 lg:pt-4">
-              {ethicsUrl ? (
-                <a
-                  href={ethicsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white px-8 py-4 rounded-xl font-medium hover:shadow-xl hover:shadow-orange-500/20 hover:scale-[1.02] transition-all"
-                >
-                  <Shield className="size-5" />
-                  Peržiūrėti Etikos Kodeksą
-                  <ExternalLink className="size-4 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              ) : (
-                <div className="group inline-flex items-center gap-3 bg-gray-300 text-gray-500 px-8 py-4 rounded-xl font-medium cursor-not-allowed">
-                  <Shield className="size-5" />
-                  Peržiūrėti Etikos Kodeksą
-                  <ExternalLink className="size-4 opacity-75" />
-                </div>
-              )}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

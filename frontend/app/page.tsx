@@ -2,9 +2,9 @@ import { sanityFetch } from "@/sanity/lib/live";
 import {
   newsQuery,
   membersCountQuery,
-  strategicDirectionsQuery,
+  apieKkpdaQuery,
   partnersQuery,
-  membershipInfoQuery,
+  narystesNaudosQuery,
   contactInfoQuery,
 } from "@/sanity/lib/queries";
 import { NewsCarousel } from "./components/NewsCarousel";
@@ -48,21 +48,21 @@ export default async function Page() {
   const [
     { data: newsData },
     { data: membersCount },
-    { data: veiklaData },
+    { data: apieKkpdaData },
     { data: partners },
-    { data: membership },
+    { data: narystesNaudos },
     { data: contactInfo },
   ] = await Promise.all([
     sanityFetch({ query: newsQuery }),
     sanityFetch({ query: membersCountQuery }),
-    sanityFetch({ query: strategicDirectionsQuery }),
+    sanityFetch({ query: apieKkpdaQuery }),
     sanityFetch({ query: partnersQuery }),
-    sanityFetch({ query: membershipInfoQuery }),
+    sanityFetch({ query: narystesNaudosQuery }),
     sanityFetch({ query: contactInfoQuery }),
   ]);
 
-  const misija = veiklaData?.misija;
-  const vizija = veiklaData?.vizija;
+  const misija = apieKkpdaData?.misija;
+  const vizija = apieKkpdaData?.vizija;
 
   // Calculate full years of activity since 1989-12-22
   const now = new Date();
@@ -108,12 +108,13 @@ export default async function Page() {
       />
 
       {/* Member Benefits */}
-      <MemberBenefits benefits={membership?.benefitsText ?? undefined} />
+      <MemberBenefits benefits={narystesNaudos?.benefitsText ?? undefined} />
 
       {/* Membership CTA */}
       <MembershipCTA
         membersCount={membersCount || 0}
         yearsOfActivity={yearsOfActivity}
+        apyvarta={apieKkpdaData?.apyvarta ?? undefined}
         contactInfo={contactInfo}
       />
     </div>

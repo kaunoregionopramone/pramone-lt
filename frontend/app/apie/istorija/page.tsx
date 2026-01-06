@@ -1,45 +1,36 @@
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
-import {
-  istorijaQuery,
-  membersCountQuery,
-} from "@/sanity/lib/queries";
+import { istorijaQuery } from "@/sanity/lib/queries";
 import type { IstorijaQueryResult } from "@/sanity.types";
 import { HistoryTimeline } from "@/app/components/HistoryTimeline";
 import PortableText from "@/app/components/PortableText";
-import {
-  Users,
-  TrendingUp,
-  Calendar as CalendarIcon,
-} from "lucide-react";
 
 export default async function IstorijaPage() {
-  const [{ data: istorijaData }, { data: membersCount }] = await Promise.all([
-    sanityFetch({ query: istorijaQuery }),
-    sanityFetch({ query: membersCountQuery }),
-  ]);
+  const { data: istorijaData } = await sanityFetch({ query: istorijaQuery });
 
   const data = istorijaData as IstorijaQueryResult;
   const pastPresidents = data?.pastPresidents || [];
   const ourHistory = data?.ourHistory;
-  const turnover = data?.turnover;
-
-  // Calculate years of activity (from 1989 to current year)
-  const foundingYear = 1989;
-  const currentYear = new Date().getFullYear();
-  const yearsOfActivity = currentYear - foundingYear;
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header Section */}
-      <div className="bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 py-16">
-          <div className="flex items-center gap-2 text-sm mb-6">
-            <Link href="/" className="text-gray-500 hover:text-gray-700">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 pt-12 pb-16 border-b border-gray-200/50 overflow-hidden">
+        {/* Decorative Shapes */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-gray-100/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-tr from-gray-200/20 to-transparent rounded-full blur-2xl" />
+        <div className="absolute top-1/2 right-1/4 w-32 h-32 border-2 border-gray-200/40 rounded-2xl rotate-12" />
+        <div className="absolute bottom-8 right-12 w-24 h-24 border-2 border-blue-200/30 rounded-full" />
+        <div className="absolute top-8 left-1/2 w-16 h-16 bg-gray-300/10 rounded-lg rotate-45" />
+
+        <div className="max-w-7xl mx-auto px-12 relative">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 mb-8 text-gray-500">
+            <Link href="/" className="hover:text-gray-700">
               Pradžia
             </Link>
             <svg
-              className="size-3.5 text-gray-400"
+              className="size-4 text-gray-400"
               fill="none"
               viewBox="0 0 14 14"
             >
@@ -51,14 +42,11 @@ export default async function IstorijaPage() {
                 strokeWidth="1.16667"
               />
             </svg>
-            <Link
-              href="/apie/istorija"
-              className="text-gray-500 hover:text-gray-700"
-            >
+            <Link href="/apie/istorija" className="hover:text-gray-700">
               Apie mus
             </Link>
             <svg
-              className="size-3.5 text-gray-400"
+              className="size-4 text-gray-400"
               fill="none"
               viewBox="0 0 14 14"
             >
@@ -73,85 +61,43 @@ export default async function IstorijaPage() {
             <span className="text-gray-900">Istorija</span>
           </div>
 
-          <h1 className="mb-6 text-5xl text-gray-900">Istorija</h1>
-          <p className="text-gray-600 max-w-3xl text-xl">
-            Kauno krašto pramonininkų ir darbdavių asociacija – viena seniausių
-            ir įtakingiausių verslo organizacijų Lietuvoje
-          </p>
-
-          <div className="mt-6 w-16 h-1 bg-gradient-to-r from-[#fe9a00] to-[#e17100] rounded-full" />
+          <div className="mb-12">
+            <h1 className="mb-3 text-5xl md:text-6xl lg:text-7xl">Istorija</h1>
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-8 py-16">
-        {/* Mūsų istorija Section */}
-        {ourHistory && (
-          <div className="mb-16">
-            <h2 className="text-2xl text-[#101828] mb-6">Mūsų istorija</h2>
-            <article className="prose prose-lg max-w-none text-[#4a5565]">
-              <PortableText value={ourHistory as any} />
-            </article>
-          </div>
-        )}
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 p-8 bg-gray-50 rounded-2xl border border-gray-100">
-          <div className="text-center">
-            <div className="flex justify-center mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#FE9A00] to-[#E17100] rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
-              </div>
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-12">
+          {/* Mūsų istorija Section */}
+          {ourHistory && (
+            <div>
+              <h2 className="text-4xl mb-8">Mūsų istorija</h2>
+              <article className="prose prose-lg max-w-none text-gray-600">
+                <PortableText value={ourHistory as any} />
+              </article>
             </div>
-            <div className="text-3xl font-bold text-[#101828] mb-1">
-              {membersCount || 0}+
-            </div>
-            <div className="text-sm text-[#4a5565]">Narių</div>
-          </div>
-          <div className="text-center">
-            <div className="flex justify-center mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#FE9A00] to-[#E17100] rounded-xl flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-white" />
-              </div>
-            </div>
-            <div className="text-3xl font-bold text-[#101828] mb-1">
-              {yearsOfActivity}+
-            </div>
-            <div className="text-sm text-[#4a5565]">Metų patirtis</div>
-          </div>
-          <div className="text-center">
-            <div className="flex justify-center mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#FE9A00] to-[#E17100] rounded-xl flex items-center justify-center">
-                <CalendarIcon className="w-6 h-6 text-white" />
-              </div>
-            </div>
-            <div className="text-3xl font-bold text-[#101828] mb-1">{turnover || "0"} mlrd.</div>
-            <div className="text-sm text-[#4a5565]">Pajamų</div>
-          </div>
+          )}
         </div>
-
-      </div>
+      </section>
 
       {/* Timeline Section */}
       {pastPresidents && pastPresidents.length > 0 && (
-        <div className="bg-gray-50 py-20 border-y border-gray-100">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-[#101828] mb-4">
-                KKPDA vadovai
-              </h2>
-              <p className="text-lg text-[#4a5565] leading-[1.7]">
+        <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50/20">
+          <div className="max-w-7xl mx-auto px-12">
+            <div className="text-center mb-16">
+              <div className="w-12 h-1 bg-gray-800 rounded-full mx-auto mb-6" />
+              <h2 className="text-4xl mb-4">KKPDA vadovai</h2>
+              <p className="text-lg text-gray-500">
                 Asociacijos prezidentai nuo pat įkūrimo 1989 metais iki šių
                 dienų
               </p>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#FE9A00] to-[#E17100] mx-auto mt-6 rounded-full"></div>
             </div>
             <HistoryTimeline events={pastPresidents} />
           </div>
-        </div>
+        </section>
       )}
-
-
     </div>
   );
 }

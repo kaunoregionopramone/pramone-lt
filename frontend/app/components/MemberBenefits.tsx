@@ -1,16 +1,5 @@
 'use client';
 
-import { 
-  Briefcase, 
-  Users, 
-  BookOpen, 
-  Globe, 
-  Shield, 
-  TrendingUp,
-  FileText,
-  Award
-} from 'lucide-react';
-
 interface Benefit {
   _key: string;
   title: string;
@@ -22,93 +11,60 @@ interface MemberBenefitsProps {
 }
 
 export function MemberBenefits({ benefits: sanityBenefits }: MemberBenefitsProps) {
-  const defaultBenefits = [
-    {
-      icon: Briefcase,
-      title: 'Verslo konsultacijos',
-      description: 'Gaukite profesionalias konsultacijas verslo, teisės ir ekonomikos klausimais.',
-    },
-    {
-      icon: Users,
-      title: 'Tinklaveika',
-      description: 'Prisijunkite prie didžiausio verslininkų tinklo Kauno regione.',
-    },
-    {
-      icon: BookOpen,
-      title: 'Mokymai ir seminarai',
-      description: 'Dalyvaukite nemokamose mokymo programose ir konferencijose.',
-    },
-    {
-      icon: Globe,
-      title: 'Tarptautiniai ryšiai',
-      description: 'Galimybė bendradarbiauti su užsienio verslo asociacijomis.',
-    },
-    {
-      icon: Shield,
-      title: 'Teisių apsauga',
-      description: 'Atstovaujame narių interesus valstybinėse institucijose.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Verslo plėtra',
-      description: 'Pagalba ieškant naujų verslo galimybių ir partnerių.',
-    },
-    {
-      icon: FileText,
-      title: 'Informacija',
-      description: 'Reguliariai teikiame aktualią verslo ir teisės informaciją.',
-    },
-    {
-      icon: Award,
-      title: 'Pripažinimas',
-      description: 'Dalyvavimas konkursuose ir nominacijose verslo bendruomenėje.',
-    },
-  ];
+  // Don't render if no benefits provided
+  if (!sanityBenefits || sanityBenefits.length === 0) {
+    return null;
+  }
 
-  const icons = [Briefcase, Users, BookOpen, Globe, Shield, TrendingUp, FileText, Award];
-
-  // Use Sanity benefits if available, otherwise use defaults
-  const benefits = sanityBenefits && sanityBenefits.length > 0
-    ? sanityBenefits.map((b, idx) => ({
-        icon: icons[idx % icons.length],
-        title: b.title,
-        description: b.description1 || '',
-      }))
-    : defaultBenefits;
+  const benefits = sanityBenefits.map((b) => ({
+    title: b.title,
+    description: b.description1 || '',
+  }));
 
   return (
-    <section className="bg-white py-20 relative">
-      {/* Subtle background decoration */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute bottom-20 left-20 w-64 h-64 bg-amber-500 rounded-full blur-3xl"></div>
+    <section className="bg-gradient-to-br from-gray-50 via-white to-gray-50 py-32 relative border-b border-gray-100">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden opacity-40">
+        <div className="absolute top-20 right-10 w-96 h-96 bg-slate-200 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 left-10 w-80 h-80 bg-gray-200 rounded-full blur-3xl"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl text-gray-900 mb-4">Narystės naudos</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl text-gray-900 mb-6">Narystės naudos</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Tapę mūsų asociacijos nariais, gausite prieigą prie išskirtinių galimybių 
             ir paslaugų, skirtų jūsų verslo augimui ir plėtrai
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => {
-            const Icon = benefit.icon;
+            const number = String(index + 1).padStart(2, '0');
             return (
               <div
                 key={index}
-                className="group p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-100 hover:border-amber-300 hover:shadow-xl transition-all duration-300"
+                className="group relative"
               >
-                <div className="w-14 h-14 mb-4 rounded-xl bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center group-hover:from-amber-500 group-hover:to-amber-600 group-hover:scale-110 transition-all duration-300">
-                  <Icon className="w-7 h-7 text-amber-600 group-hover:text-white transition-colors" />
+                {/* Decorative number background */}
+                <div className="absolute -top-6 -left-6 text-[140px] font-bold text-slate-100 select-none pointer-events-none transition-all duration-300 group-hover:text-slate-200 leading-none">
+                  {number}
                 </div>
-                <h3 className="text-gray-900 mb-2 font-semibold">
-                  {benefit.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {benefit.description}
-                </p>
+                
+                {/* Card content */}
+                <div className="relative p-8 rounded-3xl bg-white border border-gray-200 hover:border-slate-300 hover:shadow-2xl transition-all duration-300 h-full">
+                  <div className="mb-6">
+                    <div className="w-16 h-1 bg-gradient-to-r from-slate-700 to-slate-500 rounded-full"></div>
+                  </div>
+                  
+                  <h3 className="text-2xl text-gray-900 mb-4 font-semibold">
+                    {benefit.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 leading-relaxed text-base">
+                    {benefit.description}
+                  </p>
+                </div>
               </div>
             );
           })}
@@ -117,4 +73,3 @@ export function MemberBenefits({ benefits: sanityBenefits }: MemberBenefitsProps
     </section>
   );
 }
-

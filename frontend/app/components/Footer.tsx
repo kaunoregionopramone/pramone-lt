@@ -1,13 +1,15 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, Building2 } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { sanityFetch } from "@/sanity/lib/live";
-import { contactInfoQuery } from "@/sanity/lib/queries";
+import { contactInfoQuery, apieKkpdaQuery } from "@/sanity/lib/queries";
+import { toPlainText } from "@/lib/portableTextUtils";
 import Image from "next/image";
 
 export default async function Footer() {
-  const { data: contactInfo } = await sanityFetch({
-    query: contactInfoQuery,
-  });
+  const [{ data: contactInfo }, { data: apieKkpda }] = await Promise.all([
+    sanityFetch({ query: contactInfoQuery }),
+    sanityFetch({ query: apieKkpdaQuery }),
+  ]);
   return (
     <footer className="bg-gray-900 text-white py-16">
       <div className="max-w-7xl mx-auto px-8">
@@ -22,10 +24,10 @@ export default async function Footer() {
                 height={64}
               />
             </Link>
-            <p className="text-gray-400 text-sm">
-              Kauno krašto pramonininkų ir darbdavių asociacija - viena
-              seniausių ir įtakingiausių verslo organizacijų Lietuvoje, įsteigta
-              1998 metais.
+            <p className="text-gray-400 text-sm mt-4">
+              {apieKkpda?.kasEsame
+                ? toPlainText(apieKkpda.kasEsame)
+                : "Kauno krašto pramonininkų ir darbdavių asociacija - viena seniausių ir įtakingiausių verslo organizacijų Lietuvoje."}
             </p>
           </div>
 
@@ -85,13 +87,13 @@ export default async function Footer() {
               <ul className="space-y-3 text-sm">
                 {contactInfo?.address && (
                   <li className="flex items-start gap-2 text-gray-400">
-                    <MapPin className="size-4 text-[#fe9a00] mt-0.5 shrink-0" />
+                    <MapPin className="size-4 text-white mt-0.5 shrink-0" />
                     <span>{contactInfo.address}</span>
                   </li>
                 )}
                 {contactInfo?.phone && (
                   <li className="flex items-center gap-2 text-gray-400">
-                    <Phone className="size-4 text-[#fe9a00] shrink-0" />
+                    <Phone className="size-4 text-white shrink-0" />
                     <a
                       href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
                       className="hover:text-white transition-colors"
@@ -102,7 +104,7 @@ export default async function Footer() {
                 )}
                 {contactInfo?.email && (
                   <li className="flex items-center gap-2 text-gray-400">
-                    <Mail className="size-4 text-[#fe9a00] shrink-0" />
+                    <Mail className="size-4 text-white shrink-0" />
                     <a
                       href={`mailto:${contactInfo.email}`}
                       className="hover:text-white transition-colors"

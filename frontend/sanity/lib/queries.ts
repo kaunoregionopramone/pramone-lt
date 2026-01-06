@@ -1,5 +1,29 @@
 import { defineQuery } from "next-sanity";
 
+export const apieKkpdaQuery = defineQuery(`
+  *[_id == "apieKkpda"][0] {
+    kasEsame,
+    kaAtstovaujame,
+    musuMisija,
+    musuVizija,
+    misija,
+    vizija,
+    strateginesVeiklosKryptys[] {
+      _key,
+      title
+    },
+    kurEiname,
+    "kurEinamePaveikslasUrl": kurEinamePaveikslas.asset->url,
+    darboVietos,
+    apyvarta,
+    organizacijos[] {
+      pavadinimas,
+      aprasymas,
+      "logoUrl": logo.asset->url
+    }
+  }
+`);
+
 export const leadershipQuery = defineQuery(`
   *[_type == "leadership"] | order(role asc, name asc) {
     _id,
@@ -106,7 +130,6 @@ export const singleNewsQuery = defineQuery(`
 
 export const istorijaQuery = defineQuery(`
   *[_id == "istorija"][0] {
-    turnover,
     ourHistory,
     "pastPresidents": pastPresidents[] {
       _key,
@@ -143,16 +166,6 @@ export const membersQuery = defineQuery(`
   }
 `);
 
-export const strategicDirectionsQuery = defineQuery(`
-  *[_id == "veikla"][0] {
-    misija,
-    vizija,
-    "strategicDirections": strategicDirections[] {
-      _key,
-      title
-    }
-  }
-`);
 
 export const partnersQuery = defineQuery(`
   *[_id == "partneriai"][0] {
@@ -181,23 +194,30 @@ export const contactInfoQuery = defineQuery(`
 
 export const legalDocumentsQuery = defineQuery(`
   *[_type == "istatai"][0] {
+    introTitle,
+    introText,
+    "introImageUrl": introImage.asset->url,
     "statutesUrl": statutesFile.asset->url,
     "statutesName": statutesFile.asset->originalFilename,
+    ethicsTitle,
+    ethicsDescription,
+    ethicsValuesIntro,
+    ethicsValues[] {
+      title
+    },
+    ethicsNotes[] {
+      text,
+      isItalic
+    },
     "ethicsUrl": ethicsFile.asset->url,
-    "ethicsName": ethicsFile.asset->originalFilename
+    "ethicsName": ethicsFile.asset->originalFilename,
+    privacyTitle,
+    privacyDescription,
+    "privacyUrl": privacyFile.asset->url,
+    "privacyName": privacyFile.asset->originalFilename
   }
 `);
 
-export const activityReportsQuery = defineQuery(`
-  *[_id == "veikla"][0] {
-    "reports": ataskaitos[] {
-      _key,
-      period,
-      "fileUrl": file.asset->url,
-      "fileName": file.asset->originalFilename
-    }
-  }
-`);
 
 export const eventsListQuery = defineQuery(`
   *[_type == "event" &&
@@ -241,6 +261,13 @@ export const singleEventQuery = defineQuery(`
 export const membershipInfoQuery = defineQuery(`
   *[_id == "membershipInfo"][0] {
     whyJoinText,
+    whoCanJoinTitle,
+    whoCanJoinText,
+    whoCanJoinHighlights[] {
+      _key,
+      title,
+      description
+    },
     requiredDocuments[] {
       _key,
       title,
@@ -248,7 +275,9 @@ export const membershipInfoQuery = defineQuery(`
       "fileUrl": file.asset->url,
       "fileName": file.asset->originalFilename,
       buttonText
-    }
+    },
+    ctaTitle,
+    ctaText
   }
 `);
 
@@ -261,6 +290,32 @@ export const narystesNaudosQuery = defineQuery(`
       description2,
       description3,
       description4
+    }
+  }
+`);
+
+export const atstovavimasQuery = defineQuery(`
+  *[_id == "atstovavimas"][0] {
+    nationalActivities[] {
+      _key,
+      title,
+      description
+    },
+    regionalActivities[] {
+      _key,
+      title,
+      description
+    }
+  }
+`);
+
+export const veiklosAtaskaitosQuery = defineQuery(`
+  *[_id == "veiklosAtaskaitos"][0] {
+    "ataskaitos": ataskaitos[] {
+      _key,
+      period,
+      "fileUrl": file.asset->url,
+      "fileName": file.asset->originalFilename
     }
   }
 `);

@@ -31,7 +31,13 @@ export function PartnersSlider({ partners }: PartnersSliderProps) {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative py-16 overflow-hidden bg-white border-b border-gray-100">
+      {/* Subtle decorative background */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gray-400 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gray-300 rounded-full blur-3xl"></div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Infinite scroll container */}
         <div className="relative">
@@ -64,7 +70,7 @@ export function PartnersSlider({ partners }: PartnersSliderProps) {
         <div className="text-center mt-8">
           <Link
             href="/apie/partneriai"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors group text-sm"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-slate-700 transition-colors group text-sm"
           >
             <span>Visi partneriai</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -90,4 +96,3 @@ export function PartnersSlider({ partners }: PartnersSliderProps) {
     </section>
   );
 }
-

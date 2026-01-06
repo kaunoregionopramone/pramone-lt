@@ -8,12 +8,6 @@ export const istorija = defineType({
   icon: DocumentTextIcon,
   fields: [
     defineField({
-      name: 'turnover',
-      title: 'Pajamos (mlrd.)',
-      type: 'string',
-      description: 'Narių bendros pajamos, pvz. "3.5"',
-    }),
-    defineField({
       name: 'ourHistory',
       title: 'Mūsų istorija',
       type: 'blockContent',

@@ -18,7 +18,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
         <div key={event._key} className="flex gap-6 group">
           {/* Timeline dot and line */}
           <div className="flex flex-col items-center">
-            <div className="bg-[#FE9A00] rounded-full p-3 shadow-lg group-hover:scale-110 transition-transform">
+            <div className="bg-gray-800 rounded-full p-3 shadow-lg group-hover:scale-110 transition-transform">
               <Calendar className="w-5 h-5 text-white" />
             </div>
             {index !== events.length - 1 && (
@@ -29,10 +29,10 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
           {/* Content */}
           <div className="pb-8 flex-1">
             <div className="bg-white border border-gray-100 rounded-xl p-6 hover:shadow-md transition-shadow">
-              <div className="text-[#FE9A00] font-semibold mb-2">
+              <div className="text-gray-800 font-semibold mb-2">
                 {event.startYear} {event.endYear ? `— ${event.endYear}` : '— dabartis'}
               </div>
-              <h3 className="text-[#101828] font-bold text-lg">{event.name}</h3>
+              <h3 className="text-gray-900 font-bold text-lg">{event.name}</h3>
             </div>
           </div>
         </div>
@@ -40,4 +40,3 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
     </div>
   );
 }
-
