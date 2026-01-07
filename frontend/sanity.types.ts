@@ -889,18 +889,9 @@ export type AtstovavimasQueryResult = {
   nationalActivities: null;
   regionalActivities: null;
 } | null;
-// Variable: veiklosAtaskaitosQuery
-// Query: *[_id == "veiklosAtaskaitos"][0] {    "ataskaitos": ataskaitos[] {      _key,      period,      "fileUrl": file.asset->url,      "fileName": file.asset->originalFilename    }  }
-export type VeiklosAtaskaitosQueryResult = {
-  ataskaitos: null;
-} | {
-  ataskaitos: Array<{
-    _key: string;
-    period: string;
-    fileUrl: string | null;
-    fileName: string | null;
-  }> | null;
-} | null;
+// Variable: activityReportsQuery
+// Query: *[_type == "activityReport"] | order(_createdAt desc) {    _id,    period,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
+export type ActivityReportsQueryResult = Array<never>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -924,6 +915,6 @@ declare module "@sanity/client" {
     "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    whoCanJoinTitle,\n    whoCanJoinText,\n    whoCanJoinHighlights[] {\n      _key,\n      title,\n      description\n    },\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    },\n    ctaTitle,\n    ctaText\n  }\n": MembershipInfoQueryResult;
     "\n  *[_id == \"narystesNaudos\"][0] {\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    }\n  }\n": NarystesNaudosQueryResult;
     "\n  *[_id == \"atstovavimas\"][0] {\n    nationalActivities[] {\n      _key,\n      title,\n      description\n    },\n    regionalActivities[] {\n      _key,\n      title,\n      description\n    }\n  }\n": AtstovavimasQueryResult;
-    "\n  *[_id == \"veiklosAtaskaitos\"][0] {\n    \"ataskaitos\": ataskaitos[] {\n      _key,\n      period,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename\n    }\n  }\n": VeiklosAtaskaitosQueryResult;
+    "\n  *[_type == \"activityReport\"] | order(_createdAt desc) {\n    _id,\n    period,\n    \"fileUrl\": file.asset->url,\n    \"fileName\": file.asset->originalFilename\n  }\n": ActivityReportsQueryResult;
   }
 }

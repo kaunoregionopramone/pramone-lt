@@ -281,14 +281,12 @@ export const atstovavimasQuery = defineQuery(`
   }
 `);
 
-export const veiklosAtaskaitosQuery = defineQuery(`
-  *[_id == "veiklosAtaskaitos"][0] {
-    "ataskaitos": ataskaitos[] {
-      _key,
-      period,
-      "fileUrl": file.asset->url,
-      "fileName": file.asset->originalFilename
-    }
+export const activityReportsQuery = defineQuery(`
+  *[_type == "activityReport"] | order(_createdAt desc) {
+    _id,
+    period,
+    "fileUrl": file.asset->url,
+    "fileName": file.asset->originalFilename
   }
 `);
 

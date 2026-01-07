@@ -5,6 +5,7 @@ import {blockContent} from './objects/blockContent'
 import { member } from './documents/member'
 import { leadership } from './documents/leadership'
 import { news } from './documents/news'
+import { activityReport } from './documents/activityReport'
 import { contactInfo } from './singletons/contactInfo'
 import { legalDocuments } from './singletons/legalDocuments'
 import { membershipInfo } from './singletons/membershipInfo'
@@ -35,6 +36,7 @@ export const schemaTypes = [
   member,
   leadership,
   news,
+  activityReport,
   // Objects
   blockContent,
   infoSection,

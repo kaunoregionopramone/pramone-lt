@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
-import { veiklosAtaskaitosQuery } from "@/sanity/lib/queries";
+import { activityReportsQuery } from "@/sanity/lib/queries";
 import { FileText, ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function VeiklosAtaskaitosPage() {
-  const { data } = await sanityFetch({ query: veiklosAtaskaitosQuery });
-
-  const reports = data?.ataskaitos || [];
+  const { data: reports } = await sanityFetch({ query: activityReportsQuery });
 
   return (
     <div className="min-h-screen bg-white">
@@ -89,6 +87,7 @@ export default async function VeiklosAtaskaitosPage() {
                 (
                   report: {
                     _key?: string;
+                    _id?: string;
                     period?: string;
                     fileUrl?: string;
                     fileName?: string;
@@ -96,7 +95,7 @@ export default async function VeiklosAtaskaitosPage() {
                   index: number
                 ) => (
                   <div
-                    key={report._key || index}
+                    key={report._id || report._key || index}
                     className="bg-white border border-gray-100 rounded-xl p-8 hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-start gap-4">
