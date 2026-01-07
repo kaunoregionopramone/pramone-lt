@@ -625,23 +625,29 @@ export type ApieKkpdaQueryResult = {
   organizacijos: null;
 } | null;
 // Variable: leadershipQuery
-// Query: *[_type == "leadership"] | order(role asc, name asc) {    _id,    name,    position,    role,    "photo": photo{      asset->{        _id,        url      }    },    phone,    email  }
+// Query: *[_type == "leadership"] | order(role asc, name asc) {    _id,    name,    position,    role,    "photo": photo,    phone,    email  }
 export type LeadershipQueryResult = Array<{
   _id: string;
   name: string;
   position: string | null;
   role: "prezidentas" | "prezidiumoGarbesNarys" | "prezidiumoNarys" | "viceprezidentas";
   photo: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   };
   phone: string | null;
   email: string | null;
 }>;
 // Variable: newsQuery
-// Query: *[_type == "news"] | order(_createdAt desc) [0...5] {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage{      asset->{        _id,        url      }    },    _createdAt  }
+// Query: *[_type == "news"] | order(_createdAt desc) [0...5] {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    _createdAt  }
 export type NewsQueryResult = Array<{
   _id: string;
   title: string;
@@ -650,15 +656,21 @@ export type NewsQueryResult = Array<{
   isFeatured: boolean | null;
   content: BlockContent | null;
   coverImage: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   } | null;
   _createdAt: string;
 }>;
 // Variable: allNewsQuery
-// Query: *[_type == "news"] | order(isFeatured desc, _createdAt desc) {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage{      asset->{        _id,        url      }    },    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation  }
+// Query: *[_type == "news"] | order(isFeatured desc, _createdAt desc) {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation  }
 export type AllNewsQueryResult = Array<{
   _id: string;
   title: string;
@@ -667,10 +679,16 @@ export type AllNewsQueryResult = Array<{
   isFeatured: boolean | null;
   content: BlockContent | null;
   coverImage: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   } | null;
   _createdAt: string;
   eventStartDate: string | null;
@@ -688,7 +706,7 @@ export type RecentNewsQueryResult = Array<{
   _createdAt: string;
 }>;
 // Variable: singleNewsQuery
-// Query: *[_type == "news" && slug.current == $slug][0] {    _id,    title,    slug,    type,    content,    "coverImage": coverImage{      asset->{        _id,        url      }    },    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation,    entrance,    registrationUrl,    timeSlots,    "documents": documents[]{      title,      "file": file.asset->{        _id,        url,        originalFilename,        size      }    },    additionalInfo  }
+// Query: *[_type == "news" && slug.current == $slug][0] {    _id,    title,    slug,    type,    content,    "coverImage": coverImage,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation,    entrance,    registrationUrl,    timeSlots,    "documents": documents[]{      title,      "file": file.asset->{        _id,        url,        originalFilename,        size      }    },    additionalInfo  }
 export type SingleNewsQueryResult = {
   _id: string;
   title: string;
@@ -696,10 +714,16 @@ export type SingleNewsQueryResult = {
   type: "naujiena" | "renginys";
   content: BlockContent | null;
   coverImage: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   } | null;
   _createdAt: string;
   eventStartDate: string | null;
@@ -750,15 +774,21 @@ export type ValdymasSettingsQueryResult = {
 // Query: count(*[_type == "member"])
 export type MembersCountQueryResult = number;
 // Variable: membersQuery
-// Query: *[_type == "member"] | order(lower(company) asc) {    _id,    company,    "logo": logo{      asset->{        _id,        url      }    }  }
+// Query: *[_type == "member"] | order(lower(company) asc) {    _id,    company,    "logo": logo  }
 export type MembersQueryResult = Array<{
   _id: string;
   company: string;
   logo: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   } | null;
 }>;
 // Variable: partnersQuery
@@ -808,7 +838,7 @@ export type LegalDocumentsQueryResult = {
   privacyName: null;
 } | null;
 // Variable: eventsListQuery
-// Query: *[_type == "event" &&    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))  ] | order(coalesce(startAt, dateTime(date)) desc) {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    organizers,    excerpt,    "plainContent": pt::text(content),    "cover": images[0]{ asset->{ _id, url } }  }
+// Query: *[_type == "event" &&    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))  ] | order(coalesce(startAt, dateTime(date)) desc) {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    organizers,    excerpt,    "plainContent": pt::text(content),    "cover": images[0]  }
 export type EventsListQueryResult = Array<never>;
 // Variable: singleEventQuery
 // Query: *[_type == "event" && slug.current == $slug][0] {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    locationLat,    locationLng,    organizers,    excerpt,    content,    images[]{ asset->{ _id, url } }  }
@@ -877,19 +907,19 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_id == \"apieKkpda\"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    misija,\n    vizija,\n    strateginesVeiklosKryptys[] {\n      _key,\n      title\n    },\n    kurEiname,\n    \"kurEinamePaveikslasUrl\": kurEinamePaveikslas.asset->url,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      \"logoUrl\": logo.asset->url\n    }\n  }\n": ApieKkpdaQueryResult;
-    "\n  *[_type == \"leadership\"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    \"photo\": photo{\n      asset->{\n        _id,\n        url\n      }\n    },\n    phone,\n    email\n  }\n": LeadershipQueryResult;
-    "\n  *[_type == \"news\"] | order(_createdAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    _createdAt\n  }\n": NewsQueryResult;
-    "\n  *[_type == \"news\"] | order(isFeatured desc, _createdAt desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
+    "\n  *[_type == \"leadership\"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    \"photo\": photo,\n    phone,\n    email\n  }\n": LeadershipQueryResult;
+    "\n  *[_type == \"news\"] | order(_createdAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    _createdAt\n  }\n": NewsQueryResult;
+    "\n  *[_type == \"news\"] | order(isFeatured desc, _createdAt desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
     "\n  *[_type == \"news\"] | order(_createdAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    _createdAt\n  }\n": RecentNewsQueryResult;
-    "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
+    "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
     "\n  *[_id == \"istorija\"][0] {\n    ourHistory,\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
     "\n  *[_id == \"valdymasSettings\"][0] {\n    presidentMessage\n  }\n": ValdymasSettingsQueryResult;
     "\n  count(*[_type == \"member\"])\n": MembersCountQueryResult;
-    "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo{\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n": MembersQueryResult;
+    "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo\n  }\n": MembersQueryResult;
     "\n  *[_id == \"partneriai\"][0] {\n    \"cooperate\": partnersCooperate[] {\n      _key,\n      title,\n      \"logo\": logo.asset->url,\n      extra\n    },\n    \"agreements\": partnersAgreements[] {\n      _key,\n      title,\n      extra\n    }\n  }\n": PartnersQueryResult;
     "\n  *[_type == \"contactInfo\"][0] {\n    address,\n    phone,\n    email,\n    googleAddress\n  }\n": ContactInfoQueryResult;
     "\n  *[_type == \"istatai\"][0] {\n    introTitle,\n    introText,\n    \"introImageUrl\": introImage.asset->url,\n    \"statutesUrl\": statutesFile.asset->url,\n    \"statutesName\": statutesFile.asset->originalFilename,\n    ethicsTitle,\n    ethicsDescription,\n    ethicsValuesIntro,\n    ethicsValues[] {\n      title\n    },\n    ethicsNotes[] {\n      text,\n      isItalic\n    },\n    \"ethicsUrl\": ethicsFile.asset->url,\n    \"ethicsName\": ethicsFile.asset->originalFilename,\n    privacyTitle,\n    privacyDescription,\n    \"privacyUrl\": privacyFile.asset->url,\n    \"privacyName\": privacyFile.asset->originalFilename\n  }\n": LegalDocumentsQueryResult;
-    "\n  *[_type == \"event\" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    \"plainContent\": pt::text(content),\n    \"cover\": images[0]{ asset->{ _id, url } }\n  }\n": EventsListQueryResult;
+    "\n  *[_type == \"event\" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    \"plainContent\": pt::text(content),\n    \"cover\": images[0]\n  }\n": EventsListQueryResult;
     "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n": SingleEventQueryResult;
     "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    whoCanJoinTitle,\n    whoCanJoinText,\n    whoCanJoinHighlights[] {\n      _key,\n      title,\n      description\n    },\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    },\n    ctaTitle,\n    ctaText\n  }\n": MembershipInfoQueryResult;
     "\n  *[_id == \"narystesNaudos\"][0] {\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    }\n  }\n": NarystesNaudosQueryResult;
