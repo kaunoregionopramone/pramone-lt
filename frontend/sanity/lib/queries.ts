@@ -30,12 +30,7 @@ export const leadershipQuery = defineQuery(`
     name,
     position,
     role,
-    "photo": photo{
-      asset->{
-        _id,
-        url
-      }
-    },
+    "photo": photo,
     phone,
     email
   }
@@ -49,12 +44,7 @@ export const newsQuery = defineQuery(`
     type,
     isFeatured,
     content,
-    "coverImage": coverImage{
-      asset->{
-        _id,
-        url
-      }
-    },
+    "coverImage": coverImage,
     _createdAt
   }
 `);
@@ -67,12 +57,7 @@ export const allNewsQuery = defineQuery(`
     type,
     isFeatured,
     content,
-    "coverImage": coverImage{
-      asset->{
-        _id,
-        url
-      }
-    },
+    "coverImage": coverImage,
     _createdAt,
     eventStartDate,
     eventEndDate,
@@ -98,12 +83,7 @@ export const singleNewsQuery = defineQuery(`
     slug,
     type,
     content,
-    "coverImage": coverImage{
-      asset->{
-        _id,
-        url
-      }
-    },
+    "coverImage": coverImage,
     _createdAt,
     eventStartDate,
     eventEndDate,
@@ -154,12 +134,7 @@ export const membersQuery = defineQuery(`
   *[_type == "member"] | order(lower(company) asc) {
     _id,
     company,
-    "logo": logo{
-      asset->{
-        _id,
-        url
-      }
-    }
+    "logo": logo
   }
 `);
 
@@ -232,7 +207,7 @@ export const eventsListQuery = defineQuery(`
     organizers,
     excerpt,
     "plainContent": pt::text(content),
-    "cover": images[0]{ asset->{ _id, url } }
+    "cover": images[0]
   }
 `);
 

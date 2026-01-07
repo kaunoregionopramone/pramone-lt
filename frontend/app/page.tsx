@@ -13,6 +13,7 @@ import { OrganizationFacts } from "./components/OrganizationFacts";
 import { MemberBenefits } from "./components/MemberBenefits";
 import { MembershipCTA } from "./components/MembershipCTA";
 import { createExcerpt } from "@/lib/portableTextUtils";
+import { urlForImage } from "@/sanity/lib/utils";
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -76,7 +77,12 @@ export default async function Page() {
       title: item.title,
       category: formatCategory(item.type),
       excerpt: createExcerpt(item.content),
-      image: item.coverImage?.asset?.url || "",
+      image:
+        (urlForImage(item.coverImage)
+          ?.width(1600)
+          .height(900)
+          .fit("crop")
+          .url() as string) || "",
       alt: `${item.title} nuotrauka`,
       slug: item.slug?.current || "",
       type: item.type,

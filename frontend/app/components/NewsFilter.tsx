@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { AllNewsQueryResult, BlockContent } from "@/sanity.types";
 import { createExcerpt } from "@/lib/portableTextUtils";
+import { urlForImage } from "@/sanity/lib/utils";
 
 interface NewsItem {
   _id: string;
@@ -21,11 +22,7 @@ interface NewsItem {
   type: "naujiena" | "renginys";
   isFeatured?: boolean;
   content: BlockContent | null;
-  coverImage?: {
-    asset?: {
-      url: string;
-    };
-  };
+  coverImage?: any;
   _createdAt: string;
   eventStartDate?: string;
   eventEndDate?: string;
@@ -170,9 +167,15 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
             <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-2xl hover:border-slate-300 transition-all duration-500 group">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 <div className="relative h-[300px] lg:h-[360px] overflow-hidden">
-                  {featuredArticle.coverImage?.asset?.url ? (
+                  {featuredArticle.coverImage ? (
                     <Image
-                      src={featuredArticle.coverImage.asset.url}
+                      src={
+                        (urlForImage(featuredArticle.coverImage)
+                          ?.width(1200)
+                          .height(720)
+                          .fit("crop")
+                          .url() as string) || "/placeholder.jpg"
+                      }
                       alt={`${featuredArticle.title} nuotrauka`}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -267,9 +270,15 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                   className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col"
                 >
                   <div className="relative h-56 overflow-hidden">
-                    {article.coverImage?.asset?.url ? (
+                    {article.coverImage ? (
                       <Image
-                        src={article.coverImage.asset.url}
+                        src={
+                          (urlForImage(article.coverImage)
+                            ?.width(800)
+                            .height(448)
+                            .fit("crop")
+                            .url() as string) || "/placeholder.jpg"
+                        }
                         alt={`${article.title} nuotrauka`}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
