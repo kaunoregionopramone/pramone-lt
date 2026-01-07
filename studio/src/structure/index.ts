@@ -64,7 +64,11 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 .child(S.document().schemaType('atstovavimas').documentId('atstovavimas')),
               S.listItem()
                 .title('Veiklos ataskaitos')
-                .child(S.document().schemaType('veiklosAtaskaitos').documentId('veiklosAtaskaitos')),
+                .child(
+                  S.documentTypeList('activityReport')
+                    .title('Veiklos ataskaitos')
+                    .defaultOrdering([{field: '_createdAt', direction: 'desc'}])
+                ),
             ])
         ),
 

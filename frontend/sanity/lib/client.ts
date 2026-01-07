@@ -7,7 +7,8 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  // Disable CDN to allow authenticated, draft-capable queries in Presentation/Draft mode
+  useCdn: false,
   perspective: "published",
   token, // Required if you have a private dataset
   stega: {
