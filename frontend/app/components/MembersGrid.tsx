@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Search, Building2 } from "lucide-react";
 import type { MembersQueryResult } from "@/sanity.types";
+import { urlForImage } from "@/sanity/lib/utils";
 
 interface MembersGridProps {
   members: NonNullable<MembersQueryResult>;
@@ -65,10 +66,16 @@ export function MembersGrid({ members }: MembersGridProps) {
               <div className="relative">
                 {/* Logo */}
                 <div className="bg-white rounded-xl p-3 mb-4 h-28 flex items-center justify-center transition-all overflow-hidden border border-gray-100 group-hover:border-slate-200">
-                  {member.logo?.asset?.url ? (
+                  {member.logo ? (
                     <div className="relative w-full h-full">
                       <Image
-                        src={member.logo.asset.url}
+                        src={
+                          (urlForImage(member.logo)
+                            ?.width(400)
+                            .height(200)
+                            .fit("max")
+                            .url() as string) || "/images/placeholder.svg"
+                        }
                         alt={`${member.company} logotipas`}
                         fill
                         className="object-contain group-hover:scale-105 transition-transform duration-300"

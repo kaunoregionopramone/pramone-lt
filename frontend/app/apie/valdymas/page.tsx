@@ -4,6 +4,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { leadershipQuery, valdymasSettingsQuery } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
 import { Phone, Mail } from "lucide-react";
+import { urlForImage } from "@/sanity/lib/utils";
 
 interface LeadershipMember {
   _id: string;
@@ -14,11 +15,7 @@ interface LeadershipMember {
     | "viceprezidentas"
     | "prezidiumoNarys"
     | "prezidiumoGarbesNarys";
-  photo: {
-    asset: {
-      url: string | null;
-    } | null;
-  };
+  photo: any;
   phone?: string | null;
   email?: string | null;
 }
@@ -168,7 +165,11 @@ export default async function ValdymasPage() {
                 <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
                   <div className="relative aspect-[4/5]">
                     <Image
-                      src={president.photo?.asset?.url || "/placeholder.jpg"}
+                      src={
+                        president.photo
+                          ? (urlForImage(president.photo)?.width(800).height(1000).fit("crop").url() as string)
+                          : "/placeholder.jpg"
+                      }
                       alt={`${president.name} nuotrauka`}
                       fill
                       className="object-cover"
@@ -243,7 +244,11 @@ export default async function ValdymasPage() {
                   <div className="aspect-square overflow-hidden">
                     <div className="relative size-full">
                       <Image
-                        src={member.photo?.asset?.url || "/placeholder.jpg"}
+                        src={
+                          member.photo
+                            ? (urlForImage(member.photo)?.width(600).height(600).fit("crop").url() as string)
+                            : "/placeholder.jpg"
+                        }
                         alt={`${member.name} nuotrauka`}
                         fill
                         className="object-cover"
@@ -311,7 +316,11 @@ export default async function ValdymasPage() {
                   <div className="aspect-square overflow-hidden">
                     <div className="relative size-full">
                       <Image
-                        src={member.photo?.asset?.url || "/placeholder.jpg"}
+                        src={
+                          member.photo
+                            ? (urlForImage(member.photo)?.width(500).height(500).fit("crop").url() as string)
+                            : "/placeholder.jpg"
+                        }
                         alt={`${member.name} nuotrauka`}
                         fill
                         className="object-cover"
@@ -375,7 +384,11 @@ export default async function ValdymasPage() {
                   <div className="aspect-square overflow-hidden">
                     <div className="relative size-full">
                       <Image
-                        src={member.photo?.asset?.url || "/placeholder.jpg"}
+                        src={
+                          member.photo
+                            ? (urlForImage(member.photo)?.width(500).height(500).fit("crop").url() as string)
+                            : "/placeholder.jpg"
+                        }
                         alt={`${member.name} nuotrauka`}
                         fill
                         className="object-cover"

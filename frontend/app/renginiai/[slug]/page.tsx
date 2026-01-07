@@ -28,6 +28,7 @@ import {
   Euro,
   ExternalLink,
 } from "lucide-react";
+import { urlForImage } from "@/sanity/lib/utils";
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -107,8 +108,10 @@ export async function generateMetadata({
   // Create description from content
   const description = createExcerpt(event.content as any, 160);
 
-  // Get cover image URL for Open Graph
-  const coverImageUrl = event.coverImage?.asset?.url;
+  // Get cover image URL for Open Graph (respect hotspot/crop)
+  const coverImageUrl =
+    (urlForImage(event.coverImage)?.width(1200).height(630).fit("crop").url() as string) ||
+    undefined;
 
   const title = event.title || "Renginys";
   const eventTime = event.eventStartDate
@@ -232,11 +235,17 @@ export default async function EventDetailPage({
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-slate-800 to-slate-900 text-white overflow-hidden">
-        {event.coverImage?.asset?.url && (
+        {event.coverImage && (
           <>
             <div className="absolute inset-0 opacity-20">
               <Image
-                src={event.coverImage.asset.url}
+                src={
+                  (urlForImage(event.coverImage)
+                    ?.width(1600)
+                    .height(900)
+                    .fit("crop")
+                    .url() as string) || "/placeholder.jpg"
+                }
                 alt={`${event.title} nuotrauka`}
                 fill
                 className="object-cover"

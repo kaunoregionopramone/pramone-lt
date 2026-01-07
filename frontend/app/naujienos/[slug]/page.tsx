@@ -9,6 +9,7 @@ import { NewsSidebar } from "@/app/components/NewsSidebar";
 import { ShareButtons } from "@/app/components/ShareButtons";
 import { calculateReadingTime, createExcerpt } from "@/lib/portableTextUtils";
 import type { Metadata } from "next";
+import { urlForImage } from "@/sanity/lib/utils";
 import {
   Calendar,
   MapPin,
@@ -87,8 +88,10 @@ export async function generateMetadata({
   // Create description from content
   const description = createExcerpt(news.content as any, 160);
 
-  // Get cover image URL for Open Graph
-  const coverImageUrl = news.coverImage?.asset?.url;
+  // Get cover image URL for Open Graph (respect hotspot/crop)
+  const coverImageUrl =
+    (urlForImage(news.coverImage)?.width(1200).height(630).fit("crop").url() as string) ||
+    undefined;
 
   const title = news.title || "Naujiena";
 
@@ -239,12 +242,18 @@ export default async function NewsDetailPage({
       </section>
 
       {/* Featured Image */}
-      {news.coverImage?.asset?.url && (
+      {news.coverImage && (
         <section className="py-8 bg-white">
           <div className="max-w-5xl mx-auto px-8 lg:px-12">
             <div className="rounded-3xl overflow-hidden shadow-xl">
               <Image
-                src={news.coverImage.asset.url}
+                src={
+                  (urlForImage(news.coverImage)
+                    ?.width(1200)
+                    .height(500)
+                    .fit("crop")
+                    .url() as string) || "/placeholder.jpg"
+                }
                 alt={`${news.title} nuotrauka`}
                 width={1200}
                 height={500}
