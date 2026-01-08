@@ -1,7 +1,6 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { membersQuery } from "@/sanity/lib/queries";
 import Link from "next/link";
-import { Suspense } from "react";
 import { MembersGrid } from "@/app/components/MembersGrid";
 import { ArrowRight } from "lucide-react";
 
@@ -51,8 +50,8 @@ export default async function NariaiPage() {
                 Organizacijos nariai
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                KKPDA vienija įvairių sektorių įmones, kurios kartu kuria
-                stiprią verslo bendruomenę Kauno regione ir visoje Lietuvoje
+                KKPDA vienija gamybos, statybos, transporto, logistikos,
+                pramonės paslaugų, mokslo ir Savivaldybės įmones
               </p>
             </div>
 
@@ -74,18 +73,7 @@ export default async function NariaiPage() {
       </div>
 
       {/* Members Grid Section */}
-      <Suspense
-        fallback={
-          <div className="py-20 text-center">
-            <div className="inline-flex items-center gap-3 text-gray-500">
-              <div className="size-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin" />
-              Kraunama...
-            </div>
-          </div>
-        }
-      >
-        <MembersGrid members={members || []} />
-      </Suspense>
+      <MembersGrid members={members || []} />
 
       {/* CTA Section */}
       <section className="relative py-24 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 overflow-hidden">

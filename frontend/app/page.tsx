@@ -62,8 +62,10 @@ export default async function Page() {
     sanityFetch({ query: contactInfoQuery }),
   ]);
 
-  const misija = apieKkpdaData?.misija;
-  const vizija = apieKkpdaData?.vizija;
+  const metuPatirtisAprasymas = apieKkpdaData?.metuPatirtisAprasymas;
+  const asociacijosNariaiAprasymas = apieKkpdaData?.asociacijosNariaiAprasymas;
+  const misija = apieKkpdaData?.misija || '';
+  const vizija = apieKkpdaData?.vizija || '';
 
   // Calculate full years of activity since 1989-12-22
   const now = new Date();
@@ -73,7 +75,7 @@ export default async function Page() {
   // Transform news data to match expected format
   const news =
     newsData?.slice(0, 5).map((item: any) => ({
-      date: formatDate(item._createdAt),
+      date: formatDate(item.publishedAt || item._createdAt),
       title: item.title,
       category: formatCategory(item.type),
       excerpt: createExcerpt(item.content),
@@ -109,6 +111,8 @@ export default async function Page() {
       <OrganizationFacts
         yearsOfActivity={yearsOfActivity}
         membersCount={membersCount || 0}
+        metuPatirtisAprasymas={metuPatirtisAprasymas ?? undefined}
+        asociacijosNariaiAprasymas={asociacijosNariaiAprasymas ?? undefined}
         misija={misija ?? undefined}
         vizija={vizija ?? undefined}
       />

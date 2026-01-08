@@ -96,7 +96,11 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.listItem()
         .title('Naujienos ir renginiai')
         .icon(DocumentTextIcon)
-        .child(S.documentTypeList('news').title('Naujienos ir renginiai')),
+        .child(
+          S.documentTypeList('news')
+            .title('Naujienos ir renginiai')
+            .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
+        ),
 
       // Contacts singleton
       S.listItem()

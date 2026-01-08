@@ -29,7 +29,6 @@ export function MembersGrid({ members }: MembersGridProps) {
       <div className="max-w-7xl mx-auto px-8 lg:px-12 relative">
         {/* Search Section */}
         <div className="max-w-2xl mx-auto mb-16">
-
           {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
@@ -65,23 +64,19 @@ export function MembersGrid({ members }: MembersGridProps) {
 
               <div className="relative">
                 {/* Logo */}
-                <div className="bg-white rounded-xl p-3 mb-4 h-28 flex items-center justify-center transition-all overflow-hidden border border-gray-100 group-hover:border-slate-200">
+                <div className="bg-white rounded-xl p-3 mb-4 h-24 flex items-center justify-center transition-all border border-gray-100 group-hover:border-slate-200">
                   {member.logo ? (
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={
-                          (urlForImage(member.logo)
-                            ?.width(400)
-                            .height(200)
-                            .fit("max")
-                            .url() as string) || "/images/placeholder.svg"
-                        }
-                        alt={`${member.company} logotipas`}
-                        fill
-                        className="object-contain group-hover:scale-105 transition-transform duration-300"
-                        sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                      />
-                    </div>
+                    <Image
+                      src={
+                        (urlForImage(member.logo)
+                          ?.fit("max")
+                          .url() as string) || "/images/placeholder.svg"
+                      }
+                      alt={`${member.company} logotipas`}
+                      width={300}
+                      height={150}
+                      className="max-w-full max-h-full w-auto h-auto object-contain"
+                    />
                   ) : (
                     <div className="text-center">
                       <div className="size-14 mx-auto rounded-xl bg-slate-100 flex items-center justify-center mb-2 group-hover:bg-slate-200 transition-colors">
@@ -112,8 +107,7 @@ export function MembersGrid({ members }: MembersGridProps) {
               Narių nerasta
             </h3>
             <p className="text-gray-600 max-w-md mx-auto">
-              Pabandykite pakeisti paieškos kriterijus arba patikrinkite
-              rašybą
+              Pabandykite pakeisti paieškos kriterijus arba patikrinkite rašybą
             </p>
             {searchQuery && (
               <button

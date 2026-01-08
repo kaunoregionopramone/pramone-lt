@@ -76,9 +76,9 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap items-stretch gap-4 pt-4">
               <Link href={`/${news[currentSlide].type === 'renginys' ? 'renginiai' : 'naujienos'}/${news[currentSlide].slug}`}>
-                <Button className="bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-all group">
+                <Button className="bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white px-8 h-[52px] text-lg shadow-xl hover:shadow-2xl transition-all group">
                   Plačiau
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -86,7 +86,7 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
               <Link href="/naujienos-ir-renginiai">
                 <Button 
                   variant="outline" 
-                  className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-slate-500 px-8 py-6 text-lg"
+                  className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-slate-500 px-8 h-[52px] text-lg"
                 >
                   Visos naujienos
                 </Button>

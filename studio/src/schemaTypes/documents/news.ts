@@ -80,6 +80,14 @@ export const news = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'publishedAt',
+      title: 'Publikavimo data',
+      type: 'date',
+      description: 'Data, kuri bus naudojama rūšiavimui ir rodymui',
+      initialValue: () => new Date().toISOString().split('T')[0],
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'isFeatured',
       title: 'Rodomas viršuje',
       type: 'boolean',
@@ -266,6 +274,11 @@ export const news = defineType({
     }),
   ],
   orderings: [
+    {
+      title: 'Pagal publikavimo datą (naujausios pirmos)',
+      name: 'publishedAtDesc',
+      by: [{field: 'publishedAt', direction: 'desc'}],
+    },
     {
       title: 'Pagal sukūrimo datą (naujausios pirmos)',
       name: 'createdAtDesc',

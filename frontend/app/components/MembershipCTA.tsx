@@ -24,7 +24,7 @@ export function MembershipCTA({
   contactInfo,
 }: MembershipCTAProps) {
   const benefits = [
-    `Prisijunkite prie ${membersCount}+ verslo lyderių bendruomenės`,
+    `Prisijunkite prie ${membersCount} verslo lyderių bendruomenės`,
     "Gaukite ekspertų konsultacijas ir palaikymą",
     "Dalyvaukite eksklityviuose renginiuose ir mokymuose",
     "Plėskite savo verslo tinklą ir galimybes",
@@ -104,7 +104,7 @@ export function MembershipCTA({
               <div className="flex items-center gap-3 sm:gap-4">
                 <div className="text-center">
                   <div className="text-xl sm:text-3xl text-slate-800 font-bold">
-                    {membersCount}+
+                    {membersCount}
                   </div>
                   <div className="text-xs sm:text-sm text-gray-600">Narių</div>
                 </div>

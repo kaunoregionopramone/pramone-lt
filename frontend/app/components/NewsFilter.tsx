@@ -23,6 +23,7 @@ interface NewsItem {
   isFeatured?: boolean;
   content: BlockContent | null;
   coverImage?: any;
+  publishedAt?: string;
   _createdAt: string;
   eventStartDate?: string;
   eventEndDate?: string;
@@ -206,7 +207,7 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                           featuredArticle.eventStartDate,
                           featuredArticle.eventEndDate
                         )
-                      : formatDate(featuredArticle._createdAt)}
+                      : formatDate(featuredArticle.publishedAt || featuredArticle._createdAt)}
                   </div>
 
                   <h2 className="text-2xl lg:text-2xl text-gray-900 mb-3 font-semibold">
@@ -303,7 +304,7 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                             article.eventStartDate,
                             article.eventEndDate
                           )
-                        : formatDate(article._createdAt)}
+                        : formatDate(article.publishedAt || article._createdAt)}
                     </div>
 
                     <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-slate-700 transition-colors line-clamp-2">

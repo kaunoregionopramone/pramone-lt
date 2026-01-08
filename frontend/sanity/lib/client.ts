@@ -9,7 +9,7 @@ export const client = createClient({
   apiVersion,
   // Disable CDN to allow authenticated, draft-capable queries in Presentation/Draft mode
   useCdn: false,
-  perspective: "published",
+  // Do not hardcode `perspective`; let next-sanity switch to `previewDrafts` in preview
   token, // Required if you have a private dataset
   stega: {
     studioUrl,

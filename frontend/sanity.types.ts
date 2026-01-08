@@ -596,25 +596,14 @@ export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockCont
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: apieKkpdaQuery
-// Query: *[_id == "apieKkpda"][0] {    kasEsame,    kaAtstovaujame,    musuMisija,    musuVizija,    misija,    vizija,    strateginesVeiklosKryptys[] {      _key,      title    },    kurEiname,    "kurEinamePaveikslasUrl": kurEinamePaveikslas.asset->url,    darboVietos,    apyvarta,    organizacijos[] {      pavadinimas,      aprasymas,      "logoUrl": logo.asset->url    }  }
+// Query: *[_id == "apieKkpda"][0] {    kasEsame,    kaAtstovaujame,    musuMisija,    musuVizija,    metuPatirtisAprasymas,    asociacijosNariaiAprasymas,    "misija": pt::text(musuMisija),    "vizija": pt::text(musuVizija),    strateginesVeiklosKryptys[] {      _key,      title    },    kurEiname,    "kurEinamePaveikslasUrl": kurEinamePaveikslas.asset->url,    darboVietos,    apyvarta,    organizacijos[] {      pavadinimas,      aprasymas,      "logoUrl": logo.asset->url    }  }
 export type ApieKkpdaQueryResult = {
   kasEsame: null;
   kaAtstovaujame: null;
   musuMisija: null;
   musuVizija: null;
-  misija: null;
-  vizija: null;
-  strateginesVeiklosKryptys: null;
-  kurEiname: null;
-  kurEinamePaveikslasUrl: null;
-  darboVietos: null;
-  apyvarta: null;
-  organizacijos: null;
-} | {
-  kasEsame: null;
-  kaAtstovaujame: null;
-  musuMisija: null;
-  musuVizija: null;
+  metuPatirtisAprasymas: null;
+  asociacijosNariaiAprasymas: null;
   misija: string;
   vizija: string;
   strateginesVeiklosKryptys: null;
@@ -647,7 +636,7 @@ export type LeadershipQueryResult = Array<{
   email: string | null;
 }>;
 // Variable: newsQuery
-// Query: *[_type == "news"] | order(_createdAt desc) [0...5] {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    _createdAt  }
+// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    publishedAt,    _createdAt  }
 export type NewsQueryResult = Array<{
   _id: string;
   title: string;
@@ -667,10 +656,11 @@ export type NewsQueryResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
+  publishedAt: string;
   _createdAt: string;
 }>;
 // Variable: allNewsQuery
-// Query: *[_type == "news"] | order(isFeatured desc, _createdAt desc) {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation  }
+// Query: *[_type == "news"] | order(isFeatured desc, coalesce(publishedAt, _createdAt) desc) {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    publishedAt,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation  }
 export type AllNewsQueryResult = Array<{
   _id: string;
   title: string;
@@ -690,6 +680,7 @@ export type AllNewsQueryResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
+  publishedAt: string;
   _createdAt: string;
   eventStartDate: string | null;
   eventEndDate: string | null;
@@ -697,16 +688,17 @@ export type AllNewsQueryResult = Array<{
   googleMapsLocation: string | null;
 }>;
 // Variable: recentNewsQuery
-// Query: *[_type == "news"] | order(_createdAt desc) [0...5] {    _id,    title,    slug,    type,    _createdAt  }
+// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {    _id,    title,    slug,    type,    publishedAt,    _createdAt  }
 export type RecentNewsQueryResult = Array<{
   _id: string;
   title: string;
   slug: Slug;
   type: "naujiena" | "renginys";
+  publishedAt: string;
   _createdAt: string;
 }>;
 // Variable: singleNewsQuery
-// Query: *[_type == "news" && slug.current == $slug][0] {    _id,    title,    slug,    type,    content,    "coverImage": coverImage,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation,    entrance,    registrationUrl,    timeSlots,    "documents": documents[]{      title,      "file": file.asset->{        _id,        url,        originalFilename,        size      }    },    additionalInfo  }
+// Query: *[_type == "news" && slug.current == $slug][0] {    _id,    title,    slug,    type,    content,    "coverImage": coverImage,    publishedAt,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation,    entrance,    registrationUrl,    timeSlots,    "documents": documents[]{      title,      "file": file.asset->{        _id,        url,        originalFilename,        size      }    },    additionalInfo  }
 export type SingleNewsQueryResult = {
   _id: string;
   title: string;
@@ -725,6 +717,7 @@ export type SingleNewsQueryResult = {
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
+  publishedAt: string;
   _createdAt: string;
   eventStartDate: string | null;
   eventEndDate: string | null;
@@ -897,12 +890,12 @@ export type ActivityReportsQueryResult = Array<never>;
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_id == \"apieKkpda\"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    misija,\n    vizija,\n    strateginesVeiklosKryptys[] {\n      _key,\n      title\n    },\n    kurEiname,\n    \"kurEinamePaveikslasUrl\": kurEinamePaveikslas.asset->url,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      \"logoUrl\": logo.asset->url\n    }\n  }\n": ApieKkpdaQueryResult;
+    "\n  *[_id == \"apieKkpda\"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    metuPatirtisAprasymas,\n    asociacijosNariaiAprasymas,\n    \"misija\": pt::text(musuMisija),\n    \"vizija\": pt::text(musuVizija),\n    strateginesVeiklosKryptys[] {\n      _key,\n      title\n    },\n    kurEiname,\n    \"kurEinamePaveikslasUrl\": kurEinamePaveikslas.asset->url,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      \"logoUrl\": logo.asset->url\n    }\n  }\n": ApieKkpdaQueryResult;
     "\n  *[_type == \"leadership\"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    \"photo\": photo,\n    phone,\n    email\n  }\n": LeadershipQueryResult;
-    "\n  *[_type == \"news\"] | order(_createdAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    _createdAt\n  }\n": NewsQueryResult;
-    "\n  *[_type == \"news\"] | order(isFeatured desc, _createdAt desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
-    "\n  *[_type == \"news\"] | order(_createdAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    _createdAt\n  }\n": RecentNewsQueryResult;
-    "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
+    "\n  *[_type == \"news\"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt\n  }\n": NewsQueryResult;
+    "\n  *[_type == \"news\"] | order(isFeatured desc, coalesce(publishedAt, _createdAt) desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
+    "\n  *[_type == \"news\"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    publishedAt,\n    _createdAt\n  }\n": RecentNewsQueryResult;
+    "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
     "\n  *[_id == \"istorija\"][0] {\n    ourHistory,\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
     "\n  *[_id == \"valdymasSettings\"][0] {\n    presidentMessage\n  }\n": ValdymasSettingsQueryResult;
     "\n  count(*[_type == \"member\"])\n": MembersCountQueryResult;

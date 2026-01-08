@@ -102,7 +102,7 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
-      publishedTime: news._createdAt,
+      publishedTime: news.publishedAt || news._createdAt,
       authors: ["KKPDA"],
       images: coverImageUrl
         ? [
@@ -224,7 +224,7 @@ export default async function NewsDetailPage({
                 <span>
                   {news.type === "renginys" && news.eventStartDate
                     ? formatEventTime(news.eventStartDate, news.eventEndDate)
-                    : formatDate(news._createdAt)}
+                    : formatDate(news.publishedAt || news._createdAt)}
                 </span>
               </div>
               <div className="flex items-center gap-2">

@@ -40,16 +40,11 @@ export function MemberBenefits({ benefits: sanityBenefits }: MemberBenefitsProps
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => {
-            const number = String(index + 1).padStart(2, '0');
             return (
               <div
                 key={index}
                 className="group relative"
               >
-                {/* Decorative number background */}
-                <div className="absolute -top-6 -left-6 text-[140px] font-bold text-slate-100 select-none pointer-events-none transition-all duration-300 group-hover:text-slate-200 leading-none">
-                  {number}
-                </div>
                 
                 {/* Card content */}
                 <div className="relative p-8 rounded-3xl bg-white border border-gray-200 hover:border-slate-300 hover:shadow-2xl transition-all duration-300 h-full">
