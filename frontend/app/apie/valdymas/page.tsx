@@ -29,21 +29,28 @@ export default async function ValdymasPage() {
 
   const presidentMessage = valdymasSettings?.presidentMessage;
 
+  // Helper function to normalize role strings (remove invisible Unicode characters)
+  const normalizeRole = (role: string | null | undefined): string => {
+    if (!role) return "";
+    // Remove zero-width spaces, zero-width non-joiners, and other invisible Unicode characters
+    return role.replace(/[\u200B-\u200D\uFEFF\u200C\u200D]/g, "").trim();
+  };
+
   // Group leadership data by role
   const president = leadershipData?.filter(
-    (member: LeadershipMember) => member.role === "prezidentas"
+    (member: LeadershipMember) => normalizeRole(member.role) === "prezidentas"
   )[0];
 
   const vicePresidents = leadershipData?.filter(
-    (member: LeadershipMember) => member.role === "viceprezidentas"
+    (member: LeadershipMember) => normalizeRole(member.role) === "viceprezidentas"
   );
 
   const presidiumMembers = leadershipData?.filter(
-    (member: LeadershipMember) => member.role === "prezidiumoNarys"
+    (member: LeadershipMember) => normalizeRole(member.role) === "prezidiumoNarys"
   );
 
   const honoraryMembers = leadershipData?.filter(
-    (member: LeadershipMember) => member.role === "prezidiumoGarbesNarys"
+    (member: LeadershipMember) => normalizeRole(member.role) === "prezidiumoGarbesNarys"
   );
 
   return (

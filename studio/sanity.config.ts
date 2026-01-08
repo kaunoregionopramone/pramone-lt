@@ -71,6 +71,10 @@ export default defineConfig({
             route: '/nariai',
             filter: `_type == "member"`,
           },
+          {
+            route: '/apie/valdymas',
+            filter: `_id == "valdymasSettings"`,
+          },
         ]),
         // Locations Resolver API allows you to define where data is being used in your application. https://www.sanity.io/docs/presentation-resolver-api#8d8bca7bfcd7
         locations: {
@@ -121,6 +125,27 @@ export default defineConfig({
             },
             resolve: (doc) => ({
               locations: [
+                {
+                  title: 'Valdymas',
+                  href: '/apie/valdymas',
+                },
+                {
+                  title: 'Home',
+                  href: '/',
+                },
+              ].filter(Boolean) as DocumentLocation[],
+            }),
+          }),
+          valdymasSettings: defineLocations({
+            select: {
+              _id: '_id',
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: 'Valdymas',
+                  href: '/apie/valdymas',
+                },
                 {
                   title: 'Home',
                   href: '/',

@@ -42,7 +42,7 @@ export function ShareButtons({
         });
       } catch (err) {
         // User cancelled or share failed
-        console.log("Share cancelled or failed");
+        // Silently handle cancellation
       }
     } else {
       // Fallback: copy to clipboard
@@ -57,7 +57,7 @@ export function ShareButtons({
       setShowCopied(true);
       setTimeout(() => setShowCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy:", err);
+      // Failed to copy to clipboard - silently handle
     }
   };
 
