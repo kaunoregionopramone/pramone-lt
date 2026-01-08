@@ -129,7 +129,7 @@ export async function generateMetadata({
       title,
       description: fullDescription,
       type: "article",
-      publishedTime: event._createdAt,
+      publishedTime: event.publishedAt || event._createdAt,
       authors: ["KKPDA"],
       images: coverImageUrl
         ? [
@@ -541,7 +541,7 @@ export default async function EventDetailPage({
                               <div className="flex items-center gap-2 text-xs text-gray-500">
                                 <Calendar className="size-3" />
                                 <span>
-                                  {formatDate(recentEvent._createdAt)}
+                                  {formatDate(recentEvent.publishedAt || recentEvent._createdAt)}
                                 </span>
                               </div>
                             </div>

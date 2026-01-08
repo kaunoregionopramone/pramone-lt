@@ -39,7 +39,7 @@ export const leadershipQuery = defineQuery(`
 `);
 
 export const newsQuery = defineQuery(`
-  *[_type == "news"] | order(_createdAt desc) [0...5] {
+  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {
     _id,
     title,
     slug,
@@ -47,12 +47,13 @@ export const newsQuery = defineQuery(`
     isFeatured,
     content,
     "coverImage": coverImage,
+    publishedAt,
     _createdAt
   }
 `);
 
 export const allNewsQuery = defineQuery(`
-  *[_type == "news"] | order(isFeatured desc, _createdAt desc) {
+  *[_type == "news"] | order(isFeatured desc, coalesce(publishedAt, _createdAt) desc) {
     _id,
     title,
     slug,
@@ -60,6 +61,7 @@ export const allNewsQuery = defineQuery(`
     isFeatured,
     content,
     "coverImage": coverImage,
+    publishedAt,
     _createdAt,
     eventStartDate,
     eventEndDate,
@@ -69,11 +71,12 @@ export const allNewsQuery = defineQuery(`
 `);
 
 export const recentNewsQuery = defineQuery(`
-  *[_type == "news"] | order(_createdAt desc) [0...5] {
+  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {
     _id,
     title,
     slug,
     type,
+    publishedAt,
     _createdAt
   }
 `);
@@ -86,6 +89,7 @@ export const singleNewsQuery = defineQuery(`
     type,
     content,
     "coverImage": coverImage,
+    publishedAt,
     _createdAt,
     eventStartDate,
     eventEndDate,
