@@ -381,11 +381,11 @@ export default async function ValdymasPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto justify-items-center">
               {honoraryMembers.map((member: LeadershipMember) => (
                 <div
                   key={member._id}
-                  className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow w-full max-w-[270px]"
                 >
                   <div className="aspect-square overflow-hidden">
                     <div className="relative size-full">
