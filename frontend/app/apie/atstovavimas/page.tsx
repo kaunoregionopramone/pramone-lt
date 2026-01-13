@@ -95,9 +95,6 @@ export default async function AtstovavimasPage() {
                     key={activity._key || index}
                     className="bg-white border border-gray-100 rounded-xl p-8 hover:shadow-md transition-shadow"
                   >
-                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-6 text-gray-500 text-sm font-medium">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
                     <h3 className="text-lg text-gray-900 mb-3">
                       {activity.title}
                     </h3>
@@ -132,7 +129,7 @@ export default async function AtstovavimasPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {regionalActivities.map(
                 (
                   activity: { _key?: string; title?: string; description?: string },
@@ -142,21 +139,14 @@ export default async function AtstovavimasPage() {
                     key={activity._key || index}
                     className="bg-white border border-gray-100 rounded-xl p-8 hover:shadow-md transition-shadow"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center shrink-0 text-white text-sm font-medium">
-                        {String(index + 1).padStart(2, "0")}
-                      </div>
-                      <div>
-                        <h3 className="text-lg text-gray-900 mb-3">
-                          {activity.title}
-                        </h3>
-                        {activity.description && (
-                          <p className="text-gray-600 text-sm leading-relaxed">
-                            {activity.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
+                    <h3 className="text-lg text-gray-900 mb-3">
+                      {activity.title}
+                    </h3>
+                    {activity.description && (
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {activity.description}
+                      </p>
+                    )}
                   </div>
                 )
               )}
