@@ -130,12 +130,12 @@ export default async function IstataiPage() {
         ethicsNotes?.length ||
         ethicsUrl) && (
         <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50/20">
-          <div className="max-w-6xl mx-auto px-8 lg:px-12">
+          <div className="max-w-7xl mx-auto px-8 lg:px-12">
             {/* Header */}
             {(ethicsTitle || ethicsDescription) && (
               <div className="mb-12">
                 {ethicsTitle && (
-                  <h2 className="text-3xl text-gray-900 mb-4">{ethicsTitle}</h2>
+                  <h2 className="text-3xl text-gray-900 mb-8">{ethicsTitle}</h2>
                 )}
                 {ethicsDescription && (
                   <p className="text-gray-600 leading-relaxed">
@@ -233,12 +233,12 @@ export default async function IstataiPage() {
       {/* Privacy Policy Section */}
       {(privacyTitle || privacyDescription || privacyUrl) && (
         <section className="py-20 bg-white">
-          <div className="max-w-6xl mx-auto px-8 lg:px-12">
+          <div className="max-w-7xl mx-auto px-8 lg:px-12">
             <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 sm:p-10 lg:p-12">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <div>
                   {privacyTitle && (
-                    <h2 className="text-2xl sm:text-3xl text-gray-900 mb-3">
+                    <h2 className="text-3xl text-gray-900 mb-8">
                       {privacyTitle}
                     </h2>
                   )}
