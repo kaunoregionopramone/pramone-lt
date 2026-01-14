@@ -63,9 +63,9 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: SITE_TITLE,
       images: [
         {
-          url: "/images/logo.png",
-          width: 800,
-          height: 600,
+          url: "/images/logo_1200x630.png",
+          width: 1200,
+          height: 630,
           alt: "KKPDA logotipas",
         },
       ],
@@ -74,7 +74,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: SITE_TITLE,
       description: SITE_DESCRIPTION,
-      images: ["/images/logo.png"],
+      images: ["/images/logo_1200x630.png"],
     },
     robots: {
       index: true,
