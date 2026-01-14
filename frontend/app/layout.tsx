@@ -22,13 +22,14 @@ const SITE_DESCRIPTION =
  * Learn more: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
 export async function generateMetadata(): Promise<Metadata> {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://www.pramone.lt");
+
   return {
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ||
-        (process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}`
-          : "https://www.pramone.lt")
-    ),
+    metadataBase: new URL(baseUrl),
     title: {
       template: `%s | ${SITE_TITLE}`,
       default: SITE_TITLE,
@@ -50,7 +51,16 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: "KKPDA" }],
     creator: "KKPDA",
     publisher: "KKPDA",
+    applicationName: "KKPDA",
     manifest: "/site.webmanifest",
+    alternates: {
+      canonical: "/",
+    },
+    formatDetection: {
+      telephone: false,
+      email: false,
+      address: false,
+    },
     icons: {
       icon: [{ url: "/favicon.ico", sizes: "any" }],
       apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
