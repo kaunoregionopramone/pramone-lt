@@ -6,9 +6,11 @@ Modern website for the Kaunas Region Industrialists and Employers Association, b
 
 - **Modern Design**: Clean, professional interface with smooth animations
 - **Member Directory**: Comprehensive listing of association members with detailed profiles
+- **News & Events**: Publishable news articles and events with custom publication dates
 - **Responsive Layout**: Optimized for desktop, tablet, and mobile devices
 - **Content Management**: Integrated with Sanity CMS for easy content updates
-- **SEO Optimized**: Built-in metadata and sitemap generation
+- **SEO Optimized**: Built-in metadata, Open Graph images, and sitemap generation
+- **Social Sharing**: Automatic preview images for social media sharing
 - **Performance**: Optimized images, fonts, and loading speeds
 
 ## 🛠️ Tech Stack
@@ -119,20 +121,41 @@ frontend/
 Create a `.env.local` file with:
 
 ```env
+# Required - Sanity Configuration
 NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
 NEXT_PUBLIC_SANITY_DATASET=your_dataset
 SANITY_API_TOKEN=your_api_token
+
+# Optional - Site URL for Open Graph metadata
+# If not set, relative URLs will be used for OG images
+NEXT_PUBLIC_SITE_URL=https://www.pramone.lt
 ```
 
 ## 📄 Content Management
 
-The website uses Sanity CMS for content management. Member information is stored as structured content with the following schema:
+The website uses Sanity CMS for content management. Content types include:
 
+### Members (Nariai)
 - Company information
 - Contact details  
 - Business activity
 - Logo/branding assets
-- Leadership details
+
+### News & Events (Naujienos ir Renginiai)
+- Publication date (publikavimo data) - used for sorting
+- News articles and event announcements
+- Cover images
+- Event-specific fields (dates, location, registration)
+
+### Leadership (Vadovybė)
+- Leadership team profiles
+- Contact information
+
+### Organization Settings
+- About KKPDA content
+- Mission & Vision statements
+- Partners
+- Legal documents
 
 ## 🚀 Deployment
 
