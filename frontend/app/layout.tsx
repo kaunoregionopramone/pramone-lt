@@ -23,9 +23,12 @@ const SITE_DESCRIPTION =
  */
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: process.env.NEXT_PUBLIC_SITE_URL
-      ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
-      : undefined,
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL ||
+        (process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : "https://www.pramone.lt")
+    ),
     title: {
       template: `%s | ${SITE_TITLE}`,
       default: SITE_TITLE,
