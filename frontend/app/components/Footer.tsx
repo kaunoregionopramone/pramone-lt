@@ -122,7 +122,7 @@ export default async function Footer() {
             <h4 className="mb-4 text-white">Sekite mus</h4>
             <div className="flex gap-3">
               <a
-                href="https://www.facebook.com/kkpda"
+                href="https://www.facebook.com/kaunokrastopramonininku"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="size-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
