@@ -14,7 +14,8 @@ import { SanityLive } from "@/sanity/lib/live";
 import { handleError } from "./client-utils";
 
 const SITE_TITLE = "Kauno krašto pramonininkų ir darbdavių asociacija";
-const SITE_DESCRIPTION = "Kauno krašto pramonininkų ir darbdavių asociacija – savarankiška pelno nesiekianti organizacija, įsteigta 1989 m., vienijanti verslo lyderius ir atstovaujanti narių interesus.";
+const SITE_DESCRIPTION =
+  "Kauno krašto pramonininkų ir darbdavių asociacija – savarankiška pelno nesiekianti organizacija, įsteigta 1989 m., vienijanti verslo lyderius ir atstovaujanti narių interesus.";
 
 /**
  * Generate metadata for the page.
@@ -22,6 +23,9 @@ const SITE_DESCRIPTION = "Kauno krašto pramonininkų ir darbdavių asociacija �
  */
 export async function generateMetadata(): Promise<Metadata> {
   return {
+    metadataBase: process.env.NEXT_PUBLIC_SITE_URL
+      ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
+      : undefined,
     title: {
       template: `%s | ${SITE_TITLE}`,
       default: SITE_TITLE,
@@ -45,12 +49,8 @@ export async function generateMetadata(): Promise<Metadata> {
     publisher: "KKPDA",
     manifest: "/site.webmanifest",
     icons: {
-      icon: [
-        { url: "/favicon.ico", sizes: "any" },
-      ],
-      apple: [
-        { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
-      ],
+      icon: [{ url: "/favicon.ico", sizes: "any" }],
+      apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
     },
     openGraph: {
       type: "website",
@@ -58,11 +58,20 @@ export async function generateMetadata(): Promise<Metadata> {
       title: SITE_TITLE,
       description: SITE_DESCRIPTION,
       siteName: SITE_TITLE,
+      images: [
+        {
+          url: "/images/logo.png",
+          width: 800,
+          height: 600,
+          alt: "KKPDA logotipas",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: SITE_TITLE,
       description: SITE_DESCRIPTION,
+      images: ["/images/logo.png"],
     },
     robots: {
       index: true,

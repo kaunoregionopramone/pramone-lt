@@ -206,38 +206,36 @@ export default async function NewsDetailPage({
         <div className="absolute bottom-8 right-12 w-24 h-24 border-2 border-blue-200/30 rounded-full" />
 
         <div className="max-w-7xl mx-auto px-8 lg:px-12 relative">
-          <div className="max-w-4xl">
-            <div className="mb-6">
-              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
-                <Tag className="size-4" />
-                {news.type === "renginys" ? "Renginys" : "Naujiena"}
+          <div className="mb-6">
+            <span className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+              <Tag className="size-4" />
+              {news.type === "renginys" ? "Renginys" : "Naujiena"}
+            </span>
+          </div>
+
+          <h1 className="mb-6 text-4xl md:text-5xl lg:text-6xl text-gray-900">
+            {news.title}
+          </h1>
+
+          <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8">
+            <div className="flex items-center gap-2">
+              <Calendar className="size-5 text-slate-600" />
+              <span>
+                {news.type === "renginys" && news.eventStartDate
+                  ? formatEventTime(news.eventStartDate, news.eventEndDate)
+                  : formatDate(news.publishedAt || news._createdAt)}
               </span>
             </div>
-
-            <h1 className="mb-6 text-4xl md:text-5xl lg:text-6xl text-gray-900">
-              {news.title}
-            </h1>
-
-            <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8">
-              <div className="flex items-center gap-2">
-                <Calendar className="size-5 text-slate-600" />
-                <span>
-                  {news.type === "renginys" && news.eventStartDate
-                    ? formatEventTime(news.eventStartDate, news.eventEndDate)
-                    : formatDate(news.publishedAt || news._createdAt)}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="size-5 text-slate-600" />
-                <span>{readingTime} min skaitymo</span>
-              </div>
+            <div className="flex items-center gap-2">
+              <Clock className="size-5 text-slate-600" />
+              <span>{readingTime} min skaitymo</span>
             </div>
-
-            <ShareButtons
-              title={news.title}
-              description={createExcerpt(news.content as any, 160)}
-            />
           </div>
+
+          <ShareButtons
+            title={news.title}
+            description={createExcerpt(news.content as any, 160)}
+          />
         </div>
       </section>
 
