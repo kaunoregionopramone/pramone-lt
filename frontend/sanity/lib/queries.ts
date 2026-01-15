@@ -53,7 +53,7 @@ export const newsQuery = defineQuery(`
 `);
 
 export const allNewsQuery = defineQuery(`
-  *[_type == "news"] | order(isFeatured desc, coalesce(publishedAt, _createdAt) desc) {
+  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) {
     _id,
     title,
     slug,

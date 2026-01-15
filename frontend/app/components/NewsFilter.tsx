@@ -136,16 +136,16 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
     router.replace(newUrl, { scroll: false });
   }, [selectedCategory, currentPage, router]);
 
-  // Filter articles based on selected category
+  // Featured article - always show if it exists, regardless of filter
+  const featuredArticle = newsData.find((article) => article.isFeatured);
+
+  // Filter articles based on selected category (featured article will be included and sorted by date)
   const filteredArticles =
     selectedCategory === "Visos"
       ? newsData
       : selectedCategory === "Renginiai"
         ? newsData.filter((article) => article.type === "renginys")
         : newsData.filter((article) => article.type === "naujiena");
-
-  // Featured article - always show if it exists, regardless of filter
-  const featuredArticle = newsData.find((article) => article.isFeatured);
 
   // Pagination
   const totalPages = Math.ceil(filteredArticles.length / itemsPerPage);
