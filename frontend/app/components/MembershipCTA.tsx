@@ -24,10 +24,10 @@ export function MembershipCTA({
   contactInfo,
 }: MembershipCTAProps) {
   const benefits = [
-    `Prisijunkite prie ${membersCount} verslo lyderių bendruomenės`,
-    "Gaukite ekspertų konsultacijas ir palaikymą",
-    "Dalyvaukite eksklityviuose renginiuose ir mokymuose",
-    "Plėskite savo verslo tinklą ir galimybes",
+    "Dalyvavimas regioniniuose ir nacionaliniuose atstovavimo formatuose",
+    "Įsitraukimas į darbo grupes, diskusijas ir bendras iniciatyvas",
+    "Tiesioginis dialogas su savivaldos, valstybės institucijų ir verslo lyderiais",
+    "Bendruomenė, jungianti sprendimų priėmėjus ir kurianti ilgalaikę vertę",
   ];
 
   return (
@@ -43,11 +43,12 @@ export function MembershipCTA({
           {/* Left: Content */}
           <div className="text-white">
             <h2 className="text-5xl mb-6 font-bold">
-              Tapkite mūsų nariais šiandien
+              Narystė, kuri kuria vertę
             </h2>
             <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              Prisijunkite prie Kauno krašto pramonininkų ir darbdavių
-              asociacijos ir atidarykite naujas verslo galimybes.
+              Narystė Kauno krašto pramonininkų ir darbdavių asociacijoje
+              reiškia aktyvų įsitraukimą į bendrus sprendimus, interesų
+              atstovavimą ir regiono stiprinimą.
             </p>
 
             <div className="space-y-4 mb-8">
@@ -113,14 +114,18 @@ export function MembershipCTA({
                   <div className="text-xl sm:text-3xl text-slate-800 font-bold">
                     {yearsOfActivity}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">Metų patirties</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    Metų patirties
+                  </div>
                 </div>
                 <div className="w-px h-8 sm:h-12 bg-gray-200"></div>
                 <div className="text-center">
                   <div className="text-xl sm:text-3xl text-slate-800 font-bold whitespace-nowrap">
                     {apyvarta ? `${apyvarta} mlrd.` : "3+ mlrd."}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600">Apyvarta</div>
+                  <div className="text-xs sm:text-sm text-gray-600">
+                    Apyvarta
+                  </div>
                 </div>
               </div>
             </div>

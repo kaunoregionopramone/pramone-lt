@@ -45,6 +45,9 @@ function formatCategory(type: string) {
   return categoryMap[type] || "Naujiena";
 }
 
+// Revalidate the page every 60 seconds to ensure members count and other data is up to date
+export const revalidate = 60;
+
 export default async function Page() {
   const [
     { data: newsData },

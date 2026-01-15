@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     "Kauno krašto pramonininkų ir darbdavių asociacija – viena seniausių ir įtakingiausių verslo organizacijų Lietuvoje, įkurta 1989 m.",
 };
 
+// Revalidate the page every 60 seconds to ensure members count is up to date
+export const revalidate = 60;
+
 export default async function ApieKkpdaPage() {
   const [{ data }, { data: membersCount }] = await Promise.all([
     sanityFetch({ query: apieKkpdaQuery }),
@@ -171,7 +174,7 @@ export default async function ApieKkpdaPage() {
                 <div className="text-7xl text-gray-900 mb-3">
                   {membersCount ? membersCount : "—"}
                 </div>
-                <div className="text-xl text-gray-500 mb-2">asociacijos</div>
+                <div className="text-xl text-gray-500 mb-2">organizacijos</div>
               </div>
               <div className="text-center md:text-left">
                 <div className="text-7xl text-gray-900 mb-3">

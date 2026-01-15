@@ -98,11 +98,8 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
           <div className="order-1 lg:order-2 relative">
             {/* Main Image Container */}
             <div className="relative group">
-              {/* Glow effect behind image */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-400 to-slate-600 rounded-[2rem] blur-2xl opacity-20 group-hover:opacity-30 transition-opacity scale-105"></div>
-              
               {/* Image */}
-              <div className="relative rounded-[2rem] overflow-hidden shadow-2xl">
+              <div className="relative rounded-[2rem] overflow-hidden">
                 <ImageWithFallback
                   src={news[currentSlide].image || '/images/placeholder.svg'}
                   alt={`${news[currentSlide].title} nuotrauka`}
@@ -111,10 +108,6 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
-
-              {/* Decorative Elements */}
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-slate-400 to-slate-600 rounded-3xl opacity-20 -z-10"></div>
-              <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-slate-500 to-slate-700 rounded-3xl opacity-20 -z-10"></div>
             </div>
           </div>
         </div>

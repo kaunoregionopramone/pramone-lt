@@ -123,7 +123,6 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             'valdymasSettings',
             'leadership',
             'partneriai',
-            'veiklosAtaskaitos',
             'news',
           ];
           return !DISABLED_TYPES.includes(id) && !manuallyAdded.includes(id);

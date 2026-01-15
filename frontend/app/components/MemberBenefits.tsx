@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 interface Benefit {
   _key: string;
@@ -10,7 +10,9 @@ interface MemberBenefitsProps {
   benefits?: Benefit[];
 }
 
-export function MemberBenefits({ benefits: sanityBenefits }: MemberBenefitsProps) {
+export function MemberBenefits({
+  benefits: sanityBenefits,
+}: MemberBenefitsProps) {
   // Don't render if no benefits provided
   if (!sanityBenefits || sanityBenefits.length === 0) {
     return null;
@@ -18,7 +20,7 @@ export function MemberBenefits({ benefits: sanityBenefits }: MemberBenefitsProps
 
   const benefits = sanityBenefits.map((b) => ({
     title: b.title,
-    description: b.description1 || '',
+    description: b.description1 || "",
   }));
 
   return (
@@ -33,29 +35,26 @@ export function MemberBenefits({ benefits: sanityBenefits }: MemberBenefitsProps
         <div className="text-center mb-20">
           <h2 className="text-5xl text-gray-900 mb-6">Narystės naudos</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Tapę mūsų asociacijos nariais, gausite prieigą prie išskirtinių galimybių 
-            ir paslaugų, skirtų jūsų verslo augimui ir plėtrai
+            Narystė KKPDA – tai dalyvavimas bendruomenėje, kuri jungia sprendimų
+            priėmėjus, telkia kompetencijas ir kryptingai dirba regiono bei
+            nacionaliniu mastu.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => {
             return (
-              <div
-                key={index}
-                className="group relative"
-              >
-                
+              <div key={index} className="group relative">
                 {/* Card content */}
                 <div className="relative p-8 rounded-3xl bg-white border border-gray-200 hover:border-slate-300 hover:shadow-2xl transition-all duration-300 h-full">
                   <div className="mb-6">
                     <div className="w-16 h-1 bg-gradient-to-r from-slate-700 to-slate-500 rounded-full"></div>
                   </div>
-                  
+
                   <h3 className="text-2xl text-gray-900 mb-4 font-semibold">
                     {benefit.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 leading-relaxed text-base">
                     {benefit.description}
                   </p>

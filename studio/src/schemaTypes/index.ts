@@ -12,11 +12,10 @@ import { membershipInfo } from './singletons/membershipInfo'
 import { narystesNaudos } from './singletons/narystesNaudos'
 import { istorija } from './singletons/istorija'
 import { partneriai } from './singletons/partneriai'
-import { veiklosAtaskaitos } from './singletons/veiklosAtaskaitos'
 import { valdymas } from './singletons/valdymas'
 import { atstovavimas } from './singletons/atstovavimas'
 import apieKkpda from './singletons/apieKkpda'
-// Removed contactsSettings singleton, pastPresident document, partner document (replaced by partneriai singleton), activityReport document (replaced by veikla singleton), and strategicDirection document (replaced by veikla singleton)
+// Removed contactsSettings singleton, pastPresident document, partner document (replaced by partneriai singleton), veiklosAtaskaitos singleton (replaced by activityReport document), and strategicDirection document (replaced by veikla singleton)
 
 // Export an array of all the schema types.  This is used in the Sanity Studio configuration. https://www.sanity.io/docs/schema-types
 
@@ -30,7 +29,6 @@ export const schemaTypes = [
   narystesNaudos,
   istorija,
   partneriai,
-  veiklosAtaskaitos,
   valdymas,
   // Documents
   member,

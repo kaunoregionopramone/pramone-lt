@@ -4,6 +4,9 @@ import Link from "next/link";
 import { MembersGrid } from "@/app/components/MembersGrid";
 import { ArrowRight } from "lucide-react";
 
+// Revalidate the page every 60 seconds to ensure deleted members are removed
+export const revalidate = 60;
+
 export default async function NariaiPage() {
   const { data: members } = await sanityFetch({
     query: membersQuery,
