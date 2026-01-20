@@ -1,7 +1,7 @@
 {
   "name": "pramonelt",
   "description": "Pramone.lt website",
-  "homepage": "https://github.com/alfa-ts/pramone-lt-poc",
+  "homepage": "https://github.com/kaunoregionopramone/pramone-lt",
   "scripts": {
     "dev": "npm-run-all --parallel dev:*",
     "dev:next": "npm run dev --workspace=frontend",

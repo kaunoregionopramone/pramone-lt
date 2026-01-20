@@ -1,5 +1,5 @@
 {
-  "name": "starter-template",
+  "name": "sanity-studio",
   "private": true,
   "version": "1.0.0",
   "main": "package.json",
@@ -12,9 +12,6 @@
     "deploy": "sanity deploy",
     "extract-types": "sanity schema extract --enforce-required-fields"
   },
-  "keywords": [
-    "sanity"
-  ],
   "dependencies": {
     "@sanity/assist": "5.0.0",
     "@sanity/icons": "3.7.4",
