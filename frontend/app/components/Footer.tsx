@@ -11,7 +11,7 @@ export default async function Footer() {
     sanityFetch({ query: apieKkpdaQuery }),
   ]);
   return (
-    <footer className="bg-gray-900 text-white py-16">
+    <footer className="bg-slate-900 text-white pt-16 pb-12 border-t border-slate-700">
       <div className="max-w-7xl mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand & Description */}
@@ -24,7 +24,7 @@ export default async function Footer() {
                 height={64}
               />
             </Link>
-            <p className="text-gray-400 text-sm mt-4">
+            <p className="text-gray-300 text-sm mt-4">
               {apieKkpda?.kasEsame
                 ? toPlainText(apieKkpda.kasEsame)
                 : "Kauno krašto pramonininkų ir darbdavių asociacija - viena seniausių ir įtakingiausių verslo organizacijų Lietuvoje."}
@@ -38,7 +38,7 @@ export default async function Footer() {
               <li>
                 <Link
                   href="/apie/istorija"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-300 hover:text-white transition-colors"
                 >
                   Apie mus
                 </Link>
@@ -46,7 +46,7 @@ export default async function Footer() {
               <li>
                 <Link
                   href="/nariai"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-300 hover:text-white transition-colors"
                 >
                   Nariai
                 </Link>
@@ -54,7 +54,7 @@ export default async function Footer() {
               <li>
                 <Link
                   href="/kontaktai"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-300 hover:text-white transition-colors"
                 >
                   Kontaktai
                 </Link>
@@ -62,7 +62,7 @@ export default async function Footer() {
               <li>
                 <Link
                   href="/naujienos-ir-renginiai"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-300 hover:text-white transition-colors"
                 >
                   Naujienos
                 </Link>
@@ -70,7 +70,7 @@ export default async function Footer() {
               <li>
                 <Link
                   href="/apie/istatai"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-300 hover:text-white transition-colors"
                 >
                   Dokumentai
                 </Link>
@@ -86,13 +86,13 @@ export default async function Footer() {
               <h4 className="mb-4 text-white">Kontaktai</h4>
               <ul className="space-y-3 text-sm">
                 {contactInfo?.address && (
-                  <li className="flex items-start gap-2 text-gray-400">
+                  <li className="flex items-start gap-2 text-gray-300">
                     <MapPin className="size-4 text-white mt-0.5 shrink-0" />
                     <span>{contactInfo.address}</span>
                   </li>
                 )}
                 {contactInfo?.phone && (
-                  <li className="flex items-center gap-2 text-gray-400">
+                  <li className="flex items-center gap-2 text-gray-300">
                     <Phone className="size-4 text-white shrink-0" />
                     <a
                       href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
@@ -103,7 +103,7 @@ export default async function Footer() {
                   </li>
                 )}
                 {contactInfo?.email && (
-                  <li className="flex items-center gap-2 text-gray-400">
+                  <li className="flex items-center gap-2 text-gray-300">
                     <Mail className="size-4 text-white shrink-0" />
                     <a
                       href={`mailto:${contactInfo.email}`}
@@ -125,7 +125,7 @@ export default async function Footer() {
                 href="https://www.facebook.com/kaunokrastopramonininku"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="size-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
+                className="size-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors border border-slate-700"
                 aria-label="Facebook"
               >
                 <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
@@ -136,7 +136,7 @@ export default async function Footer() {
                 href="https://www.instagram.com/kkpda_"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="size-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
+                className="size-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors border border-slate-700"
                 aria-label="Instagram"
               >
                 <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
@@ -147,7 +147,7 @@ export default async function Footer() {
                 href="https://www.linkedin.com/company/kkpda"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="size-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
+                className="size-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors border border-slate-700"
                 aria-label="LinkedIn"
               >
                 <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
@@ -158,7 +158,7 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
+        <div className="border-t border-slate-700 mt-12 pt-8 text-center text-sm text-gray-500">
           © {new Date().getFullYear()} Kauno krašto pramonininkų ir darbdavių
           asociacija. Visos teisės saugomos.
         </div>
