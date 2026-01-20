@@ -14,34 +14,43 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install rclone
         run: |
-          npm install -g @sanity/cli
           sudo apt-get update
           sudo apt-get install -y rclone
+
+      - name: Install Sanity dependencies
+        working-directory: studio
+        run: npm install
 
       - name: Set date variables
         run: |
           echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
       - name: Export Sanity dataset
+        working-directory: studio
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         run: |
-          sanity dataset export production sanity-backup-${DATE}.tar.gz
+          npx sanity dataset export production ../sanity-backup-${DATE}.tar.gz
 
       - name: Configure rclone (Google Drive)
         env:
           GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
         run: |
           mkdir -p ~/.config/rclone
-          echo "$GDRIVE_CREDENTIALS" > service-account.json
+          echo "$GDRIVE_CREDENTIALS" > ${{ github.workspace }}/service-account.json
 
           cat > ~/.config/rclone/rclone.conf <<EOF
           [gdrive]
           type = drive
           scope = drive
-          service_account_file = service-account.json
+          service_account_file = ${{ github.workspace }}/service-account.json
           root_folder_id = ${{ secrets.GDRIVE_FOLDER_ID }}
           EOF
 
@@ -56,4 +65,4 @@ jobs:
             --include "sanity-backup-*.tar.gz"
 
       - name: Cleanup local files
-        run: rm -f sanity-backup-*.tar.gz service-account.json
+        run: rm -f sanity-backup-*.tar.gz ${{ github.workspace }}/service-account.json
