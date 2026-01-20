@@ -91,18 +91,20 @@ export function MembershipCTA({
             )}
           </div>
 
-          {/* Right: Image/Visual */}
-          <div className="relative">
-            <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-600">
+          {/* Right: Logo & Stats */}
+          <div className="relative flex flex-col gap-6">
+            {/* Logo Card */}
+            <div className="bg-white rounded-3xl shadow-2xl p-8 sm:p-12 flex items-center justify-center">
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHRlYW18ZW58MXx8fHwxNzYxNzQ2NzQwfDA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Business team"
-                className="w-full h-[500px] object-cover"
+                src="/images/logo.png"
+                alt="KKPDA logotipas"
+                className="w-full max-w-md h-auto object-contain"
               />
             </div>
-            {/* Stats Overlay */}
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-left-6 bg-white rounded-2xl shadow-2xl p-4 sm:p-6">
-              <div className="flex items-center gap-3 sm:gap-4">
+            
+            {/* Stats Card */}
+            <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6">
+              <div className="flex items-center justify-center gap-4 sm:gap-6">
                 <div className="text-center">
                   <div className="text-xl sm:text-3xl text-slate-800 font-bold">
                     {membersCount}

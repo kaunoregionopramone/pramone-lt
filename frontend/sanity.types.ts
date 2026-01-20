@@ -660,7 +660,7 @@ export type NewsQueryResult = Array<{
   _createdAt: string;
 }>;
 // Variable: allNewsQuery
-// Query: *[_type == "news"] | order(isFeatured desc, coalesce(publishedAt, _createdAt) desc) {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    publishedAt,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation  }
+// Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    publishedAt,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation  }
 export type AllNewsQueryResult = Array<{
   _id: string;
   title: string;
@@ -893,7 +893,7 @@ declare module "@sanity/client" {
     "\n  *[_id == \"apieKkpda\"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    metuPatirtisAprasymas,\n    asociacijosNariaiAprasymas,\n    \"misija\": pt::text(musuMisija),\n    \"vizija\": pt::text(musuVizija),\n    strateginesVeiklosKryptys[] {\n      _key,\n      title\n    },\n    kurEiname,\n    \"kurEinamePaveikslasUrl\": kurEinamePaveikslas.asset->url,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      \"logoUrl\": logo.asset->url\n    }\n  }\n": ApieKkpdaQueryResult;
     "\n  *[_type == \"leadership\"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    \"photo\": photo,\n    phone,\n    email\n  }\n": LeadershipQueryResult;
     "\n  *[_type == \"news\"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt\n  }\n": NewsQueryResult;
-    "\n  *[_type == \"news\"] | order(isFeatured desc, coalesce(publishedAt, _createdAt) desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
+    "\n  *[_type == \"news\"] | order(coalesce(publishedAt, _createdAt) desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
     "\n  *[_type == \"news\"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    publishedAt,\n    _createdAt\n  }\n": RecentNewsQueryResult;
     "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
     "\n  *[_id == \"istorija\"][0] {\n    ourHistory,\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
