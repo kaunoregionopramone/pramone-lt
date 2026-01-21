@@ -195,7 +195,7 @@ export default async function ValdymasPage() {
                 </div>
 
                 {presidentMessage && (
-                  <div className="space-y-6 text-gray-600 leading-relaxed mb-auto prose prose-lg max-w-none prose-p:text-gray-600 prose-blockquote:border-l-4 prose-blockquote:border-gray-800 prose-blockquote:pl-4 prose-blockquote:italic">
+                  <div className="space-y-6 text-gray-600 leading-relaxed mb-auto prose prose-lg max-w-none text-justify prose-p:text-gray-600 prose-blockquote:border-l-4 prose-blockquote:border-gray-800 prose-blockquote:pl-4 prose-blockquote:italic">
                     <PortableText value={presidentMessage as any} />
                   </div>
                 )}

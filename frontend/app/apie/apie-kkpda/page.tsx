@@ -200,7 +200,7 @@ export default async function ApieKkpdaPage() {
             {/* Left Content */}
             <div>
               {data?.kurEiname && (
-                <div className="prose prose-lg max-w-none text-gray-700 prose-ul:space-y-4 prose-li:marker:text-gray-400">
+                <div className="prose prose-lg max-w-none text-gray-700 text-justify prose-ul:space-y-4 prose-li:marker:text-gray-400">
                   <PortableText value={data.kurEiname as any} />
                 </div>
               )}
