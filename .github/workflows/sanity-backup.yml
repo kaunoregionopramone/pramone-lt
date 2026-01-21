@@ -3,7 +3,7 @@ name: Weekly Sanity Backup
 on:
   schedule:
     # Every Sunday at 02:00 UTC
-    - cron: '0 2 * * 0'
+    - cron: "0 2 * * 0"
   workflow_dispatch:
 
 jobs:
@@ -17,12 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-
-      - name: Install rclone
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rclone
+          node-version: "20"
 
       - name: Install Sanity dependencies
         working-directory: studio
@@ -41,30 +36,33 @@ jobs:
         run: |
           npx sanity dataset export production ../sanity-backup-${DATE}.tar.gz
 
-      - name: Configure rclone (Google Drive)
-        env:
-          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+      - name: Install rclone
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rclone
+
+      - name: Configure rclone for Cloudflare R2
         run: |
           mkdir -p ~/.config/rclone
-          echo "$GDRIVE_CREDENTIALS" > ${{ github.workspace }}/service-account.json
-
           cat > ~/.config/rclone/rclone.conf <<EOF
-          [gdrive]
-          type = drive
-          scope = drive
-          service_account_file = ${{ github.workspace }}/service-account.json
-          root_folder_id = ${{ secrets.GDRIVE_FOLDER_ID }}
+          [r2]
+          type = s3
+          provider = Cloudflare
+          access_key_id = ${{ secrets.R2_ACCESS_KEY_ID }}
+          secret_access_key = ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          endpoint = https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+          acl = private
           EOF
 
-      - name: Upload backup to Google Drive
+      - name: Upload backup to Cloudflare R2
         run: |
-          rclone copy sanity-backup-${DATE}.tar.gz gdrive: --progress
+          rclone copy sanity-backup-${DATE}.tar.gz r2:${{ secrets.R2_BUCKET_NAME }}/ --progress
 
       - name: Delete backups older than 60 days
         run: |
-          rclone delete gdrive: \
+          rclone delete r2:${{ secrets.R2_BUCKET_NAME }}/ \
             --min-age 60d \
             --include "sanity-backup-*.tar.gz"
 
       - name: Cleanup local files
-        run: rm -f sanity-backup-*.tar.gz ${{ github.workspace }}/service-account.json
+        run: rm -f sanity-backup-*.tar.gz
