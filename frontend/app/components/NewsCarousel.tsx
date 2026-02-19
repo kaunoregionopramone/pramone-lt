@@ -31,10 +31,6 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fading, setFading] = useState(false);
 
-  if (!news || news.length === 0) {
-    return null;
-  }
-
   const goToSlide = useCallback((index: number) => {
     if (index === currentSlide) return;
     setFading(true);
@@ -43,6 +39,10 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
       setFading(false);
     }, 200);
   }, [currentSlide]);
+
+  if (!news || news.length === 0) {
+    return null;
+  }
 
   const nextSlide = () => goToSlide((currentSlide + 1) % news.length);
   const prevSlide = () => goToSlide((currentSlide - 1 + news.length) % news.length);
