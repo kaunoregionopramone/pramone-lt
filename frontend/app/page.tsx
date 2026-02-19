@@ -85,8 +85,7 @@ export default async function Page() {
       image:
         (urlForImage(item.coverImage)
           ?.width(1600)
-          .height(900)
-          .fit("crop")
+          .fit("max")
           .url() as string) || "",
       alt: `${item.title} nuotrauka`,
       slug: item.slug?.current || "",
