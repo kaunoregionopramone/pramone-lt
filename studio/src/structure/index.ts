@@ -48,6 +48,9 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
               S.listItem()
                 .title('Partneriai')
                 .child(S.document().schemaType('partneriai').documentId('partneriai')),
+              S.listItem()
+                .title('Verslo atsparumo ir tęstinumo vadovas')
+                .child(S.document().schemaType('versloAtsparumas').documentId('versloAtsparumas')),
             ])
         ),
 
@@ -123,6 +126,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             'valdymasSettings',
             'leadership',
             'partneriai',
+            'versloAtsparumas',
             'news',
           ];
           return !DISABLED_TYPES.includes(id) && !manuallyAdded.includes(id);

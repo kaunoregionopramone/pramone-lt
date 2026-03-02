@@ -58,7 +58,7 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-20 pb-14 lg:pb-24">
-        <div className="grid lg:grid-cols-[2fr_3fr] gap-10 lg:gap-16 items-stretch">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
 
           {/* Left: Text Content */}
           <div
@@ -76,7 +76,7 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
             </div>
 
             {/* Title */}
-            <h2 className="text-3xl lg:text-4xl xl:text-5xl text-gray-900 leading-snug line-clamp-3">
+            <h2 className="text-3xl lg:text-3xl xl:text-3xl 2xl:text-4xl text-gray-900 leading-snug line-clamp-4">
               {cleanText(item.title)}
             </h2>
 
@@ -86,20 +86,18 @@ export function NewsCarousel({ news }: NewsCarouselProps) {
             </p>
 
             {/* CTA Buttons — pinned to bottom */}
-            <div className="flex flex-wrap items-center gap-3 mt-auto">
+            <div className="flex flex-wrap items-center gap-4 mt-auto">
               <Link href={`/${item.type === 'renginys' ? 'renginiai' : 'naujienos'}/${item.slug}`}>
-                <Button className="bg-slate-700 hover:bg-slate-800 text-white px-8 h-13 text-base shadow-lg hover:shadow-xl transition-all group">
-                  Plačiau
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                <Button className="bg-slate-700 hover:bg-slate-800 text-white px-7 h-11 text-sm shadow-md hover:shadow-lg transition-all">
+                  Skaityti daugiau
                 </Button>
               </Link>
-              <Link href="/naujienos-ir-renginiai">
-                <Button
-                  variant="outline"
-                  className="border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-slate-400 px-8 h-13 text-base"
-                >
-                  Visos naujienos
-                </Button>
+              <Link
+                href="/naujienos-ir-renginiai"
+                className="group inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              >
+                Visos naujienos
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
           </div>
