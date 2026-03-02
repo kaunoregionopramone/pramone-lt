@@ -296,4 +296,14 @@ export const activityReportsQuery = defineQuery(`
   }
 `);
 
+export const versloAtsparumasQuery = defineQuery(`
+  *[_id == "versloAtsparumas"][0] {
+    description,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt,
+    "fileUrl": file.asset->url,
+    "fileName": file.asset->originalFilename
+  }
+`);
+
 // Removed unused queries for pages, posts, and people since those document types are no longer needed
