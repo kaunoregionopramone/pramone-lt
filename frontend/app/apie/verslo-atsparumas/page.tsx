@@ -117,9 +117,6 @@ export default async function VersloAtsparumasPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Left: description + download card */}
             <div className="flex flex-col gap-10">
-              {/* Decorative header */}
-              <div className="w-12 h-1 bg-gray-800 rounded-full" />
-
               {description && (
                 <article className="prose prose-lg max-w-none text-gray-600 text-justify">
                   <PortableText value={description as any} />

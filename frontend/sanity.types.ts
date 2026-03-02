@@ -885,6 +885,21 @@ export type AtstovavimasQueryResult = {
 // Variable: activityReportsQuery
 // Query: *[_type == "activityReport"] | order(_createdAt desc) {    _id,    period,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
 export type ActivityReportsQueryResult = Array<never>;
+// Variable: versloAtsparumasQuery
+// Query: *[_id == "versloAtsparumas"][0] {    description,    "imageUrl": image.asset->url,    "imageAlt": image.alt,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
+export type VersloAtsparumasQueryResult = {
+  description: null;
+  imageUrl: null;
+  imageAlt: null;
+  fileUrl: null;
+  fileName: null;
+} | {
+  description: string | null;
+  imageUrl: null;
+  imageAlt: null;
+  fileUrl: null;
+  fileName: null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -909,5 +924,6 @@ declare module "@sanity/client" {
     "\n  *[_id == \"narystesNaudos\"][0] {\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    }\n  }\n": NarystesNaudosQueryResult;
     "\n  *[_id == \"atstovavimas\"][0] {\n    nationalActivities[] {\n      _key,\n      title,\n      description\n    },\n    regionalActivities[] {\n      _key,\n      title,\n      description\n    }\n  }\n": AtstovavimasQueryResult;
     "\n  *[_type == \"activityReport\"] | order(_createdAt desc) {\n    _id,\n    period,\n    \"fileUrl\": file.asset->url,\n    \"fileName\": file.asset->originalFilename\n  }\n": ActivityReportsQueryResult;
+    "\n  *[_id == \"versloAtsparumas\"][0] {\n    description,\n    \"imageUrl\": image.asset->url,\n    \"imageAlt\": image.alt,\n    \"fileUrl\": file.asset->url,\n    \"fileName\": file.asset->originalFilename\n  }\n": VersloAtsparumasQueryResult;
   }
 }
