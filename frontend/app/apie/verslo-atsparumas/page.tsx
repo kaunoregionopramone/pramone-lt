@@ -3,7 +3,7 @@ import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
 import { versloAtsparumasQuery } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
-import { Download, FileText } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
 import { toPlainText } from "@/lib/portableTextUtils";
 import type { Metadata } from "next";
 
@@ -139,13 +139,12 @@ export default async function VersloAtsparumasPage() {
                   </div>
                   <a
                     href={fileUrl}
-                    download={fileName || true}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group shrink-0 inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:shadow-lg hover:-translate-y-0.5 transition-all"
+                    className="group shrink-0 inline-flex items-center gap-2 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:from-slate-800 hover:to-slate-900 hover:shadow-lg hover:-translate-y-0.5 transition-all"
                   >
-                    <Download className="size-4" />
-                    Atsisiųsti
+                    Peržiūrėti
+                    <ExternalLink className="size-4 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
                 </div>
               )}
