@@ -2,7 +2,7 @@ import {defineField, defineType} from 'sanity'
 
 export const legalDocuments = defineType({
   name: 'istatai',
-  title: 'Įstatai',
+  title: 'Įstatai ir etikos kodeksas',
   type: 'document',
   fields: [
     // Introduction Section
@@ -126,7 +126,7 @@ export const legalDocuments = defineType({
   ],
   preview: {
     prepare() {
-      return {title: 'Įstatai'}
+      return {title: 'Įstatai ir etikos kodeksas'}
     },
   },
 })
