@@ -28,8 +28,11 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 .title('Istorija')
                 .child(S.document().schemaType('istorija').documentId('istorija')),
               S.listItem()
-                .title('Įstatai')
+                .title('Įstatai ir etikos kodeksas')
                 .child(S.document().schemaType('istatai').documentId('istatai')),
+              S.listItem()
+                .title('Privatumo politika')
+                .child(S.document().schemaType('privatumoPolitika').documentId('privatumoPolitika')),
               S.listItem()
                 .title('Valdymas')
                 .icon(FolderIcon)
@@ -119,6 +122,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
             'atstovavimas',
             'contactInfo',
             'istatai',
+            'privatumoPolitika',
             'membershipInfo',
             'narystesNaudos',
             'member',

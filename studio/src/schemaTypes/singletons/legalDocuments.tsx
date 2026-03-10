@@ -2,7 +2,7 @@ import {defineField, defineType} from 'sanity'
 
 export const legalDocuments = defineType({
   name: 'istatai',
-  title: 'Įstatai',
+  title: 'Įstatai ir etikos kodeksas',
   type: 'document',
   fields: [
     // Introduction Section
@@ -123,32 +123,10 @@ export const legalDocuments = defineType({
       options: {storeOriginalFilename: true},
       description: 'Įkelkite etikos kodeksą PDF formatu',
     }),
-
-    // Privacy Policy Section
-    defineField({
-      name: 'privacyTitle',
-      title: 'Privatumo politikos pavadinimas',
-      type: 'string',
-      description: 'Pvz.: "Privatumo politika"',
-    }),
-    defineField({
-      name: 'privacyDescription',
-      title: 'Privatumo politikos aprašymas',
-      type: 'text',
-      rows: 3,
-      description: 'Trumpas privatumo politikos aprašymas',
-    }),
-    defineField({
-      name: 'privacyFile',
-      title: 'Privatumo politika (PDF)',
-      type: 'file',
-      options: {storeOriginalFilename: true},
-      description: 'Įkelkite privatumo politiką PDF formatu',
-    }),
   ],
   preview: {
     prepare() {
-      return {title: 'Įstatai'}
+      return {title: 'Įstatai ir etikos kodeksas'}
     },
   },
 })

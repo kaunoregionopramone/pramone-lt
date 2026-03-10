@@ -8,6 +8,7 @@ import { news } from './documents/news'
 import { activityReport } from './documents/activityReport'
 import { contactInfo } from './singletons/contactInfo'
 import { legalDocuments } from './singletons/legalDocuments'
+import { privatumoPolitika } from './singletons/privatumoPolitika'
 import { membershipInfo } from './singletons/membershipInfo'
 import { narystesNaudos } from './singletons/narystesNaudos'
 import { istorija } from './singletons/istorija'
@@ -26,6 +27,7 @@ export const schemaTypes = [
   atstovavimas,
   contactInfo,
   legalDocuments,
+  privatumoPolitika,
   membershipInfo,
   narystesNaudos,
   istorija,
