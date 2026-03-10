@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
-import { legalDocumentsQuery } from "@/sanity/lib/queries";
+import { privacyPolicyQuery } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
 import { ExternalLink } from "lucide-react";
 
 export default async function PrivatumoPolitikaPage() {
-  const { data } = await sanityFetch({ query: legalDocumentsQuery });
+  const { data } = await sanityFetch({ query: privacyPolicyQuery });
 
-  const privacyTitle = data?.privacyTitle;
-  const privacyDescription = data?.privacyDescription;
-  const privacyUrl = data?.privacyUrl;
+  const title = data?.title;
+  const description = data?.description;
+  const fileUrl = data?.fileUrl;
 
-  const hasPrivacyDescription =
-    privacyDescription &&
-    Array.isArray(privacyDescription) &&
-    privacyDescription.length > 0;
+  const hasDescription =
+    description &&
+    Array.isArray(description) &&
+    description.length > 0;
 
   return (
     <div className="min-h-screen bg-white">
@@ -73,23 +73,23 @@ export default async function PrivatumoPolitikaPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 sm:p-10 lg:p-12">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
               <div>
-                {privacyTitle && (
+                {title && (
                   <h2 className="text-3xl text-gray-900 mb-8">
-                    {privacyTitle}
+                    {title}
                   </h2>
                 )}
-                {hasPrivacyDescription && (
+                {hasDescription && (
                   <div className="text-gray-600 leading-relaxed max-w-2xl prose prose-lg max-w-none">
-                    <PortableText value={privacyDescription as any} />
+                    <PortableText value={description as any} />
                   </div>
                 )}
               </div>
 
-              {privacyUrl && (
+              {fileUrl && (
                 <a
-                  href={privacyUrl}
+                  href={fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-xl font-medium hover:from-slate-800 hover:to-slate-900 hover:shadow-xl hover:-translate-y-0.5 transition-all shrink-0"

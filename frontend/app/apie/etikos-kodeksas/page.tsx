@@ -66,11 +66,11 @@ export default async function EtikosKodeksasPage() {
                 strokeWidth="1.16667"
               />
             </svg>
-            <span className="text-gray-900">Etikos kodeksas</span>
+            <span className="text-gray-900">Įstatai ir etikos kodeksas</span>
           </div>
 
           <div className="mb-12">
-            <h1 className="mb-3 text-5xl md:text-6xl lg:text-7xl">Etikos kodeksas</h1>
+            <h1 className="mb-3 text-5xl md:text-6xl lg:text-7xl">Įstatai ir etikos kodeksas</h1>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@ export default async function EtikosKodeksasPage() {
                 <div className="relative h-[550px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-slate-500/10 transition-shadow">
                   <Image
                     src={introImageUrl}
-                    alt="Etikos kodeksas"
+                    alt="Įstatai ir etikos kodeksas"
                     fill
                     className="object-cover object-right"
                   />

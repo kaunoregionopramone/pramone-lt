@@ -20,7 +20,7 @@ export default function Header() {
     { href: "/apie/apie-kkpda", label: "Apie KKPDA" },
     { href: "/apie/valdymas", label: "Valdymas" },
     { href: "/apie/istorija", label: "Istorija" },
-    { href: "/apie/etikos-kodeksas", label: "Etikos kodeksas" },
+    { href: "/apie/etikos-kodeksas", label: "Įstatai ir etikos kodeksas" },
     { href: "/apie/partneriai", label: "Partneriai" },
     { href: "/apie/verslo-atsparumas", label: "Verslo atsparumo ir tęstinumo vadovas" },
   ];

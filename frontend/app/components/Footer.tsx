@@ -72,7 +72,7 @@ export default async function Footer() {
                   href="/apie/etikos-kodeksas"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Etikos kodeksas
+                  Įstatai ir etikos kodeksas
                 </Link>
               </li>
               <li>
