@@ -134,9 +134,9 @@ export const legalDocuments = defineType({
     defineField({
       name: 'privacyDescription',
       title: 'Privatumo politikos aprašymas',
-      type: 'text',
-      rows: 3,
-      description: 'Trumpas privatumo politikos aprašymas',
+      type: 'array',
+      of: [{type: 'block'}],
+      description: 'Privatumo politikos tekstas (rodomas Privatumo politikos puslapyje). Galite naudoti formatavimą, sąrašus ir pan.',
     }),
     defineField({
       name: 'privacyFile',

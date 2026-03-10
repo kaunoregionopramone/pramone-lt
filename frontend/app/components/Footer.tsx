@@ -69,10 +69,18 @@ export default async function Footer() {
               </li>
               <li>
                 <Link
-                  href="/apie/istatai"
+                  href="/apie/etikos-kodeksas"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Dokumentai
+                  Etikos kodeksas
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/apie/privatumo-politika"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Privatumo politika
                 </Link>
               </li>
             </ul>

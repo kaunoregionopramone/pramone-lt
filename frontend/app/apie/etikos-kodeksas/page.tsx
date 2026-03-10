@@ -5,7 +5,7 @@ import { legalDocumentsQuery } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
 import { ExternalLink } from "lucide-react";
 
-export default async function IstataiPage() {
+export default async function EtikosKodeksasPage() {
   const { data } = await sanityFetch({ query: legalDocumentsQuery });
 
   // Extract data
@@ -19,9 +19,6 @@ export default async function IstataiPage() {
   const ethicsValues = data?.ethicsValues;
   const ethicsNotes = data?.ethicsNotes;
   const ethicsUrl = data?.ethicsUrl;
-  const privacyTitle = data?.privacyTitle;
-  const privacyDescription = data?.privacyDescription;
-  const privacyUrl = data?.privacyUrl;
 
   return (
     <div className="min-h-screen bg-white">
@@ -69,11 +66,11 @@ export default async function IstataiPage() {
                 strokeWidth="1.16667"
               />
             </svg>
-            <span className="text-gray-900">Įstatai</span>
+            <span className="text-gray-900">Etikos kodeksas</span>
           </div>
 
           <div className="mb-12">
-            <h1 className="mb-3 text-5xl md:text-6xl lg:text-7xl">Įstatai</h1>
+            <h1 className="mb-3 text-5xl md:text-6xl lg:text-7xl">Etikos kodeksas</h1>
           </div>
         </div>
       </div>
@@ -111,7 +108,7 @@ export default async function IstataiPage() {
                 <div className="relative h-[550px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-slate-500/10 transition-shadow">
                   <Image
                     src={introImageUrl}
-                    alt="Įstatai"
+                    alt="Etikos kodeksas"
                     fill
                     className="object-cover object-right"
                   />
@@ -226,42 +223,6 @@ export default async function IstataiPage() {
                 )}
               </div>
             )}
-          </div>
-        </section>
-      )}
-
-      {/* Privacy Policy Section */}
-      {(privacyTitle || privacyDescription || privacyUrl) && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-8 lg:px-12">
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 sm:p-10 lg:p-12">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                <div>
-                  {privacyTitle && (
-                    <h2 className="text-3xl text-gray-900 mb-8">
-                      {privacyTitle}
-                    </h2>
-                  )}
-                  {privacyDescription && (
-                    <p className="text-gray-600 leading-relaxed max-w-2xl">
-                      {privacyDescription}
-                    </p>
-                  )}
-                </div>
-
-                {privacyUrl && (
-                  <a
-                    href={privacyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-3 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-xl font-medium hover:from-slate-800 hover:to-slate-900 hover:shadow-xl hover:-translate-y-0.5 transition-all shrink-0"
-                  >
-                    Peržiūrėti dokumentą
-                    <ExternalLink className="size-4 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
-                )}
-              </div>
-            </div>
           </div>
         </section>
       )}
