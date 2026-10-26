@@ -185,7 +185,7 @@ export default async function EtikosKodeksasPage() {
                   >
                     {ethicsNotes.map(
                       (
-                        note: { text: string; isItalic?: boolean },
+                        note: { text: string; isItalic?: boolean | null },
                         index: number
                       ) => {
                         return (

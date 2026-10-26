@@ -148,7 +148,7 @@ export default async function KaipTaptiNariuPage() {
                     >
                       {data.whoCanJoinHighlights.map(
                         (
-                          highlight: { title: string; description?: string },
+                          highlight: { title: string; description?: string | null },
                           index: number
                         ) => (
                           <div

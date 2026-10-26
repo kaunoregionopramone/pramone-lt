@@ -89,8 +89,8 @@ export default async function VeiklosAtaskaitosPage() {
                     _key?: string;
                     _id?: string;
                     period?: string;
-                    fileUrl?: string;
-                    fileName?: string;
+                    fileUrl?: string | null;
+                    fileName?: string | null;
                   },
                   index: number
                 ) => (

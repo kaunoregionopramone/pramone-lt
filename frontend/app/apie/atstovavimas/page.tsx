@@ -88,7 +88,7 @@ export default async function AtstovavimasPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {nationalActivities.map(
                 (
-                  activity: { _key?: string; title?: string; description?: string },
+                  activity: { _key?: string; title?: string; description?: string | null },
                   index: number
                 ) => (
                   <div
@@ -132,7 +132,7 @@ export default async function AtstovavimasPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {regionalActivities.map(
                 (
-                  activity: { _key?: string; title?: string; description?: string },
+                  activity: { _key?: string; title?: string; description?: string | null },
                   index: number
                 ) => (
                   <div

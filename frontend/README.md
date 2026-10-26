@@ -27,7 +27,7 @@ Modern website for the Kaunas Region Industrialists and Employers Association, b
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 24.22.1 (see `.nvmrc`)
 - npm, yarn, pnpm, or bun
 
 ### Installation

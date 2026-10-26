@@ -68,6 +68,25 @@ export type BlockContent = Array<{
   _key: string;
 }>;
 
+export type ActivityReport = {
+  _id: string;
+  _type: "activityReport";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  period: string;
+  file: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
+};
+
 export type Leadership = {
   _id: string;
   _type: "leadership";
@@ -130,6 +149,38 @@ export type Member = {
   };
 };
 
+export type VersloAtsparumas = {
+  _id: string;
+  _type: "versloAtsparumas";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  description?: BlockContent;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  file?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
+};
+
 export type ValdymasSettings = {
   _id: string;
   _type: "valdymasSettings";
@@ -137,34 +188,6 @@ export type ValdymasSettings = {
   _updatedAt: string;
   _rev: string;
   presidentMessage?: BlockContent;
-};
-
-export type Veikla = {
-  _id: string;
-  _type: "veikla";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  misija: string;
-  vizija: string;
-  strategicDirections?: Array<{
-    title: string;
-    _key: string;
-  }>;
-  ataskaitos?: Array<{
-    period: string;
-    file: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-      };
-      media?: unknown;
-      _type: "file";
-    };
-    _key: string;
-  }>;
 };
 
 export type Partneriai = {
@@ -194,18 +217,6 @@ export type Partneriai = {
   partnersAgreements?: Array<{
     title: string;
     extra?: string;
-    logo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
     _type: "agreement";
     _key: string;
   }>;
@@ -217,19 +228,29 @@ export type Istorija = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  turnover?: string;
   ourHistory?: BlockContent;
-  services?: Array<{
-    title: string;
-    description?: string;
-    _type: "service";
-    _key: string;
-  }>;
   pastPresidents?: Array<{
     name: string;
     startYear: number;
     endYear?: number;
     _type: "pastPresident";
+    _key: string;
+  }>;
+};
+
+export type NarystesNaudos = {
+  _id: string;
+  _type: "narystesNaudos";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  benefitsText?: Array<{
+    title: string;
+    description1?: string;
+    description2?: string;
+    description3?: string;
+    description4?: string;
+    _type: "benefitItem";
     _key: string;
   }>;
 };
@@ -241,13 +262,12 @@ export type MembershipInfo = {
   _updatedAt: string;
   _rev: string;
   whyJoinText?: BlockContent;
-  benefitsText?: Array<{
+  whoCanJoinTitle?: string;
+  whoCanJoinText?: string;
+  whoCanJoinHighlights?: Array<{
     title: string;
-    description1?: string;
-    description2?: string;
-    description3?: string;
-    description4?: string;
-    _type: "benefitItem";
+    description?: string;
+    _type: "highlightItem";
     _key: string;
   }>;
   requiredDocuments?: Array<{
@@ -263,9 +283,12 @@ export type MembershipInfo = {
       media?: unknown;
       _type: "file";
     };
+    buttonText?: string;
     _type: "documentItem";
     _key: string;
   }>;
+  ctaTitle?: string;
+  ctaText?: BlockContent;
 };
 
 export type News = {
@@ -277,6 +300,7 @@ export type News = {
   title: string;
   slug: Slug;
   type: "naujiena" | "renginys";
+  publishedAt: string;
   isFeatured?: boolean;
   content?: BlockContent;
   coverImage?: {
@@ -291,22 +315,13 @@ export type News = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  publishedAt: string;
   eventStartDate?: string;
   eventEndDate?: string;
-  organizers?: Array<string>;
   location?: string;
   googleMapsLocation?: string;
   entrance?: string;
   registrationUrl?: string;
   timeSlots?: Array<string>;
-  program?: Array<{
-    date: string;
-    title: string;
-    time?: string;
-    description?: string;
-    _key: string;
-  }>;
   documents?: Array<{
     title: string;
     file: {
@@ -335,12 +350,80 @@ export type Slug = {
   source?: string;
 };
 
+export type PrivatumoPolitika = {
+  _id: string;
+  _type: "privatumoPolitika";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  file?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
+};
+
 export type Istatai = {
   _id: string;
   _type: "istatai";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  introTitle?: string;
+  introText?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  introImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   statutesFile?: {
     asset?: {
       _ref: string;
@@ -351,6 +434,20 @@ export type Istatai = {
     media?: unknown;
     _type: "file";
   };
+  ethicsTitle?: string;
+  ethicsDescription?: string;
+  ethicsValuesIntro?: string;
+  ethicsValues?: Array<{
+    title: string;
+    _type: "ethicsValue";
+    _key: string;
+  }>;
+  ethicsNotes?: Array<{
+    text: string;
+    isItalic?: boolean;
+    _type: "ethicsNote";
+    _key: string;
+  }>;
   ethicsFile?: {
     asset?: {
       _ref: string;
@@ -373,6 +470,172 @@ export type ContactInfo = {
   phone?: string;
   email?: string;
   googleAddress?: string;
+};
+
+export type Atstovavimas = {
+  _id: string;
+  _type: "atstovavimas";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  nationalActivities?: Array<{
+    title: string;
+    description?: string;
+    _type: "nationalActivity";
+    _key: string;
+  }>;
+  regionalActivities?: Array<{
+    title: string;
+    description?: string;
+    _type: "regionalActivity";
+    _key: string;
+  }>;
+};
+
+export type ApieKkpda = {
+  _id: string;
+  _type: "apieKkpda";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  kasEsame?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  kaAtstovaujame?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  musuMisija?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  musuVizija?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  metuPatirtisAprasymas?: string;
+  asociacijosNariaiAprasymas?: string;
+  strateginesVeiklosKryptys?: Array<{
+    title: string;
+    _type: "kryptis";
+    _key: string;
+  }>;
+  kurEiname?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  kurEinamePaveikslas?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  darboVietos?: number;
+  apyvarta?: number;
+  organizacijos?: Array<{
+    logo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    pavadinimas?: string;
+    aprasymas?: string;
+    _type: "organizacija";
+    _key: string;
+  }>;
+};
+
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
 };
 
 export type SanityAssistInstructionTask = {
@@ -592,7 +855,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockContent | Leadership | SanityImageCrop | SanityImageHotspot | Member | ValdymasSettings | Veikla | Partneriai | Istorija | MembershipInfo | News | Slug | Istatai | ContactInfo | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockContent | ActivityReport | Leadership | SanityImageCrop | SanityImageHotspot | Member | VersloAtsparumas | ValdymasSettings | Partneriai | Istorija | NarystesNaudos | MembershipInfo | News | Slug | PrivatumoPolitika | Istatai | ContactInfo | Atstovavimas | ApieKkpda | MediaTag | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: apieKkpdaQuery
@@ -612,6 +875,113 @@ export type ApieKkpdaQueryResult = {
   darboVietos: null;
   apyvarta: null;
   organizacijos: null;
+} | {
+  kasEsame: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  kaAtstovaujame: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  musuMisija: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  musuVizija: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  metuPatirtisAprasymas: string | null;
+  asociacijosNariaiAprasymas: string | null;
+  misija: string;
+  vizija: string;
+  strateginesVeiklosKryptys: Array<{
+    _key: string;
+    title: string;
+  }> | null;
+  kurEiname: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  kurEinamePaveikslasUrl: string | null;
+  darboVietos: number | null;
+  apyvarta: number | null;
+  organizacijos: Array<{
+    pavadinimas: string | null;
+    aprasymas: string | null;
+    logoUrl: string | null;
+  }> | null;
 } | null;
 // Variable: leadershipQuery
 // Query: *[_type == "leadership"] | order(role asc, name asc) {    _id,    name,    position,    role,    "photo": photo,    phone,    email  }
@@ -811,24 +1181,67 @@ export type ContactInfoQueryResult = {
   googleAddress: string | null;
 } | null;
 // Variable: legalDocumentsQuery
-// Query: *[_type == "istatai"][0] {    introTitle,    introText,    "introImageUrl": introImage.asset->url,    "statutesUrl": statutesFile.asset->url,    "statutesName": statutesFile.asset->originalFilename,    ethicsTitle,    ethicsDescription,    ethicsValuesIntro,    ethicsValues[] {      title    },    ethicsNotes[] {      text,      isItalic    },    "ethicsUrl": ethicsFile.asset->url,    "ethicsName": ethicsFile.asset->originalFilename,    privacyTitle,    privacyDescription,    "privacyUrl": privacyFile.asset->url,    "privacyName": privacyFile.asset->originalFilename  }
+// Query: *[_type == "istatai"][0] {    introTitle,    introText,    "introImageUrl": introImage.asset->url,    "statutesUrl": statutesFile.asset->url,    "statutesName": statutesFile.asset->originalFilename,    ethicsTitle,    ethicsDescription,    ethicsValuesIntro,    ethicsValues[] {      title    },    ethicsNotes[] {      text,      isItalic    },    "ethicsUrl": ethicsFile.asset->url,    "ethicsName": ethicsFile.asset->originalFilename  }
 export type LegalDocumentsQueryResult = {
-  introTitle: null;
-  introText: null;
-  introImageUrl: null;
+  introTitle: string | null;
+  introText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  introImageUrl: string | null;
   statutesUrl: string | null;
   statutesName: string | null;
-  ethicsTitle: null;
-  ethicsDescription: null;
-  ethicsValuesIntro: null;
-  ethicsValues: null;
-  ethicsNotes: null;
+  ethicsTitle: string | null;
+  ethicsDescription: string | null;
+  ethicsValuesIntro: string | null;
+  ethicsValues: Array<{
+    title: string;
+  }> | null;
+  ethicsNotes: Array<{
+    text: string;
+    isItalic: boolean | null;
+  }> | null;
   ethicsUrl: string | null;
   ethicsName: string | null;
-  privacyTitle: null;
-  privacyDescription: null;
-  privacyUrl: null;
-  privacyName: null;
+} | null;
+// Variable: privacyPolicyQuery
+// Query: *[_type == "privatumoPolitika"][0] {    title,    description,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
+export type PrivacyPolicyQueryResult = {
+  title: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  fileUrl: string | null;
+  fileName: string | null;
 } | null;
 // Variable: eventsListQuery
 // Query: *[_type == "event" &&    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))  ] | order(coalesce(startAt, dateTime(date)) desc) {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    organizers,    excerpt,    "plainContent": pt::text(content),    "cover": images[0]  }
@@ -848,19 +1261,23 @@ export type MembershipInfoQueryResult = {
   ctaText: null;
 } | {
   whyJoinText: BlockContent | null;
-  whoCanJoinTitle: null;
-  whoCanJoinText: null;
-  whoCanJoinHighlights: null;
+  whoCanJoinTitle: string | null;
+  whoCanJoinText: string | null;
+  whoCanJoinHighlights: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+  }> | null;
   requiredDocuments: Array<{
     _key: string;
     title: string;
     description: string | null;
     fileUrl: string | null;
     fileName: string | null;
-    buttonText: null;
+    buttonText: string | null;
   }> | null;
-  ctaTitle: null;
-  ctaText: null;
+  ctaTitle: string | null;
+  ctaText: BlockContent | null;
 } | null;
 // Variable: narystesNaudosQuery
 // Query: *[_id == "narystesNaudos"][0] {    benefitsText[] {      _key,      title,      description1,      description2,      description3,      description4    }  }
@@ -881,10 +1298,26 @@ export type NarystesNaudosQueryResult = {
 export type AtstovavimasQueryResult = {
   nationalActivities: null;
   regionalActivities: null;
+} | {
+  nationalActivities: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+  }> | null;
+  regionalActivities: Array<{
+    _key: string;
+    title: string;
+    description: string | null;
+  }> | null;
 } | null;
 // Variable: activityReportsQuery
 // Query: *[_type == "activityReport"] | order(_createdAt desc) {    _id,    period,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
-export type ActivityReportsQueryResult = Array<never>;
+export type ActivityReportsQueryResult = Array<{
+  _id: string;
+  period: string;
+  fileUrl: string | null;
+  fileName: string | null;
+}>;
 // Variable: versloAtsparumasQuery
 // Query: *[_id == "versloAtsparumas"][0] {    description,    "imageUrl": image.asset->url,    "imageAlt": image.alt,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
 export type VersloAtsparumasQueryResult = {
@@ -893,6 +1326,41 @@ export type VersloAtsparumasQueryResult = {
   imageAlt: null;
   fileUrl: null;
   fileName: null;
+} | {
+  description: null;
+  imageUrl: null;
+  imageAlt: null;
+  fileUrl: string | null;
+  fileName: string | null;
+} | {
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  imageUrl: null;
+  imageAlt: null;
+  fileUrl: string | null;
+  fileName: string | null;
+} | {
+  description: BlockContent | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
+  fileUrl: string | null;
+  fileName: string | null;
 } | {
   description: string | null;
   imageUrl: null;
@@ -917,7 +1385,8 @@ declare module "@sanity/client" {
     "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo\n  }\n": MembersQueryResult;
     "\n  *[_id == \"partneriai\"][0] {\n    \"cooperate\": partnersCooperate[] {\n      _key,\n      title,\n      \"logo\": logo.asset->url,\n      extra\n    },\n    \"agreements\": partnersAgreements[] {\n      _key,\n      title,\n      extra\n    }\n  }\n": PartnersQueryResult;
     "\n  *[_type == \"contactInfo\"][0] {\n    address,\n    phone,\n    email,\n    googleAddress\n  }\n": ContactInfoQueryResult;
-    "\n  *[_type == \"istatai\"][0] {\n    introTitle,\n    introText,\n    \"introImageUrl\": introImage.asset->url,\n    \"statutesUrl\": statutesFile.asset->url,\n    \"statutesName\": statutesFile.asset->originalFilename,\n    ethicsTitle,\n    ethicsDescription,\n    ethicsValuesIntro,\n    ethicsValues[] {\n      title\n    },\n    ethicsNotes[] {\n      text,\n      isItalic\n    },\n    \"ethicsUrl\": ethicsFile.asset->url,\n    \"ethicsName\": ethicsFile.asset->originalFilename,\n    privacyTitle,\n    privacyDescription,\n    \"privacyUrl\": privacyFile.asset->url,\n    \"privacyName\": privacyFile.asset->originalFilename\n  }\n": LegalDocumentsQueryResult;
+    "\n  *[_type == \"istatai\"][0] {\n    introTitle,\n    introText,\n    \"introImageUrl\": introImage.asset->url,\n    \"statutesUrl\": statutesFile.asset->url,\n    \"statutesName\": statutesFile.asset->originalFilename,\n    ethicsTitle,\n    ethicsDescription,\n    ethicsValuesIntro,\n    ethicsValues[] {\n      title\n    },\n    ethicsNotes[] {\n      text,\n      isItalic\n    },\n    \"ethicsUrl\": ethicsFile.asset->url,\n    \"ethicsName\": ethicsFile.asset->originalFilename\n  }\n": LegalDocumentsQueryResult;
+    "\n  *[_type == \"privatumoPolitika\"][0] {\n    title,\n    description,\n    \"fileUrl\": file.asset->url,\n    \"fileName\": file.asset->originalFilename\n  }\n": PrivacyPolicyQueryResult;
     "\n  *[_type == \"event\" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    \"plainContent\": pt::text(content),\n    \"cover\": images[0]\n  }\n": EventsListQueryResult;
     "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n": SingleEventQueryResult;
     "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    whoCanJoinTitle,\n    whoCanJoinText,\n    whoCanJoinHighlights[] {\n      _key,\n      title,\n      description\n    },\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    },\n    ctaTitle,\n    ctaText\n  }\n": MembershipInfoQueryResult;

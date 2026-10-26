@@ -23,7 +23,7 @@ pramone.lt/
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 24.22.1 (see `.nvmrc`)
 - npm or yarn
 
 ### Installation
