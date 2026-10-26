@@ -1,5 +1,5 @@
 import { defineType } from "sanity";
-import { InfoOutlineIcon } from "@sanity/icons";
+import {InfoOutlineIcon} from '@sanity/icons/InfoOutline'
 
 export default defineType({
   name: "apieKkpda",

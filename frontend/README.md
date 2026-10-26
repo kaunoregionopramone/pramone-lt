@@ -15,7 +15,7 @@ Modern website for the Kaunas Region Industrialists and Employers Association, b
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 14](https://nextjs.org/) with App Router
+- **Framework**: [Next.js 16](https://nextjs.org/) with App Router
 - **Language**: TypeScript
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **CMS**: [Sanity](https://www.sanity.io/)
@@ -27,7 +27,7 @@ Modern website for the Kaunas Region Industrialists and Employers Association, b
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 24.22.1 or later in the 24.x LTS line
 - npm, yarn, pnpm, or bun
 
 ### Installation

@@ -9,8 +9,8 @@ export const revalidate = 60;
 interface Partner {
   _key: string;
   title: string;
-  logo?: string;
-  extra?: string;
+  logo?: string | null;
+  extra?: string | null;
 }
 
 export default async function PartneriaiPage() {

@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { singleNewsQuery, recentNewsQuery } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
 import Image from "next/image";
+import { stegaClean } from "@sanity/client/stega";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GoogleMap } from "@/app/components/GoogleMap";
@@ -209,7 +210,7 @@ export default async function NewsDetailPage({
           <div className="mb-6">
             <span className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
               <Tag className="size-4" />
-              {news.type === "renginys" ? "Renginys" : "Naujiena"}
+              {stegaClean(news.type) === "renginys" ? "Renginys" : "Naujiena"}
             </span>
           </div>
 
@@ -221,7 +222,7 @@ export default async function NewsDetailPage({
             <div className="flex items-center gap-2">
               <Calendar className="size-5 text-slate-600" />
               <span>
-                {news.type === "renginys" && news.eventStartDate
+                {stegaClean(news.type) === "renginys" && news.eventStartDate
                   ? formatEventTime(news.eventStartDate, news.eventEndDate)
                   : formatDate(news.publishedAt || news._createdAt)}
               </span>
@@ -269,7 +270,7 @@ export default async function NewsDetailPage({
             {/* Main Content */}
             <div className="lg:col-span-2">
               {/* Event Information */}
-              {news.type === "renginys" && (
+              {stegaClean(news.type) === "renginys" && (
                 <div className="mb-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl p-6">
                   <h3 className="text-lg font-medium text-gray-900 mb-4">
                     Renginio informacija
@@ -325,7 +326,7 @@ export default async function NewsDetailPage({
             <div className="lg:col-span-1">
               <div className="sticky top-8">
                 <NewsSidebar
-                  recentNews={recentNews || []}
+                  recentNews={(recentNews || []).map((item) => ({ ...item, type: stegaClean(item.type) }))}
                   currentNewsId={news._id}
                 />
               </div>
@@ -335,7 +336,7 @@ export default async function NewsDetailPage({
       </section>
 
       {/* Google Map for Events */}
-      {news.type === "renginys" &&
+      {stegaClean(news.type) === "renginys" &&
         (news.googleMapsLocation || news.location) && (
           <section className="bg-white pb-12">
             <div className="max-w-7xl mx-auto px-8 lg:px-12">

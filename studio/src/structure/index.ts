@@ -1,4 +1,8 @@
-import {FolderIcon, UsersIcon, InfoOutlineIcon, ActivityIcon, DocumentTextIcon} from '@sanity/icons'
+import {FolderIcon} from '@sanity/icons/Folder'
+import {UsersIcon} from '@sanity/icons/Users'
+import {InfoOutlineIcon} from '@sanity/icons/InfoOutline'
+import {ActivityIcon} from '@sanity/icons/Activity'
+import {DocumentTextIcon} from '@sanity/icons/DocumentText'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 
 /**

@@ -6,7 +6,10 @@
     "dev": "npm-run-all --parallel dev:*",
     "dev:next": "npm run dev --workspace=frontend",
     "dev:studio": "npm run dev --workspace=studio",
-    "import-sample-data": "cd studio && sanity dataset import sample-data.tar.gz --replace"
+    "import-sample-data": "cd studio && sanity dataset import sample-data.tar.gz --replace",
+    "build": "npm run build --workspace=studio && npm run build --workspace=frontend",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces"
   },
   "workspaces": [
     "studio",
@@ -14,5 +17,23 @@
   ],
   "devDependencies": {
     "npm-run-all": "4.1.5"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "overrides": {
+    "@vercel/frameworks": {
+      "js-yaml": "3.15.2",
+      "smol-toml": "1.9.1"
+    },
+    "@module-federation/dts-plugin": {
+      "undici": "7.30.1"
+    },
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "7.1.7"
+    },
+    "typeid-js": {
+      "uuid": "11.1.1"
+    }
   }
 }

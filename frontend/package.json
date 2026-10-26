@@ -3,44 +3,49 @@
   "private": true,
   "scripts": {
     "predev": "npm run typegen",
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "prebuild": "npm run typegen",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "typegen": "sanity typegen generate"
+    "lint": "eslint .",
+    "typegen": "sanity typegen generate",
+    "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-slot": "1.2.4",
-    "@sanity/client": "7.6.0",
-    "@sanity/image-url": "1.1.0",
-    "@sanity/uuid": "3.0.2",
-    "@tailwindcss/postcss": "4.1.10",
-    "@tailwindcss/typography": "0.5.16",
+    "@sanity/client": "7.28.0",
+    "@sanity/image-url": "1.2.0",
+    "@sanity/uuid": "3.0.3",
+    "@tailwindcss/postcss": "4.3.3",
+    "@tailwindcss/typography": "0.5.20",
     "@vercel/speed-insights": "1.1.0",
     "autoprefixer": "10.4.20",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "date-fns": "3.6.0",
     "lucide-react": "0.553.0",
-    "next": "15.4.10",
-    "next-sanity": "11.0.0",
-    "postcss": "8.5.6",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "next": "16.4.3",
+    "next-sanity": "13.4.0",
+    "postcss": "8.5.31",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "react-icons": "5.5.0",
-    "sanity": "4.18.0",
+    "sanity": "6.20.0",
     "sonner": "1.7.0",
-    "styled-components": "6.1.18",
+    "styled-components": "6.6.0",
     "tailwind-merge": "3.4.0",
-    "tailwindcss": "4.1.10"
+    "tailwindcss": "4.3.3",
+    "@sanity/asset-utils": "2.3.0"
   },
   "devDependencies": {
-    "@types/node": "20.17.17",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
-    "eslint": "8.57.0",
-    "eslint-config-next": "15.1.6",
-    "typescript": "5.6.3"
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.3",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }

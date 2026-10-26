@@ -15,8 +15,9 @@ function cleanInvisibleChars(text: string): string {
  * Extracts plain text from Portable Text content
  * Cleans stega encoding to prevent corruption when truncating
  */
-export function toPlainText(blocks: BlockContent | null | undefined): string {
+export function toPlainText(blocks: BlockContent | string | null | undefined): string {
   if (!blocks) return "";
+  if (typeof blocks === "string") return cleanInvisibleChars(blocks).trim();
 
   const rawText = (blocks as any[])
     // Only process text blocks

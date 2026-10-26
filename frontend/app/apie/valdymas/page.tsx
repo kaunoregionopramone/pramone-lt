@@ -1,24 +1,11 @@
 import Link from "next/link";
+import { stegaClean } from "@sanity/client/stega";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { leadershipQuery, valdymasSettingsQuery } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
 import { Phone, Mail } from "lucide-react";
 import { urlForImage } from "@/sanity/lib/utils";
-
-interface LeadershipMember {
-  _id: string;
-  name: string;
-  position: string | null;
-  role:
-    | "prezidentas"
-    | "viceprezidentas"
-    | "prezidiumoNarys"
-    | "prezidiumoGarbesNarys";
-  photo: any;
-  phone?: string | null;
-  email?: string | null;
-}
 
 export default async function ValdymasPage() {
   const [{ data: leadershipData }, { data: valdymasSettings }] =
@@ -33,24 +20,24 @@ export default async function ValdymasPage() {
   const normalizeRole = (role: string | null | undefined): string => {
     if (!role) return "";
     // Remove zero-width spaces, zero-width non-joiners, and other invisible Unicode characters
-    return role.replace(/[\u200B-\u200D\uFEFF\u200C\u200D]/g, "").trim();
+    return stegaClean(role).replace(/[\u200B-\u200D\uFEFF\u200C\u200D]/g, "").trim();
   };
 
   // Group leadership data by role
   const president = leadershipData?.filter(
-    (member: LeadershipMember) => normalizeRole(member.role) === "prezidentas"
+    (member) => normalizeRole(member.role) === "prezidentas"
   )[0];
 
   const vicePresidents = leadershipData?.filter(
-    (member: LeadershipMember) => normalizeRole(member.role) === "viceprezidentas"
+    (member) => normalizeRole(member.role) === "viceprezidentas"
   );
 
   const presidiumMembers = leadershipData?.filter(
-    (member: LeadershipMember) => normalizeRole(member.role) === "prezidiumoNarys"
+    (member) => normalizeRole(member.role) === "prezidiumoNarys"
   );
 
   const honoraryMembers = leadershipData?.filter(
-    (member: LeadershipMember) => normalizeRole(member.role) === "prezidiumoGarbesNarys"
+    (member) => normalizeRole(member.role) === "prezidiumoGarbesNarys"
   );
 
   return (
@@ -242,7 +229,7 @@ export default async function ValdymasPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {vicePresidents.map((member: LeadershipMember) => (
+              {vicePresidents.map((member) => (
                 <div
                   key={member._id}
                   className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow"
@@ -315,7 +302,7 @@ export default async function ValdymasPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              {presidiumMembers.map((member: LeadershipMember) => (
+              {presidiumMembers.map((member) => (
                 <div
                   key={member._id}
                   className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow"
@@ -382,7 +369,7 @@ export default async function ValdymasPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto justify-items-center">
-              {honoraryMembers.map((member: LeadershipMember) => (
+              {honoraryMembers.map((member) => (
                 <div
                   key={member._id}
                   className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow w-full max-w-[270px]"

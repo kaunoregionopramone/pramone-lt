@@ -6,13 +6,13 @@ import {
 } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
 import Image from "next/image";
+import { stegaClean } from "@sanity/client/stega";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GoogleMap } from "@/app/components/GoogleMap";
 import { ShareButtons } from "@/app/components/ShareButtons";
 import { createExcerpt } from "@/lib/portableTextUtils";
 import type { Metadata } from "next";
-import type { RecentNewsQueryResult } from "@/sanity.types";
 import {
   Calendar,
   MapPin,
@@ -170,15 +170,15 @@ export default async function EventDetailPage({
     query: contactInfoQuery,
   });
 
-  if (!event || event.type !== "renginys") {
+  if (!event || stegaClean(event.type) !== "renginys") {
     notFound();
   }
 
   // Filter recent events to show only events
   const filteredRecentEvents = recentEvents
     ?.filter(
-      (item: RecentNewsQueryResult[number]) =>
-        item.type === "renginys" && item._id !== event._id
+      (item) =>
+        stegaClean(item.type) === "renginys" && item._id !== event._id
     )
     .slice(0, 3);
 

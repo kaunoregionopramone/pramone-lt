@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  useDraftModeEnvironment,
   useIsPresentationTool,
 } from "next-sanity/hooks";
 import { useRouter } from "next/navigation";
@@ -11,7 +10,6 @@ import { disableDraftMode } from "@/app/actions";
 
 export default function DraftModeToast() {
   const isPresentationTool = useIsPresentationTool();
-  const env = useDraftModeEnvironment();
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const toastIdRef = useRef<string | number | null>(null);
@@ -62,10 +60,7 @@ export default function DraftModeToast() {
        * We delay the toast in case we're inside Presentation Tool
        */
       const toastId = toast("Draft Mode Enabled", {
-        description:
-          env === "live"
-            ? "Content is live, refreshing automatically"
-            : "Refresh manually to see changes",
+        description: "Draft content is shown",
         duration: Infinity,
         action: {
           label: "Disable",
@@ -85,7 +80,7 @@ export default function DraftModeToast() {
         toastIdRef.current = null;
       };
     }
-  }, [env, router, isPresentationTool, isInIframe]);
+  }, [router, isPresentationTool, isInIframe]);
 
   useEffect(() => {
     if (pending) {

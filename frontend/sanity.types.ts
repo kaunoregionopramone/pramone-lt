@@ -12,17 +12,21 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
+// Source: ../studio/schema.json
+export type NewsReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "news";
+};
+
 export type Link = {
   _type: "link";
   linkType?: "href" | "news";
   href?: string;
-  news?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "news";
-  };
+  news?: NewsReference;
   openInNewTab?: boolean;
 };
 
@@ -53,12 +57,7 @@ export type BlockContent = Array<{
   markDefs?: Array<{
     linkType?: "href" | "news";
     href?: string;
-    news?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "news";
-    };
+    news?: NewsReference;
     openInNewTab?: boolean;
     _type: "link";
     _key: string;
@@ -68,6 +67,34 @@ export type BlockContent = Array<{
   _key: string;
 }>;
 
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type ActivityReport = {
+  _id: string;
+  _type: "activityReport";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  period: string;
+  file: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
 export type Leadership = {
   _id: string;
   _type: "leadership";
@@ -76,14 +103,13 @@ export type Leadership = {
   _rev: string;
   name: string;
   position?: string;
-  role: "prezidentas" | "viceprezidentas" | "prezidiumoNarys" | "prezidiumoGarbesNarys";
+  role:
+    | "prezidentas"
+    | "viceprezidentas"
+    | "prezidiumoNarys"
+    | "prezidiumoGarbesNarys";
   photo: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -117,16 +143,33 @@ export type Member = {
   _rev: string;
   company: string;
   logo?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
+  };
+};
+
+export type VersloAtsparumas = {
+  _id: string;
+  _type: "versloAtsparumas";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  description?: BlockContent;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  file?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
   };
 };
 
@@ -139,34 +182,6 @@ export type ValdymasSettings = {
   presidentMessage?: BlockContent;
 };
 
-export type Veikla = {
-  _id: string;
-  _type: "veikla";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  misija: string;
-  vizija: string;
-  strategicDirections?: Array<{
-    title: string;
-    _key: string;
-  }>;
-  ataskaitos?: Array<{
-    period: string;
-    file: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-      };
-      media?: unknown;
-      _type: "file";
-    };
-    _key: string;
-  }>;
-};
-
 export type Partneriai = {
   _id: string;
   _type: "partneriai";
@@ -177,12 +192,7 @@ export type Partneriai = {
     title: string;
     extra?: string;
     logo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -194,18 +204,6 @@ export type Partneriai = {
   partnersAgreements?: Array<{
     title: string;
     extra?: string;
-    logo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
     _type: "agreement";
     _key: string;
   }>;
@@ -217,19 +215,29 @@ export type Istorija = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  turnover?: string;
   ourHistory?: BlockContent;
-  services?: Array<{
-    title: string;
-    description?: string;
-    _type: "service";
-    _key: string;
-  }>;
   pastPresidents?: Array<{
     name: string;
     startYear: number;
     endYear?: number;
     _type: "pastPresident";
+    _key: string;
+  }>;
+};
+
+export type NarystesNaudos = {
+  _id: string;
+  _type: "narystesNaudos";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  benefitsText?: Array<{
+    title: string;
+    description1?: string;
+    description2?: string;
+    description3?: string;
+    description4?: string;
+    _type: "benefitItem";
     _key: string;
   }>;
 };
@@ -241,31 +249,28 @@ export type MembershipInfo = {
   _updatedAt: string;
   _rev: string;
   whyJoinText?: BlockContent;
-  benefitsText?: Array<{
+  whoCanJoinTitle?: string;
+  whoCanJoinText?: string;
+  whoCanJoinHighlights?: Array<{
     title: string;
-    description1?: string;
-    description2?: string;
-    description3?: string;
-    description4?: string;
-    _type: "benefitItem";
+    description?: string;
+    _type: "highlightItem";
     _key: string;
   }>;
   requiredDocuments?: Array<{
     title: string;
     description?: string;
     file?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-      };
+      asset?: SanityFileAssetReference;
       media?: unknown;
       _type: "file";
     };
+    buttonText?: string;
     _type: "documentItem";
     _key: string;
   }>;
+  ctaTitle?: string;
+  ctaText?: BlockContent;
 };
 
 export type News = {
@@ -277,45 +282,27 @@ export type News = {
   title: string;
   slug: Slug;
   type: "naujiena" | "renginys";
+  publishedAt: string;
   isFeatured?: boolean;
   content?: BlockContent;
   coverImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
-  publishedAt: string;
   eventStartDate?: string;
   eventEndDate?: string;
-  organizers?: Array<string>;
   location?: string;
   googleMapsLocation?: string;
   entrance?: string;
   registrationUrl?: string;
   timeSlots?: Array<string>;
-  program?: Array<{
-    date: string;
-    title: string;
-    time?: string;
-    description?: string;
-    _key: string;
-  }>;
   documents?: Array<{
     title: string;
     file: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-      };
+      asset?: SanityFileAssetReference;
       media?: unknown;
       _type: "file";
     };
@@ -335,29 +322,91 @@ export type Slug = {
   source?: string;
 };
 
+export type PrivatumoPolitika = {
+  _id: string;
+  _type: "privatumoPolitika";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  file?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+};
+
 export type Istatai = {
   _id: string;
   _type: "istatai";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  introTitle?: string;
+  introText?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  introImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   statutesFile?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-    };
+    asset?: SanityFileAssetReference;
     media?: unknown;
     _type: "file";
   };
+  ethicsTitle?: string;
+  ethicsDescription?: string;
+  ethicsValuesIntro?: string;
+  ethicsValues?: Array<{
+    title: string;
+    _type: "ethicsValue";
+    _key: string;
+  }>;
+  ethicsNotes?: Array<{
+    text: string;
+    isItalic?: boolean;
+    _type: "ethicsNote";
+    _key: string;
+  }>;
   ethicsFile?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-    };
+    asset?: SanityFileAssetReference;
     media?: unknown;
     _type: "file";
   };
@@ -375,6 +424,179 @@ export type ContactInfo = {
   googleAddress?: string;
 };
 
+export type Atstovavimas = {
+  _id: string;
+  _type: "atstovavimas";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  nationalActivities?: Array<{
+    title: string;
+    description?: string;
+    _type: "nationalActivity";
+    _key: string;
+  }>;
+  regionalActivities?: Array<{
+    title: string;
+    description?: string;
+    _type: "regionalActivity";
+    _key: string;
+  }>;
+};
+
+export type ApieKkpda = {
+  _id: string;
+  _type: "apieKkpda";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  kasEsame?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  kaAtstovaujame?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  musuMisija?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  musuVizija?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  metuPatirtisAprasymas?: string;
+  asociacijosNariaiAprasymas?: string;
+  strateginesVeiklosKryptys?: Array<{
+    title: string;
+    _type: "kryptis";
+    _key: string;
+  }>;
+  kurEiname?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  kurEinamePaveikslas?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  darboVietos?: number;
+  apyvarta?: number;
+  organizacijos?: Array<{
+    logo?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    pavadinimas?: string;
+    aprasymas?: string;
+    _type: "organizacija";
+    _key: string;
+  }>;
+};
+
+export type MediaFolderReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "media.folder";
+};
+
+export type MediaFolder = {
+  _id: string;
+  _type: "media.folder";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  parent?: MediaFolderReference;
+};
+
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
+};
+
 export type SanityAssistInstructionTask = {
   _type: "sanity.assist.instructionTask";
   path?: string;
@@ -386,17 +608,21 @@ export type SanityAssistInstructionTask = {
 
 export type SanityAssistTaskStatus = {
   _type: "sanity.assist.task.status";
-  tasks?: Array<{
-    _key: string;
-  } & SanityAssistInstructionTask>;
+  tasks?: Array<
+    {
+      _key: string;
+    } & SanityAssistInstructionTask
+  >;
 };
 
 export type SanityAssistSchemaTypeAnnotations = {
   _type: "sanity.assist.schemaType.annotations";
   title?: string;
-  fields?: Array<{
-    _key: string;
-  } & SanityAssistSchemaTypeField>;
+  fields?: Array<
+    {
+      _key: string;
+    } & SanityAssistSchemaTypeField
+  >;
 };
 
 export type SanityAssistOutputType = {
@@ -409,14 +635,16 @@ export type SanityAssistOutputField = {
   path?: string;
 };
 
+export type AssistInstructionContextReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "assist.instruction.context";
+};
+
 export type SanityAssistInstructionContext = {
   _type: "sanity.assist.instruction.context";
-  reference: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "assist.instruction.context";
-  };
+  reference: AssistInstructionContextReference;
 };
 
 export type AssistInstructionContext = {
@@ -449,18 +677,23 @@ export type SanityAssistInstructionUserInput = {
 };
 
 export type SanityAssistInstructionPrompt = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  } | {
-    _key: string;
-  } & SanityAssistInstructionFieldRef | {
-    _key: string;
-  } & SanityAssistInstructionContext | {
-    _key: string;
-  } & SanityAssistInstructionUserInput>;
+  children?: Array<
+    | {
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & SanityAssistInstructionFieldRef)
+    | ({
+        _key: string;
+      } & SanityAssistInstructionContext)
+    | ({
+        _key: string;
+      } & SanityAssistInstructionUserInput)
+  >;
   style?: "normal";
   listItem?: never;
   markDefs?: null;
@@ -481,19 +714,24 @@ export type SanityAssistInstruction = {
   title?: string;
   userId?: string;
   createdById?: string;
-  output?: Array<{
-    _key: string;
-  } & SanityAssistOutputField | {
-    _key: string;
-  } & SanityAssistOutputType>;
+  output?: Array<
+    | ({
+        _key: string;
+      } & SanityAssistOutputField)
+    | ({
+        _key: string;
+      } & SanityAssistOutputType)
+  >;
 };
 
 export type SanityAssistSchemaTypeField = {
   _type: "sanity.assist.schemaType.field";
   path?: string;
-  instructions?: Array<{
-    _key: string;
-  } & SanityAssistInstruction>;
+  instructions?: Array<
+    {
+      _key: string;
+    } & SanityAssistInstruction
+  >;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -529,6 +767,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette;
   lqip?: string;
   blurHash?: string;
+  thumbHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
 };
@@ -544,14 +783,14 @@ export type SanityFileAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
   uploadId?: string;
-  path?: string;
-  url?: string;
+  path: string;
+  url: string;
   source?: SanityAssetSourceData;
 };
 
@@ -573,14 +812,14 @@ export type SanityImageAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
   uploadId?: string;
-  path?: string;
-  url?: string;
+  path: string;
+  url: string;
   metadata?: SanityImageMetadata;
   source?: SanityAssetSourceData;
 };
@@ -592,41 +831,206 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockContent | Leadership | SanityImageCrop | SanityImageHotspot | Member | ValdymasSettings | Veikla | Partneriai | Istorija | MembershipInfo | News | Slug | Istatai | ContactInfo | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
-export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./sanity/lib/queries.ts
+export type AllSanitySchemaTypes =
+  | NewsReference
+  | Link
+  | CallToAction
+  | InfoSection
+  | BlockContent
+  | SanityFileAssetReference
+  | ActivityReport
+  | SanityImageAssetReference
+  | Leadership
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Member
+  | VersloAtsparumas
+  | ValdymasSettings
+  | Partneriai
+  | Istorija
+  | NarystesNaudos
+  | MembershipInfo
+  | News
+  | Slug
+  | PrivatumoPolitika
+  | Istatai
+  | ContactInfo
+  | Atstovavimas
+  | ApieKkpda
+  | MediaFolderReference
+  | MediaFolder
+  | MediaTag
+  | SanityAssistInstructionTask
+  | SanityAssistTaskStatus
+  | SanityAssistSchemaTypeAnnotations
+  | SanityAssistOutputType
+  | SanityAssistOutputField
+  | AssistInstructionContextReference
+  | SanityAssistInstructionContext
+  | AssistInstructionContext
+  | SanityAssistInstructionUserInput
+  | SanityAssistInstructionPrompt
+  | SanityAssistInstructionFieldRef
+  | SanityAssistInstruction
+  | SanityAssistSchemaTypeField
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
+
+// Source: sanity/lib/queries.ts
 // Variable: apieKkpdaQuery
 // Query: *[_id == "apieKkpda"][0] {    kasEsame,    kaAtstovaujame,    musuMisija,    musuVizija,    metuPatirtisAprasymas,    asociacijosNariaiAprasymas,    "misija": pt::text(musuMisija),    "vizija": pt::text(musuVizija),    strateginesVeiklosKryptys[] {      _key,      title    },    kurEiname,    "kurEinamePaveikslasUrl": kurEinamePaveikslas.asset->url,    darboVietos,    apyvarta,    organizacijos[] {      pavadinimas,      aprasymas,      "logoUrl": logo.asset->url    }  }
-export type ApieKkpdaQueryResult = {
-  kasEsame: null;
-  kaAtstovaujame: null;
-  musuMisija: null;
-  musuVizija: null;
-  metuPatirtisAprasymas: null;
-  asociacijosNariaiAprasymas: null;
-  misija: string;
-  vizija: string;
-  strateginesVeiklosKryptys: null;
-  kurEiname: null;
-  kurEinamePaveikslasUrl: null;
-  darboVietos: null;
-  apyvarta: null;
-  organizacijos: null;
-} | null;
+export type ApieKkpdaQueryResult =
+  | {
+      kasEsame: null;
+      kaAtstovaujame: null;
+      musuMisija: null;
+      musuVizija: null;
+      metuPatirtisAprasymas: null;
+      asociacijosNariaiAprasymas: null;
+      misija: string;
+      vizija: string;
+      strateginesVeiklosKryptys: null;
+      kurEiname: null;
+      kurEinamePaveikslasUrl: null;
+      darboVietos: null;
+      apyvarta: null;
+      organizacijos: null;
+    }
+  | {
+      kasEsame: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }> | null;
+      kaAtstovaujame: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }> | null;
+      musuMisija: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }> | null;
+      musuVizija: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }> | null;
+      metuPatirtisAprasymas: string | null;
+      asociacijosNariaiAprasymas: string | null;
+      misija: string;
+      vizija: string;
+      strateginesVeiklosKryptys: Array<{
+        _key: string;
+        title: string;
+      }> | null;
+      kurEiname: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }> | null;
+      kurEinamePaveikslasUrl: string | null;
+      darboVietos: number | null;
+      apyvarta: number | null;
+      organizacijos: Array<{
+        pavadinimas: string | null;
+        aprasymas: string | null;
+        logoUrl: string | null;
+      }> | null;
+    }
+  | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: leadershipQuery
 // Query: *[_type == "leadership"] | order(role asc, name asc) {    _id,    name,    position,    role,    "photo": photo,    phone,    email  }
 export type LeadershipQueryResult = Array<{
   _id: string;
   name: string;
   position: string | null;
-  role: "prezidentas" | "prezidiumoGarbesNarys" | "prezidiumoNarys" | "viceprezidentas";
+  role:
+    | "prezidentas"
+    | "prezidiumoGarbesNarys"
+    | "prezidiumoNarys"
+    | "viceprezidentas";
   photo: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -635,6 +1039,8 @@ export type LeadershipQueryResult = Array<{
   phone: string | null;
   email: string | null;
 }>;
+
+// Source: sanity/lib/queries.ts
 // Variable: newsQuery
 // Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    publishedAt,    _createdAt  }
 export type NewsQueryResult = Array<{
@@ -645,12 +1051,7 @@ export type NewsQueryResult = Array<{
   isFeatured: boolean | null;
   content: BlockContent | null;
   coverImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -659,6 +1060,8 @@ export type NewsQueryResult = Array<{
   publishedAt: string;
   _createdAt: string;
 }>;
+
+// Source: sanity/lib/queries.ts
 // Variable: allNewsQuery
 // Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) {    _id,    title,    slug,    type,    isFeatured,    content,    "coverImage": coverImage,    publishedAt,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation  }
 export type AllNewsQueryResult = Array<{
@@ -669,12 +1072,7 @@ export type AllNewsQueryResult = Array<{
   isFeatured: boolean | null;
   content: BlockContent | null;
   coverImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -687,6 +1085,8 @@ export type AllNewsQueryResult = Array<{
   location: string | null;
   googleMapsLocation: string | null;
 }>;
+
+// Source: sanity/lib/queries.ts
 // Variable: recentNewsQuery
 // Query: *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {    _id,    title,    slug,    type,    publishedAt,    _createdAt  }
 export type RecentNewsQueryResult = Array<{
@@ -697,6 +1097,8 @@ export type RecentNewsQueryResult = Array<{
   publishedAt: string;
   _createdAt: string;
 }>;
+
+// Source: sanity/lib/queries.ts
 // Variable: singleNewsQuery
 // Query: *[_type == "news" && slug.current == $slug][0] {    _id,    title,    slug,    type,    content,    "coverImage": coverImage,    publishedAt,    _createdAt,    eventStartDate,    eventEndDate,    location,    googleMapsLocation,    entrance,    registrationUrl,    timeSlots,    "documents": documents[]{      title,      "file": file.asset->{        _id,        url,        originalFilename,        size      }    },    additionalInfo  }
 export type SingleNewsQueryResult = {
@@ -706,12 +1108,7 @@ export type SingleNewsQueryResult = {
   type: "naujiena" | "renginys";
   content: BlockContent | null;
   coverImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -730,9 +1127,9 @@ export type SingleNewsQueryResult = {
     title: string;
     file: {
       _id: string;
-      url: string | null;
+      url: string;
       originalFilename: string | null;
-      size: number | null;
+      size: number;
     } | null;
   }> | null;
   additionalInfo: Array<{
@@ -742,66 +1139,82 @@ export type SingleNewsQueryResult = {
     _key: string;
   }> | null;
 } | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: istorijaQuery
 // Query: *[_id == "istorija"][0] {    ourHistory,    "pastPresidents": pastPresidents[] {      _key,      name,      startYear,      endYear    }  }
-export type IstorijaQueryResult = {
-  ourHistory: null;
-  pastPresidents: null;
-} | {
-  ourHistory: BlockContent | null;
-  pastPresidents: Array<{
-    _key: string;
-    name: string;
-    startYear: number;
-    endYear: number | null;
-  }> | null;
-} | null;
+export type IstorijaQueryResult =
+  | {
+      ourHistory: null;
+      pastPresidents: null;
+    }
+  | {
+      ourHistory: BlockContent | null;
+      pastPresidents: Array<{
+        _key: string;
+        name: string;
+        startYear: number;
+        endYear: number | null;
+      }> | null;
+    }
+  | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: valdymasSettingsQuery
 // Query: *[_id == "valdymasSettings"][0] {    presidentMessage  }
-export type ValdymasSettingsQueryResult = {
-  presidentMessage: null;
-} | {
-  presidentMessage: BlockContent | null;
-} | null;
+export type ValdymasSettingsQueryResult =
+  | {
+      presidentMessage: null;
+    }
+  | {
+      presidentMessage: BlockContent | null;
+    }
+  | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: membersCountQuery
 // Query: count(*[_type == "member"])
 export type MembersCountQueryResult = number;
+
+// Source: sanity/lib/queries.ts
 // Variable: membersQuery
 // Query: *[_type == "member"] | order(lower(company) asc) {    _id,    company,    "logo": logo  }
 export type MembersQueryResult = Array<{
   _id: string;
   company: string;
   logo: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
 }>;
+
+// Source: sanity/lib/queries.ts
 // Variable: partnersQuery
 // Query: *[_id == "partneriai"][0] {    "cooperate": partnersCooperate[] {      _key,      title,      "logo": logo.asset->url,      extra    },    "agreements": partnersAgreements[] {      _key,      title,      extra    }  }
-export type PartnersQueryResult = {
-  cooperate: null;
-  agreements: null;
-} | {
-  cooperate: Array<{
-    _key: string;
-    title: string;
-    logo: string | null;
-    extra: string | null;
-  }> | null;
-  agreements: Array<{
-    _key: string;
-    title: string;
-    extra: string | null;
-  }> | null;
-} | null;
+export type PartnersQueryResult =
+  | {
+      cooperate: null;
+      agreements: null;
+    }
+  | {
+      cooperate: Array<{
+        _key: string;
+        title: string;
+        logo: string | null;
+        extra: string | null;
+      }> | null;
+      agreements: Array<{
+        _key: string;
+        title: string;
+        extra: string | null;
+      }> | null;
+    }
+  | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: contactInfoQuery
 // Query: *[_type == "contactInfo"][0] {    address,    phone,    email,    googleAddress  }
 export type ContactInfoQueryResult = {
@@ -810,120 +1223,256 @@ export type ContactInfoQueryResult = {
   email: string | null;
   googleAddress: string | null;
 } | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: legalDocumentsQuery
-// Query: *[_type == "istatai"][0] {    introTitle,    introText,    "introImageUrl": introImage.asset->url,    "statutesUrl": statutesFile.asset->url,    "statutesName": statutesFile.asset->originalFilename,    ethicsTitle,    ethicsDescription,    ethicsValuesIntro,    ethicsValues[] {      title    },    ethicsNotes[] {      text,      isItalic    },    "ethicsUrl": ethicsFile.asset->url,    "ethicsName": ethicsFile.asset->originalFilename,    privacyTitle,    privacyDescription,    "privacyUrl": privacyFile.asset->url,    "privacyName": privacyFile.asset->originalFilename  }
+// Query: *[_type == "istatai"][0] {    introTitle,    introText,    "introImageUrl": introImage.asset->url,    "statutesUrl": statutesFile.asset->url,    "statutesName": statutesFile.asset->originalFilename,    ethicsTitle,    ethicsDescription,    ethicsValuesIntro,    ethicsValues[] {      title    },    ethicsNotes[] {      text,      isItalic    },    "ethicsUrl": ethicsFile.asset->url,    "ethicsName": ethicsFile.asset->originalFilename  }
 export type LegalDocumentsQueryResult = {
-  introTitle: null;
-  introText: null;
-  introImageUrl: null;
+  introTitle: string | null;
+  introText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  introImageUrl: string | null;
   statutesUrl: string | null;
   statutesName: string | null;
-  ethicsTitle: null;
-  ethicsDescription: null;
-  ethicsValuesIntro: null;
-  ethicsValues: null;
-  ethicsNotes: null;
+  ethicsTitle: string | null;
+  ethicsDescription: string | null;
+  ethicsValuesIntro: string | null;
+  ethicsValues: Array<{
+    title: string;
+  }> | null;
+  ethicsNotes: Array<{
+    text: string;
+    isItalic: boolean | null;
+  }> | null;
   ethicsUrl: string | null;
   ethicsName: string | null;
-  privacyTitle: null;
-  privacyDescription: null;
-  privacyUrl: null;
-  privacyName: null;
 } | null;
+
+// Source: sanity/lib/queries.ts
+// Variable: privacyPolicyQuery
+// Query: *[_type == "privatumoPolitika"][0] {    title,    description,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
+export type PrivacyPolicyQueryResult = {
+  title: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  fileUrl: string | null;
+  fileName: string | null;
+} | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: eventsListQuery
 // Query: *[_type == "event" &&    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))  ] | order(coalesce(startAt, dateTime(date)) desc) {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    organizers,    excerpt,    "plainContent": pt::text(content),    "cover": images[0]  }
 export type EventsListQueryResult = Array<never>;
+
+// Source: sanity/lib/queries.ts
 // Variable: singleEventQuery
 // Query: *[_type == "event" && slug.current == $slug][0] {    _id,    title,    slug,    date,    startAt,    endAt,    time,    location,    locationLat,    locationLng,    organizers,    excerpt,    content,    images[]{ asset->{ _id, url } }  }
 export type SingleEventQueryResult = null;
+
+// Source: sanity/lib/queries.ts
 // Variable: membershipInfoQuery
 // Query: *[_id == "membershipInfo"][0] {    whyJoinText,    whoCanJoinTitle,    whoCanJoinText,    whoCanJoinHighlights[] {      _key,      title,      description    },    requiredDocuments[] {      _key,      title,      description,      "fileUrl": file.asset->url,      "fileName": file.asset->originalFilename,      buttonText    },    ctaTitle,    ctaText  }
-export type MembershipInfoQueryResult = {
-  whyJoinText: null;
-  whoCanJoinTitle: null;
-  whoCanJoinText: null;
-  whoCanJoinHighlights: null;
-  requiredDocuments: null;
-  ctaTitle: null;
-  ctaText: null;
-} | {
-  whyJoinText: BlockContent | null;
-  whoCanJoinTitle: null;
-  whoCanJoinText: null;
-  whoCanJoinHighlights: null;
-  requiredDocuments: Array<{
-    _key: string;
-    title: string;
-    description: string | null;
-    fileUrl: string | null;
-    fileName: string | null;
-    buttonText: null;
-  }> | null;
-  ctaTitle: null;
-  ctaText: null;
-} | null;
+export type MembershipInfoQueryResult =
+  | {
+      whyJoinText: null;
+      whoCanJoinTitle: null;
+      whoCanJoinText: null;
+      whoCanJoinHighlights: null;
+      requiredDocuments: null;
+      ctaTitle: null;
+      ctaText: null;
+    }
+  | {
+      whyJoinText: BlockContent | null;
+      whoCanJoinTitle: string | null;
+      whoCanJoinText: string | null;
+      whoCanJoinHighlights: Array<{
+        _key: string;
+        title: string;
+        description: string | null;
+      }> | null;
+      requiredDocuments: Array<{
+        _key: string;
+        title: string;
+        description: string | null;
+        fileUrl: string | null;
+        fileName: string | null;
+        buttonText: string | null;
+      }> | null;
+      ctaTitle: string | null;
+      ctaText: BlockContent | null;
+    }
+  | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: narystesNaudosQuery
 // Query: *[_id == "narystesNaudos"][0] {    benefitsText[] {      _key,      title,      description1,      description2,      description3,      description4    }  }
-export type NarystesNaudosQueryResult = {
-  benefitsText: null;
-} | {
-  benefitsText: Array<{
-    _key: string;
-    title: string;
-    description1: string | null;
-    description2: string | null;
-    description3: string | null;
-    description4: string | null;
-  }> | null;
-} | null;
+export type NarystesNaudosQueryResult =
+  | {
+      benefitsText: null;
+    }
+  | {
+      benefitsText: Array<{
+        _key: string;
+        title: string;
+        description1: string | null;
+        description2: string | null;
+        description3: string | null;
+        description4: string | null;
+      }> | null;
+    }
+  | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: atstovavimasQuery
 // Query: *[_id == "atstovavimas"][0] {    nationalActivities[] {      _key,      title,      description    },    regionalActivities[] {      _key,      title,      description    }  }
-export type AtstovavimasQueryResult = {
-  nationalActivities: null;
-  regionalActivities: null;
-} | null;
+export type AtstovavimasQueryResult =
+  | {
+      nationalActivities: null;
+      regionalActivities: null;
+    }
+  | {
+      nationalActivities: Array<{
+        _key: string;
+        title: string;
+        description: string | null;
+      }> | null;
+      regionalActivities: Array<{
+        _key: string;
+        title: string;
+        description: string | null;
+      }> | null;
+    }
+  | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: activityReportsQuery
 // Query: *[_type == "activityReport"] | order(_createdAt desc) {    _id,    period,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
-export type ActivityReportsQueryResult = Array<never>;
+export type ActivityReportsQueryResult = Array<{
+  _id: string;
+  period: string;
+  fileUrl: string | null;
+  fileName: string | null;
+}>;
+
+// Source: sanity/lib/queries.ts
 // Variable: versloAtsparumasQuery
 // Query: *[_id == "versloAtsparumas"][0] {    description,    "imageUrl": image.asset->url,    "imageAlt": image.alt,    "fileUrl": file.asset->url,    "fileName": file.asset->originalFilename  }
-export type VersloAtsparumasQueryResult = {
-  description: null;
-  imageUrl: null;
-  imageAlt: null;
-  fileUrl: null;
-  fileName: null;
-} | {
-  description: string | null;
-  imageUrl: null;
-  imageAlt: null;
-  fileUrl: null;
-  fileName: null;
-} | null;
+export type VersloAtsparumasQueryResult =
+  | {
+      description: null;
+      imageUrl: null;
+      imageAlt: null;
+      fileUrl: null;
+      fileName: null;
+    }
+  | {
+      description: null;
+      imageUrl: null;
+      imageAlt: null;
+      fileUrl: string | null;
+      fileName: string | null;
+    }
+  | {
+      description: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }> | null;
+      imageUrl: null;
+      imageAlt: null;
+      fileUrl: string | null;
+      fileName: string | null;
+    }
+  | {
+      description: BlockContent | null;
+      imageUrl: string | null;
+      imageAlt: string | null;
+      fileUrl: string | null;
+      fileName: string | null;
+    }
+  | {
+      description: string | null;
+      imageUrl: null;
+      imageAlt: null;
+      fileUrl: null;
+      fileName: null;
+    }
+  | null;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+declare global {
   interface SanityQueries {
-    "\n  *[_id == \"apieKkpda\"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    metuPatirtisAprasymas,\n    asociacijosNariaiAprasymas,\n    \"misija\": pt::text(musuMisija),\n    \"vizija\": pt::text(musuVizija),\n    strateginesVeiklosKryptys[] {\n      _key,\n      title\n    },\n    kurEiname,\n    \"kurEinamePaveikslasUrl\": kurEinamePaveikslas.asset->url,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      \"logoUrl\": logo.asset->url\n    }\n  }\n": ApieKkpdaQueryResult;
-    "\n  *[_type == \"leadership\"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    \"photo\": photo,\n    phone,\n    email\n  }\n": LeadershipQueryResult;
-    "\n  *[_type == \"news\"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt\n  }\n": NewsQueryResult;
-    "\n  *[_type == \"news\"] | order(coalesce(publishedAt, _createdAt) desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
-    "\n  *[_type == \"news\"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    publishedAt,\n    _createdAt\n  }\n": RecentNewsQueryResult;
-    "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
-    "\n  *[_id == \"istorija\"][0] {\n    ourHistory,\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
-    "\n  *[_id == \"valdymasSettings\"][0] {\n    presidentMessage\n  }\n": ValdymasSettingsQueryResult;
-    "\n  count(*[_type == \"member\"])\n": MembersCountQueryResult;
-    "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo\n  }\n": MembersQueryResult;
-    "\n  *[_id == \"partneriai\"][0] {\n    \"cooperate\": partnersCooperate[] {\n      _key,\n      title,\n      \"logo\": logo.asset->url,\n      extra\n    },\n    \"agreements\": partnersAgreements[] {\n      _key,\n      title,\n      extra\n    }\n  }\n": PartnersQueryResult;
-    "\n  *[_type == \"contactInfo\"][0] {\n    address,\n    phone,\n    email,\n    googleAddress\n  }\n": ContactInfoQueryResult;
-    "\n  *[_type == \"istatai\"][0] {\n    introTitle,\n    introText,\n    \"introImageUrl\": introImage.asset->url,\n    \"statutesUrl\": statutesFile.asset->url,\n    \"statutesName\": statutesFile.asset->originalFilename,\n    ethicsTitle,\n    ethicsDescription,\n    ethicsValuesIntro,\n    ethicsValues[] {\n      title\n    },\n    ethicsNotes[] {\n      text,\n      isItalic\n    },\n    \"ethicsUrl\": ethicsFile.asset->url,\n    \"ethicsName\": ethicsFile.asset->originalFilename,\n    privacyTitle,\n    privacyDescription,\n    \"privacyUrl\": privacyFile.asset->url,\n    \"privacyName\": privacyFile.asset->originalFilename\n  }\n": LegalDocumentsQueryResult;
-    "\n  *[_type == \"event\" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    \"plainContent\": pt::text(content),\n    \"cover\": images[0]\n  }\n": EventsListQueryResult;
-    "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n": SingleEventQueryResult;
-    "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    whoCanJoinTitle,\n    whoCanJoinText,\n    whoCanJoinHighlights[] {\n      _key,\n      title,\n      description\n    },\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    },\n    ctaTitle,\n    ctaText\n  }\n": MembershipInfoQueryResult;
-    "\n  *[_id == \"narystesNaudos\"][0] {\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    }\n  }\n": NarystesNaudosQueryResult;
-    "\n  *[_id == \"atstovavimas\"][0] {\n    nationalActivities[] {\n      _key,\n      title,\n      description\n    },\n    regionalActivities[] {\n      _key,\n      title,\n      description\n    }\n  }\n": AtstovavimasQueryResult;
-    "\n  *[_type == \"activityReport\"] | order(_createdAt desc) {\n    _id,\n    period,\n    \"fileUrl\": file.asset->url,\n    \"fileName\": file.asset->originalFilename\n  }\n": ActivityReportsQueryResult;
-    "\n  *[_id == \"versloAtsparumas\"][0] {\n    description,\n    \"imageUrl\": image.asset->url,\n    \"imageAlt\": image.alt,\n    \"fileUrl\": file.asset->url,\n    \"fileName\": file.asset->originalFilename\n  }\n": VersloAtsparumasQueryResult;
+    '\n  *[_id == "apieKkpda"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    metuPatirtisAprasymas,\n    asociacijosNariaiAprasymas,\n    "misija": pt::text(musuMisija),\n    "vizija": pt::text(musuVizija),\n    strateginesVeiklosKryptys[] {\n      _key,\n      title\n    },\n    kurEiname,\n    "kurEinamePaveikslasUrl": kurEinamePaveikslas.asset->url,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      "logoUrl": logo.asset->url\n    }\n  }\n': ApieKkpdaQueryResult;
+    '\n  *[_type == "leadership"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    "photo": photo,\n    phone,\n    email\n  }\n': LeadershipQueryResult;
+    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    "coverImage": coverImage,\n    publishedAt,\n    _createdAt\n  }\n': NewsQueryResult;
+    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    "coverImage": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation\n  }\n': AllNewsQueryResult;
+    '\n  *[_type == "news"] | order(coalesce(publishedAt, _createdAt) desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    publishedAt,\n    _createdAt\n  }\n': RecentNewsQueryResult;
+    '\n  *[_type == "news" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    "coverImage": coverImage,\n    publishedAt,\n    _createdAt,\n    eventStartDate,\n    eventEndDate,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    "documents": documents[]{\n      title,\n      "file": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n': SingleNewsQueryResult;
+    '\n  *[_id == "istorija"][0] {\n    ourHistory,\n    "pastPresidents": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n': IstorijaQueryResult;
+    '\n  *[_id == "valdymasSettings"][0] {\n    presidentMessage\n  }\n': ValdymasSettingsQueryResult;
+    '\n  count(*[_type == "member"])\n': MembersCountQueryResult;
+    '\n  *[_type == "member"] | order(lower(company) asc) {\n    _id,\n    company,\n    "logo": logo\n  }\n': MembersQueryResult;
+    '\n  *[_id == "partneriai"][0] {\n    "cooperate": partnersCooperate[] {\n      _key,\n      title,\n      "logo": logo.asset->url,\n      extra\n    },\n    "agreements": partnersAgreements[] {\n      _key,\n      title,\n      extra\n    }\n  }\n': PartnersQueryResult;
+    '\n  *[_type == "contactInfo"][0] {\n    address,\n    phone,\n    email,\n    googleAddress\n  }\n': ContactInfoQueryResult;
+    '\n  *[_type == "istatai"][0] {\n    introTitle,\n    introText,\n    "introImageUrl": introImage.asset->url,\n    "statutesUrl": statutesFile.asset->url,\n    "statutesName": statutesFile.asset->originalFilename,\n    ethicsTitle,\n    ethicsDescription,\n    ethicsValuesIntro,\n    ethicsValues[] {\n      title\n    },\n    ethicsNotes[] {\n      text,\n      isItalic\n    },\n    "ethicsUrl": ethicsFile.asset->url,\n    "ethicsName": ethicsFile.asset->originalFilename\n  }\n': LegalDocumentsQueryResult;
+    '\n  *[_type == "privatumoPolitika"][0] {\n    title,\n    description,\n    "fileUrl": file.asset->url,\n    "fileName": file.asset->originalFilename\n  }\n': PrivacyPolicyQueryResult;
+    '\n  *[_type == "event" &&\n    (!defined($from) || $from == null || coalesce(startAt, dateTime(date)) >= dateTime($from)) &&\n    (!defined($to) || $to == null || coalesce(startAt, dateTime(date)) <= dateTime($to))\n  ] | order(coalesce(startAt, dateTime(date)) desc) {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    organizers,\n    excerpt,\n    "plainContent": pt::text(content),\n    "cover": images[0]\n  }\n': EventsListQueryResult;
+    '\n  *[_type == "event" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n': SingleEventQueryResult;
+    '\n  *[_id == "membershipInfo"][0] {\n    whyJoinText,\n    whoCanJoinTitle,\n    whoCanJoinText,\n    whoCanJoinHighlights[] {\n      _key,\n      title,\n      description\n    },\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      "fileUrl": file.asset->url,\n      "fileName": file.asset->originalFilename,\n      buttonText\n    },\n    ctaTitle,\n    ctaText\n  }\n': MembershipInfoQueryResult;
+    '\n  *[_id == "narystesNaudos"][0] {\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    }\n  }\n': NarystesNaudosQueryResult;
+    '\n  *[_id == "atstovavimas"][0] {\n    nationalActivities[] {\n      _key,\n      title,\n      description\n    },\n    regionalActivities[] {\n      _key,\n      title,\n      description\n    }\n  }\n': AtstovavimasQueryResult;
+    '\n  *[_type == "activityReport"] | order(_createdAt desc) {\n    _id,\n    period,\n    "fileUrl": file.asset->url,\n    "fileName": file.asset->originalFilename\n  }\n': ActivityReportsQueryResult;
+    '\n  *[_id == "versloAtsparumas"][0] {\n    description,\n    "imageUrl": image.asset->url,\n    "imageAlt": image.alt,\n    "fileUrl": file.asset->url,\n    "fileName": file.asset->originalFilename\n  }\n': VersloAtsparumasQueryResult;
   }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module "@sanity/client" {
+  interface SanityQueries extends globalThis.SanityQueries {}
 }

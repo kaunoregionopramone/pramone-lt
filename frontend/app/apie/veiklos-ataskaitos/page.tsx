@@ -85,17 +85,11 @@ export default async function VeiklosAtaskaitosPage() {
             {Array.isArray(reports) && reports.length > 0 ? (
               reports.map(
                 (
-                  report: {
-                    _key?: string;
-                    _id?: string;
-                    period?: string;
-                    fileUrl?: string;
-                    fileName?: string;
-                  },
+                  report,
                   index: number
                 ) => (
                   <div
-                    key={report._id || report._key || index}
+                    key={report._id || index}
                     className="bg-white border border-gray-100 rounded-xl p-8 hover:shadow-md transition-shadow"
                   >
                     <div className="flex items-start gap-4">

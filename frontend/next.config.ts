@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     SC_DISABLE_SPEEDY: "false",
   },
   images: {
+    qualities: [75, 90],
     remotePatterns: [
       {
         protocol: 'https',

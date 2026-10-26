@@ -1,6 +1,7 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { allNewsQuery } from "@/sanity/lib/queries";
 import Link from "next/link";
+import { stegaClean } from "@sanity/client/stega";
 import { Suspense } from "react";
 import { NewsFilter } from "@/app/components/NewsFilter";
 
@@ -82,7 +83,7 @@ export default async function NaujienosPage() {
           </div>
         }
       >
-        <NewsFilter newsData={newsData || []} />
+        <NewsFilter newsData={(newsData || []).map((item) => ({ ...item, type: stegaClean(item.type) }))} />
       </Suspense>
     </div>
   );

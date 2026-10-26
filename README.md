@@ -12,7 +12,7 @@ pramone.lt/
 
 ## Features
 
-- **Modern Next.js 15**: App Router with server-side rendering
+- **Modern Next.js 16**: App Router with server-side rendering
 - **Sanity CMS**: Real-time content management with Lithuanian interface
 - **Member Directory**: Searchable directory of association members
 - **News & Events**: Publication date-based sorting, event management
@@ -23,7 +23,7 @@ pramone.lt/
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 24.22.1 or later in the 24.x LTS line
 - npm or yarn
 
 ### Installation
@@ -42,6 +42,29 @@ npm run dev
 
 - Frontend: [http://localhost:3000](http://localhost:3000)
 - Studio: [http://localhost:3333](http://localhost:3333)
+
+## Verification
+
+Use `nvm use` to select the patched Node.js version from `.nvmrc`, then install
+the committed dependency versions with `npm ci` at the repository root.
+
+```shell
+npm run lint
+npm run typecheck
+npm run build
+npm audit
+```
+
+The build runs Studio schema extraction before generating frontend types. Configure
+the environment variables in `studio/.env.example` and `frontend/.env.example`
+before building. Preview testing requires a Sanity read token.
+
+Scoped dependency overrides patch pinned YAML/TOML parsers, Undici, UUID, and the
+typography selector parser until their parent packages update those dependencies.
+The current `sanity-plugin-media` release still depends on Zod 3, so `npm audit`
+reports two high-severity entries for that dependency chain. Keep the compatible
+Zod version until the plugin supports the patched major version; forcing Zod 4
+also requires migrating its form resolver.
 
 ## Content Management
 
@@ -64,6 +87,10 @@ Deploy to Vercel:
 1. Connect repository to Vercel
 2. Set root directory to `frontend`
 3. Configure environment variables
+
+The frontend pins the Vercel Node.js runtime to `24.x` through `engines.node`.
+After reviewing and merging dependency updates, redeploy the frontend and run
+`npm run deploy --workspace=studio` to publish the updated Studio separately.
 
 ## Environment Variables
 
